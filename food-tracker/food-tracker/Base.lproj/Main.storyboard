@@ -32,14 +32,15 @@
                         <viewControllerLayoutGuide type="bottom" id="AUH-bX-5a0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9wh-aP-4no">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="akA-Sg-vVU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="701" y="295"/>
+            <point key="canvasLocation" x="797" y="366"/>
         </scene>
     </scenes>
 </document>
