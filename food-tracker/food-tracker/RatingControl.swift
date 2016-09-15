@@ -14,16 +14,23 @@ class RatingControl: UIView {
 	
 	var rating = 0
 	var ratingButtons = [UIButton]()
+	
+	let spacing = 5
+	
+	let starCount = 5
 
 	// MARK: Initialization
 	
 	override func layoutSubviews() {
 		
-		var buttonFrame = CGRect(x: 0, y: 0, width: 44, height: 44)
+		// Set the button's width and height to a square the size of the frame's height.
+		let buttonSize = Int(frame.size.height)
+		
+		var buttonFrame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
 		
 		// Offset each button's origin by the length of the button plus spacing.
 		for (index, button) in ratingButtons.enumerate() {
-			buttonFrame.origin.x = CGFloat(index * (44 + 5))
+			buttonFrame.origin.x = CGFloat(index * (buttonSize + starCount))
 			button.frame = buttonFrame
 		}
 	}
@@ -32,9 +39,10 @@ class RatingControl: UIView {
 		
 		super.init(coder: aDecoder)
 		
-		for _ in 0..<5 {
+		for _ in 0..<starCount {
 		
-			let button = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+			let button = UIButton()
+			
 			button.backgroundColor = UIColor.redColor()
 			
 			button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(_:)), forControlEvents: .TouchDown)
@@ -47,7 +55,12 @@ class RatingControl: UIView {
 	}
 	
 	override func intrinsicContentSize() -> CGSize {
-		return CGSize(width: 240, height: 44)
+		
+		let buttonSize = Int(frame.size.height)
+		
+		let width = (buttonSize * starCount) + (spacing * (starCount - 1))
+		
+		return CGSize(width: width, height: buttonSize)
 	}
     /*
     // Only override drawRect: if you perform custom drawing.
