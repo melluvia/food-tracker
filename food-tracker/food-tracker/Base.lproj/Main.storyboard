@@ -42,9 +42,13 @@
                                     </button>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="VXP-mk-If4">
                                         <rect key="frame" x="0.0" y="117" width="320" height="320"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="VXP-mk-If4" secondAttribute="height" multiplier="1:1" id="YSC-Qu-fhZ"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="rha-yQ-bJs" appends="YES" id="Mg7-m9-7SK"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -64,9 +68,15 @@
                     <connections>
                         <outlet property="mealNameLabel" destination="Zu2-en-uEt" id="XEH-Cq-COo"/>
                         <outlet property="nameTextField" destination="JVV-pV-lvV" id="zGD-iL-b8w"/>
+                        <outlet property="photoImageView" destination="VXP-mk-If4" id="opv-xH-vk1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="rha-yQ-bJs">
+                    <connections>
+                        <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="Km1-Kb-UOb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
         </scene>
         <!--View Controller-->
