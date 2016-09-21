@@ -168,10 +168,74 @@ class MealTableViewController: UITableViewController {
 			saveMeals()
 		}
 	}
+	// backendless
 	
+	 let backendless = Backendless.sharedInstance()!
+	
+	func randomBool() -> Bool {
+		return arc4random_uniform(2) == 0 ? true: false
+	}
+
+	// check for backendless setup
+	
+	func checkForBackendlessSetup() {
+		
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		
+		if appDelegate.APP_ID == "<replace-with-your-app-id>" || appDelegate.SECRET_KEY == "<replace-with-your-secret-key>" {
+			
+			let alertController = UIAlertController(title: "Backendless Error",
+			                                        message: "To use this sample you must register with Backendless, create an app, and replace the APP_ID and SECRET_KEY in the AppDelegate with the values from your app's settings.",
+			                                        preferredStyle: .alert)
+			
+			let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+			
+			alertController.addAction(okAction)
+			
+			self.present(alertController, animated: true, completion: nil)
+		}
+	}
+	
+	// save meals to backendless
+	@IBAction func createCommentBtn(_ sender: UIButton) {
+		
+		checkForBackendlessSetup()
+		
+		print( "createCommentBtn called!" )
+		
+		var objectId: Int
+		
+		if randomBool() {
+			objectId = 1
+		} else {
+			objectId = 2
+		}
+		
+		let meal = Meal()
+		meal.name = "Hello, from iOS user!"
+		meal.photoUrl = "this is the url"
+		meal.rating = 5
+		meal.objectId = objectId
+		
+		backendless.data.save( meal,
+		                       
+		                       response: { (entity: Any?) -> Void in
+								
+								let meal = entity as! Meal
+								
+								print("Meal was saved: \(meal.objectId), name: \(meal.name), rating: \"\(meal.rating)\"")
+			},
+		                       
+		                       error: { (fault: Fault?) -> Void in
+								print("Meal failed to save: \(fault)")
+			}
+		)
+	}
+	
+	//end of code to save meals to backendless
+
 	// MARK: NSCoding
 	
-	// Add code here to save meals to backendless
 	func saveMeals() {
 		
 		let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile: MealData.ArchiveURL.path)
