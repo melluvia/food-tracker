@@ -10,13 +10,69 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+	
+	let VERSION_NUM = "v1"
+//
+//	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//	// Replace these with YOUR App's ID and Secret Key from YOUR Backendless Dashboard!
+//	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	let APP_ID = "2ECFFE12-41E3-DA72-FF9C-68AA8967D700"
+	let SECRET_KEY = "AFE77CAD-2858-C0DA-FF8D-455A60FA4D00"
+	
+	let EMAIL = "ios_user@gmail.com" // Doubles as User Name
+	let PASSWORD = "password"
+//
 	var window: UIWindow?
-
-
+//
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
+		
+			let backendless = Backendless.sharedInstance()
+			backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+			backendless?.userService.setStayLoggedIn(true)
+		
+		let isValidUser = backendless?.userService.isValidUserToken()
+		
+		if isValidUser != nil && isValidUser != 0 {
+			
+			// The user has a valid user token so we know for sure the user is already logged!
+			print("User is already logged: \(isValidUser?.boolValue)");
+			
+		} else {
+			
+			// If the user is not logged in, register the test user,
+			// and if that succeeds, go ahead and log them in.
+			
+			let user: BackendlessUser = BackendlessUser()
+			user.email = EMAIL as NSString!
+			user.password = PASSWORD as NSString!
+			
+			backendless?.userService.registering( user,
+			                                      
+			response: { (user: BackendlessUser?) -> Void in
+													
+				print("User was registered: \(user?.objectId)")
+													
+				backendless?.userService.login( self.EMAIL, password: self.PASSWORD,
+													                                
+					response: { (user: BackendlessUser?) -> Void in
+						print("User logged in: \(user!.objectId)")
+					},
+													                                
+					error: { (fault: Fault?) -> Void in
+						print("User failed to login: \(fault)")
+					}
+				)
+			},
+			                                      
+			error: { (fault: Fault?) -> Void in
+				print("User failed to register: \(fault)")
+			}
+		)
+	}
+		
 		return true
+//
 	}
 
 	func applicationWillResignActive(_ application: UIApplication) {

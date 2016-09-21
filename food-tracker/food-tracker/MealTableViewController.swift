@@ -12,7 +12,7 @@ class MealTableViewController: UITableViewController {
 
 	// MARK: Properties
 	
-	var meals = [Meal]()
+	var meals = [MealData]()
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +34,13 @@ class MealTableViewController: UITableViewController {
 	func loadSampleMeals() {
 		
 		let photo1 = UIImage(named: "meal1")!
-		let meal1 = Meal(name: "Caprese Salad", photo: photo1, rating: 4)!
+		let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4)!
 		
 		let photo2 = UIImage(named: "meal2")!
-		let meal2 = Meal(name: "Chicken and Potatoes", photo: photo2, rating: 5)!
+		let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5)!
 		
 		let photo3 = UIImage(named: "meal3")!
-		let meal3 = Meal(name: "Pasta with Meatballs", photo: photo3, rating: 3)!
+		let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3)!
 		
 		meals += [meal1, meal2, meal3]
 	}
@@ -170,17 +170,19 @@ class MealTableViewController: UITableViewController {
 	}
 	
 	// MARK: NSCoding
+	
+	// Add code here to save meals to backendless
 	func saveMeals() {
 		
-		let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.ArchiveURL.path)
+		let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile: MealData.ArchiveURL.path)
 		
 		if !isSuccessfulSave {
 			print("Failed to save meals...")
 		}
 	}
-	
-	func loadMeals() -> [Meal]? {
+	// Add code here to load meals from Backendless
+	func loadMeals() -> [MealData]? {
 		
-		return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.ArchiveURL.path) as? [Meal]
+		return NSKeyedUnarchiver.unarchiveObject(withFile: MealData.ArchiveURL.path) as? [MealData]
 	}
 }
