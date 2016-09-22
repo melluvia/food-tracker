@@ -9,16 +9,23 @@
 import UIKit
 
 class MealData: NSObject, NSCoding {
-	// MARK: Properties
+	// MARK: Common Properties Shared by Archiver and Backendless
 	
 	var name: String
-	var photo: UIImage?
 	var rating: Int
+	
+	// MARK: Archiver Only Properties
+	
+	var photo: UIImage?
+	
+	// MARK: Backendless Only Properties
+	
+	var objectId: String?
+	var photoUrl: String?
 	
 	// MARK: Archiving Paths
  
 	static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-	
 	static let ArchiveURL = DocumentsDirectory.appendingPathComponent("meals")
 	
 	// MARK: Types

@@ -10,7 +10,7 @@ import UIKit
 
 class Meal : NSObject {
 	
-	var objectId: Int = 0
+	var objectId: String?
 	var name: String?
 	var photoUrl: String?
 	var rating: Int = 0

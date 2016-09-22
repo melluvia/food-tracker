@@ -20,6 +20,7 @@
 		6C12C9E61D8B069A00C82247 /* MealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C12C9E41D8B069A00C82247 /* MealData.swift */; };
 		6C12C9E81D8B116200C82247 /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C12C9E71D8B116200C82247 /* MealTableViewCell.swift */; };
 		6C12C9EA1D8B15B200C82247 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C12C9E91D8B15B200C82247 /* MealTableViewController.swift */; };
+		6CF5C0C91D9473E200450F52 /* BackendlessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF5C0C81D9473E200450F52 /* BackendlessManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		6C12C9E41D8B069A00C82247 /* MealData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealData.swift; sourceTree = "<group>"; };
 		6C12C9E71D8B116200C82247 /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
 		6C12C9E91D8B15B200C82247 /* MealTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewController.swift; sourceTree = "<group>"; };
+		6CF5C0C81D9473E200450F52 /* BackendlessManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendlessManager.swift; sourceTree = "<group>"; };
 		AC54008F474C05054705EA65 /* Pods_food_tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_food_tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D347114CC2B991A646FDE9E3 /* Pods_food_trackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_food_trackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE659380D209F91483A25C31 /* Pods-food-tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-food-tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-food-tracker/Pods-food-tracker.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				6C12C9C21D89E2C500C82247 /* AppDelegate.swift */,
 				6C12C9C41D89E2C500C82247 /* MealViewController.swift */,
+				6CF5C0C81D9473E200450F52 /* BackendlessManager.swift */,
 				6C12C9E41D8B069A00C82247 /* MealData.swift */,
 				6C0E0B2D1D92FD3D00442321 /* Meal.swift */,
 				6C12C9E21D8AF4B800C82247 /* RatingControl.swift */,
@@ -297,6 +300,7 @@
 				6C0E0B2E1D92FD3D00442321 /* Meal.swift in Sources */,
 				6C12C9E31D8AF4B800C82247 /* RatingControl.swift in Sources */,
 				6C12C9C31D89E2C500C82247 /* AppDelegate.swift in Sources */,
+				6CF5C0C91D9473E200450F52 /* BackendlessManager.swift in Sources */,
 				6C12C9EA1D8B15B200C82247 /* MealTableViewController.swift in Sources */,
 				6C12C9E81D8B116200C82247 /* MealTableViewCell.swift in Sources */,
 			);

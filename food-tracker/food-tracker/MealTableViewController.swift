@@ -14,6 +14,8 @@ class MealTableViewController: UITableViewController {
 	
 	var meals = [MealData]()
 	
+	let backendless = Backendless.sharedInstance()!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -21,13 +23,25 @@ class MealTableViewController: UITableViewController {
 		navigationItem.leftBarButtonItem = editButtonItem
 		
 		// Load any saved meals, otherwise load sample data.
-		if let savedMeals = loadMeals() {
+		if BackendlessManager.sharedInstance.isUserLoggedIn() {
 			
-			meals += savedMeals
+			BackendlessManager.sharedInstance.loadMeals { mealData in
+				
+				self.meals += mealData
+				self.tableView.reloadData()
+			}
+			
 		} else {
 			
-			// Load the sample data.
-			loadSampleMeals()
+			// Load any saved meals, otherwise load sample data.
+			if let savedMeals = loadMealsFromArchiver() {
+				meals += savedMeals
+			} else {
+				// Load the samply data.
+
+// HACK: Disabled sample meal data for now!
+//loadSampleMeals()
+			}
 		}
 	}
 	
@@ -44,85 +58,122 @@ class MealTableViewController: UITableViewController {
 		
 		meals += [meal1, meal2, meal3]
 	}
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-
-        return 1
-    }
-
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
+	
+	// MARK: - Table view data source
+	
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		
 		return meals.count
 	}
 	
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		
 		// Table view cells are reused and should be dequeued using a cell identifier.
 		let cellIdentifier = "MealTableViewCell"
-		
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MealTableViewCell
 		
 		// Fetches the appropriate meal for the data source layout.
 		let meal = meals[(indexPath as NSIndexPath).row]
-
+		
 		cell.nameLabel.text = meal.name
-		cell.photoImageView.image = meal.photo
+		
+		if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {
+			loadImageFromUrl(cell: cell, photoUrl: meal.photoUrl!)
+		} else {
+			cell.photoImageView.image = meal.photo
+		}
+		
 		cell.ratingControl.rating = meal.rating
-
-        return cell
-    }
-
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
- 
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		return cell
+	}
+	
+	func loadImageFromUrl(cell: MealTableViewCell, photoUrl: String) {
 		
-        if editingStyle == .delete {
+		let url = URL(string: photoUrl)!
+		
+		let session = URLSession.shared
+		
+		let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
 			
-            // Delete the row from the data source
-			meals.remove(at: (indexPath as NSIndexPath).row)
+			if error == nil {
+				
+				do {
+					
+					let data = try Data(contentsOf: url, options: [])
+					
+					DispatchQueue.main.async {
+						
+						// We got the image data! Use it to create a UIImage for our cell's
+						// UIImageView. Then, stop the activity spinner.
+						cell.photoImageView.image = UIImage(data: data)
+						//cell.activityIndicator.stopAnimating()
+					}
+					
+				} catch {
+					print("NSData Error: \(error)")
+				}
+				
+			} else {
+				print("NSURLSession Error: \(error)")
+			}
+		})
+		
+		task.resume()
+	}
+	
+	// Override to support conditional editing of the table view.
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		
+		// Return false if you do not want the specified item to be editable.
+		return true
+	}
+	
+	// Override to support editing the table view.
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		
+		if editingStyle == .delete {
 			
-			saveMeals()
+			if BackendlessManager.sharedInstance.isUserLoggedIn() {
+				
+				// Find the MealData in the data source that we wish to delete.
+				let mealToRemove = meals[indexPath.row]
+				
+				BackendlessManager.sharedInstance.removeMeal(mealToRemove: mealToRemove) {
+					
+					// It was removed from the database, now delete the row from the data source.
+					self.meals.remove(at: (indexPath as NSIndexPath).row)
+					tableView.deleteRows(at: [indexPath], with: .fade)
+				}
+				
+			} else {
+				
+				// Delete the row from the data source
+				meals.remove(at: (indexPath as NSIndexPath).row)
+				
+				// Save the meals.
+				saveMealsToArchiver()
+				
+				tableView.deleteRows(at: [indexPath], with: .fade)
+			}
 			
-            tableView.deleteRows(at: [indexPath], with: .fade)
-			
-        } else if editingStyle == .insert {
-			
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		} else if editingStyle == .insert {
+			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+		}
+	}
+	
+	// MARK: - Navigation
+	
+	// In a storyboard-based application, you will often want to do a little preparation before navigation
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		
 		if segue.identifier == "ShowDetail" {
 			
@@ -132,17 +183,15 @@ class MealTableViewController: UITableViewController {
 			if let selectedMealCell = sender as? MealTableViewCell {
 				
 				let indexPath = tableView.indexPath(for: selectedMealCell)!
-				
 				let selectedMeal = meals[(indexPath as NSIndexPath).row]
-				
 				mealDetailViewController.meal = selectedMeal
 			}
-		} else if segue.identifier == "AddItem" {
 			
+		} else if segue.identifier == "AddItem" {
 			print("Adding new meal.")
 		}
-    }
- 
+	}
+	
 	@IBAction func unwindToMealList(_ sender: UIStoryboardSegue) {
 		
 		if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
@@ -151,92 +200,28 @@ class MealTableViewController: UITableViewController {
 				
 				// Update an existing meal.
 				meals[(selectedIndexPath as NSIndexPath).row] = meal
-				
 				tableView.reloadRows(at: [selectedIndexPath], with: .none)
 				
 			} else {
 				
-			// Add a new meal.
+				// Add a new meal.
 				let newIndexPath = IndexPath(row: meals.count, section: 0)
-				
 				meals.append(meal)
-				
 				tableView.insertRows(at: [newIndexPath], with: .bottom)
 			}
 			
-			// Save the meals.
-			saveMeals()
-		}
-	}
-	// backendless
-	
-	 let backendless = Backendless.sharedInstance()!
-	
-	func randomBool() -> Bool {
-		return arc4random_uniform(2) == 0 ? true: false
-	}
-
-	// check for backendless setup
-	
-	func checkForBackendlessSetup() {
-		
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
-		
-		if appDelegate.APP_ID == "<replace-with-your-app-id>" || appDelegate.SECRET_KEY == "<replace-with-your-secret-key>" {
-			
-			let alertController = UIAlertController(title: "Backendless Error",
-			                                        message: "To use this sample you must register with Backendless, create an app, and replace the APP_ID and SECRET_KEY in the AppDelegate with the values from your app's settings.",
-			                                        preferredStyle: .alert)
-			
-			let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-			
-			alertController.addAction(okAction)
-			
-			self.present(alertController, animated: true, completion: nil)
-		}
-	}
-	
-	// save meals to backendless
-	@IBAction func createCommentBtn(_ sender: UIButton) {
-		
-		checkForBackendlessSetup()
-		
-		print( "createCommentBtn called!" )
-		
-		var objectId: Int
-		
-		if randomBool() {
-			objectId = 1
-		} else {
-			objectId = 2
-		}
-		
-		let meal = Meal()
-		meal.name = "Hello, from iOS user!"
-		meal.photoUrl = "this is the url"
-		meal.rating = 5
-		meal.objectId = objectId
-		
-		backendless.data.save( meal,
-		                       
-		                       response: { (entity: Any?) -> Void in
-								
-								let meal = entity as! Meal
-								
-								print("Meal was saved: \(meal.objectId), name: \(meal.name), rating: \"\(meal.rating)\"")
-			},
-		                       
-		                       error: { (fault: Fault?) -> Void in
-								print("Meal failed to save: \(fault)")
+			if BackendlessManager.sharedInstance.isUserLoggedIn() {
+				BackendlessManager.sharedInstance.saveMeal(mealData: meal)
+			} else {
+				// Save the meals.
+				saveMealsToArchiver()
 			}
-		)
+		}
 	}
 	
-	//end of code to save meals to backendless
-
 	// MARK: NSCoding
 	
-	func saveMeals() {
+	func saveMealsToArchiver() {
 		
 		let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile: MealData.ArchiveURL.path)
 		
@@ -244,8 +229,8 @@ class MealTableViewController: UITableViewController {
 			print("Failed to save meals...")
 		}
 	}
-	// Add code here to load meals from Backendless
-	func loadMeals() -> [MealData]? {
+	
+	func loadMealsFromArchiver() -> [MealData]? {
 		
 		return NSKeyedUnarchiver.unarchiveObject(withFile: MealData.ArchiveURL.path) as? [MealData]
 	}
