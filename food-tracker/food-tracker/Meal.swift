@@ -6,12 +6,13 @@
 //  Copyright © 2016 Melissa Phillips Design. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 class Meal : NSObject {
 	
 	var objectId: String?
 	var name: String?
 	var photoUrl: String?
+	var thumbnailUrl: String?
 	var rating: Int = 0
 }

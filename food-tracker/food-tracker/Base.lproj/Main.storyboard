@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EzF-vf-7SE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EzF-vf-7SE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -20,10 +20,10 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kjQ-c0-U9U" id="esn-pb-Ci0">
-                                    <frame key="frameInset" width="375" height="90"/>
+                                    <frame key="frameInset" width="375" height="89"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="V5P-nb-unr">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="V5P-nb-unr" userLabel="Photo Image View">
                                             <frame key="frameInset" width="89" height="89"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -43,7 +43,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="nameLabel" destination="8QF-IF-Wns" id="VE7-eU-Qir"/>
-                                    <outlet property="photoImageView" destination="V5P-nb-unr" id="L1j-8g-dtP"/>
+                                    <outlet property="photoImageView" destination="V5P-nb-unr" id="pxS-U7-0QK"/>
                                     <outlet property="ratingControl" destination="Qap-i3-Gk3" id="NFU-9Q-npr"/>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="V4i-3B-om2"/>
                                 </connections>
@@ -68,7 +68,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0op-lb-LXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="583" y="290"/>
+            <point key="canvasLocation" x="1586" y="116"/>
         </scene>
         <!--New Meal-->
         <scene sceneID="tne-QT-ifu">
@@ -92,7 +92,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="VXP-mk-If4">
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="VXP-mk-If4" userLabel="Photo Image View">
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="VXP-mk-If4" secondAttribute="height" multiplier="1:1" id="YSC-Qu-fhZ"/>
@@ -115,14 +115,16 @@
                                     <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="437-ZG-kFT" secondAttribute="leading" id="TXK-iY-3NH"/>
                                     <constraint firstItem="ICG-oO-6LN" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="g5D-uq-tSC"/>
                                     <constraint firstAttribute="trailing" secondItem="JVV-pV-lvV" secondAttribute="trailing" id="hs3-D2-qpk"/>
-                                    <constraint firstItem="ICG-oO-6LN" firstAttribute="top" secondItem="VXP-mk-If4" secondAttribute="bottom" constant="12" id="vlg-6f-vTN"/>
                                 </constraints>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zpA-5m-LrH"/>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="437-ZG-kFT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="KFS-Me-Vaw"/>
                             <constraint firstItem="437-ZG-kFT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hhv-tg-Kll"/>
+                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mk4-Ys-IJH"/>
+                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sJL-NJ-KeJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Meal" id="mVr-Wg-uo0">
@@ -133,15 +135,17 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="H54-sf-MR9">
                             <connections>
-                                <segue destination="peH-xY-lBr" kind="unwind" unwindAction="unwindToMealList:" id="Xht-6C-nrr"/>
+                                <action selector="save:" destination="BYZ-38-t0r" id="Jd7-Vs-ftT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="nameTextField" destination="JVV-pV-lvV" id="zGD-iL-b8w"/>
-                        <outlet property="photoImageView" destination="VXP-mk-If4" id="opv-xH-vk1"/>
+                        <outlet property="photoImageView" destination="VXP-mk-If4" id="vA2-Gf-YmX"/>
                         <outlet property="ratingControl" destination="ICG-oO-6LN" id="yYU-xu-Ioj"/>
                         <outlet property="saveButton" destination="H54-sf-MR9" id="Q9e-02-Nox"/>
+                        <outlet property="saveSpinner" destination="zpA-5m-LrH" id="iaY-Z9-aDZ"/>
+                        <segue destination="peH-xY-lBr" kind="unwind" identifier="unwindToMealList" unwindAction="unwindToMealList:" id="VYC-EL-sth"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -152,7 +156,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1716" y="230"/>
+            <point key="canvasLocation" x="2018" y="881"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P20-2N-2aO">
@@ -170,7 +174,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Lg-56-pSK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-229" y="290"/>
+            <point key="canvasLocation" x="809" y="116"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4nQ-al-Rho">
@@ -188,7 +192,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9aj-XL-Skm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1175" y="714"/>
+            <point key="canvasLocation" x="1159" y="881"/>
         </scene>
     </scenes>
     <resources>

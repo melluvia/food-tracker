@@ -9,20 +9,19 @@
 import UIKit
 
 class MealTableViewController: UITableViewController {
-
+	
 	// MARK: Properties
 	
 	var meals = [MealData]()
 	
 	let backendless = Backendless.sharedInstance()!
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		
 		// Use the edit button item provided by the table view controller.
 		navigationItem.leftBarButtonItem = editButtonItem
 		
-		// Load any saved meals, otherwise load sample data.
 		if BackendlessManager.sharedInstance.isUserLoggedIn() {
 			
 			BackendlessManager.sharedInstance.loadMeals { mealData in
@@ -37,10 +36,10 @@ class MealTableViewController: UITableViewController {
 			if let savedMeals = loadMealsFromArchiver() {
 				meals += savedMeals
 			} else {
-				// Load the samply data.
-
-// HACK: Disabled sample meal data for now!
-//loadSampleMeals()
+				// Load the sample data.
+				
+				// HACK: Disabled sample meal data for now!
+				//loadSampleMeals()
 			}
 		}
 	}
@@ -58,6 +57,7 @@ class MealTableViewController: UITableViewController {
 		
 		meals += [meal1, meal2, meal3]
 	}
+	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -147,12 +147,28 @@ class MealTableViewController: UITableViewController {
 				// Find the MealData in the data source that we wish to delete.
 				let mealToRemove = meals[indexPath.row]
 				
-				BackendlessManager.sharedInstance.removeMeal(mealToRemove: mealToRemove) {
+				BackendlessManager.sharedInstance.removeMeal(mealToRemove: mealToRemove,
+				                                             
+					completion: {
+						
+						// It was removed from the database, now delete the row from the data source.
+						self.meals.remove(at: (indexPath as NSIndexPath).row)
+						tableView.deleteRows(at: [indexPath], with: .fade)
+					},
+									 
+					error: {
+						
+						// It was NOT removed - tell the user and DON'T delete the row from the data source.
+						let alertController = UIAlertController(title: "Remove Failed",
+															message: "Oops! We couldn't remove your Meal at this time.",
+															preferredStyle: .alert)
+
+						let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+						alertController.addAction(okAction)
 					
-					// It was removed from the database, now delete the row from the data source.
-					self.meals.remove(at: (indexPath as NSIndexPath).row)
-					tableView.deleteRows(at: [indexPath], with: .fade)
-				}
+						self.present(alertController, animated: true, completion: nil)
+					}
+				)
 				
 			} else {
 				
@@ -210,10 +226,8 @@ class MealTableViewController: UITableViewController {
 				tableView.insertRows(at: [newIndexPath], with: .bottom)
 			}
 			
-			if BackendlessManager.sharedInstance.isUserLoggedIn() {
-				BackendlessManager.sharedInstance.saveMeal(mealData: meal)
-			} else {
-				// Save the meals.
+			if !BackendlessManager.sharedInstance.isUserLoggedIn() {
+				// We're not logged in - save the meals using NSKeyedUnarchiver.
 				saveMealsToArchiver()
 			}
 		}

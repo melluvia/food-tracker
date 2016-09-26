@@ -9,6 +9,7 @@
 import UIKit
 
 class MealData: NSObject, NSCoding {
+	
 	// MARK: Common Properties Shared by Archiver and Backendless
 	
 	var name: String
@@ -22,6 +23,9 @@ class MealData: NSObject, NSCoding {
 	
 	var objectId: String?
 	var photoUrl: String?
+	var thumbnailUrl: String?
+	
+	var replacePhoto: Bool = false
 	
 	// MARK: Archiving Paths
  
@@ -37,7 +41,7 @@ class MealData: NSObject, NSCoding {
 		static let ratingKey = "rating"
 	}
 	
-	// MARK: Initialization
+//	 MARK: Initialization
  
 	init?(name: String, photo: UIImage?, rating: Int) {
 		
@@ -54,7 +58,7 @@ class MealData: NSObject, NSCoding {
 		}
 	}
 	
-	// MARK: NSCoding
+//	 MARK: NSCoding
 	
 	func encode(with aCoder: NSCoder) {
 		
