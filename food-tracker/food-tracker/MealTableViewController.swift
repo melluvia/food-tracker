@@ -248,4 +248,22 @@ class MealTableViewController: UITableViewController {
 		
 		return NSKeyedUnarchiver.unarchiveObject(withFile: MealData.ArchiveURL.path) as? [MealData]
 	}
+	
+	// MARK: Logout Button
+	
+	@IBAction func logoutBtn(_ sender: UIButton) {
+		
+		print( "logoutBtn called!" )
+		
+		BackendlessManager.sharedInstance.logoutUser(
+			
+			completion: {
+				self.performSegue(withIdentifier: "gotoLoginFromMenu", sender: sender)
+			},
+			
+			error: { message in
+				print("User failed to log out: \(message)")
+		})
+	}
+	
 }

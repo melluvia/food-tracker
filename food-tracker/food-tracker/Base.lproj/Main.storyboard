@@ -15,6 +15,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fWY-dz-mSc">
+                            <rect key="frame" x="0.0" y="182" width="375" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Log Out"/>
+                            <connections>
+                                <segue destination="wLa-aO-8YV" kind="show" identifier="gotoLoginFromMeals" id="I8u-Ev-ES7"/>
+                            </connections>
+                        </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="90" id="kjQ-c0-U9U" customClass="MealTableViewCell" customModule="food_tracker" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="90"/>
@@ -249,9 +258,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jmu-gz-nqD">
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Log Out"/>
-                                        <connections>
-                                            <action selector="logoutBtn:" destination="rhk-N4-QZN" eventType="touchUpInside" id="058-pP-sTK"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -262,20 +268,15 @@
                             <constraint firstItem="DJ1-R3-t2p" firstAttribute="centerX" secondItem="NBS-fW-Tig" secondAttribute="centerX" id="Tjf-yG-Y9n"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="wLa-aO-8YV" kind="show" identifier="gotoLoginFromMenu" id="iDJ-Rr-4QK">
-                            <nil key="action"/>
-                        </segue>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="duI-Cu-2N1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="36"/>
+            <point key="canvasLocation" x="-187" y="-443"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="yRQ-cZ-ygW">
             <objects>
-                <viewController id="wLa-aO-8YV" customClass="LoginViewController" customModule="food_tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wLa-aO-8YV" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Veu-Ch-cAZ"/>
                         <viewControllerLayoutGuide type="bottom" id="0tw-BM-MGM"/>
@@ -321,7 +322,7 @@
                                 </constraints>
                                 <state key="normal" title="Create a New Account"/>
                                 <connections>
-                                    <segue destination="3Zu-8Q-6nz" kind="presentation" id="lgY-ru-F6t"/>
+                                    <segue destination="3Zu-8Q-6nz" kind="presentation" identifier="gotoRegisterFromLogin" id="lgY-ru-F6t"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lB7-Gk-BgS"/>
@@ -345,9 +346,7 @@
                         <outlet property="loginBtn" destination="2FC-Kt-D7C" id="1rK-P8-YXT"/>
                         <outlet property="passwordTextField" destination="EIy-Au-byO" id="Xca-tl-21s"/>
                         <outlet property="spinner" destination="lB7-Gk-BgS" id="8tU-o6-R2e"/>
-                        <segue destination="rhk-N4-QZN" kind="show" identifier="gotoMenuFromLogin" id="5lm-TS-g19">
-                            <nil key="action"/>
-                        </segue>
+                        <segue destination="EzF-vf-7SE" kind="show" identifier="gotoMealsFromLogin" id="Av5-fB-9fV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CMJ-Ii-PTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -441,9 +440,7 @@
                         <outlet property="passwordTextField" destination="ghP-pC-Vzu" id="8Kj-Xe-ow0"/>
                         <outlet property="registerBtn" destination="O8Y-5P-9Jq" id="cUJ-cq-ZCY"/>
                         <outlet property="spinner" destination="s3m-Fd-ieE" id="NfZ-I5-VIM"/>
-                        <segue destination="rhk-N4-QZN" kind="show" identifier="gotoMenuFromRegister" id="fed-OG-zTs">
-                            <nil key="action"/>
-                        </segue>
+                        <segue destination="EzF-vf-7SE" kind="show" identifier="gotoMealsFromRegister" id="2m5-1t-NAp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zlh-2g-xs4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -455,7 +452,7 @@
         <image name="defaultPhoto" width="540" height="540"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Av5-fB-9fV"/>
         <segue reference="V4i-3B-om2"/>
-        <segue reference="fed-OG-zTs"/>
     </inferredMetricsTieBreakers>
 </document>

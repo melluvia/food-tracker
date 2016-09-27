@@ -52,7 +52,7 @@ class RegisterViewController: UIViewController {
         let email = emailTextField.text!
         let password = passwordTextField.text!
         
-        BackendlessManager.sharedInstance.registerUser(email: email, password: password,
+        BackendlessManager.sharedInstance.registerTestUser(email: email, password: password,
             completion: {
                 
                 BackendlessManager.sharedInstance.loginUser(email: email, password: password,
