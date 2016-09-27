@@ -1,0 +1,6 @@
+framework module Pods_food_tracker {
+  umbrella header "Pods-food-tracker-umbrella.h"
+
+  export *
+  module * { export * }
+}
