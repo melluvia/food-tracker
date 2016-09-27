@@ -30,8 +30,9 @@ class BackendlessManager {
 	let APP_ID = "2ECFFE12-41E3-DA72-FF9C-68AA8967D700"
 	let SECRET_KEY = "AFE77CAD-2858-C0DA-FF8D-455A60FA4D00"
 	
-	let EMAIL = "test@gmail.com" // Doubles as User Name
-	let PASSWORD = "password"
+// will type in manually
+//	let EMAIL = "test@gmail.com" // Doubles as User Name
+//	let PASSWORD = "password"
 	
 	func initApp() {
 		
@@ -51,48 +52,72 @@ class BackendlessManager {
 		}
 	}
 	
-	func registerTestUser() {
+	func registerUser(email: String, password: String, completion: @escaping () -> (), error: @escaping (String) -> ()) {
 		
 		let user: BackendlessUser = BackendlessUser()
-		user.email = EMAIL as NSString!
-		user.password = PASSWORD as NSString!
+		user.email = email as NSString!
+		user.password = password as NSString!
 		
 		backendless.userService.registering( user,
 		                                     
-			 response: { (user: BackendlessUser?) -> Void in
+			response: { (user: BackendlessUser?) -> Void in
 
 				print("User was registered: \(user?.objectId)")
 
-				self.loginTestUser()
+				completion()
 			},
 		                                     
 			 error: { (fault: Fault?) -> Void in
 				print("User failed to register: \(fault)")
 
-				print(fault?.faultCode)
+				error((fault?.message)!)
 
 				// If fault is for "User already exists." - go ahead and just login!
 				if fault?.faultCode == "3033" {
-					self.loginTestUser()
+					self.loginUser(email: email, password: password, completion: completion, error: error)
 				}
-			}
-		)
+			})
 	}
 	
-	func loginTestUser() {
+	func loginUser(email: String, password: String, completion: @escaping () -> (), error: @escaping (String) -> ()) {
 		
-		backendless.userService.login( self.EMAIL, password: self.PASSWORD,
+		backendless.userService.login( email, password: password,
 		                               
-		   response: { (user: BackendlessUser?) -> Void in
+		response: { (user: BackendlessUser?) -> Void in
 			print("User logged in: \(user!.objectId)")
+			completion()
 		},
 		                               
-		   error: { (fault: Fault?) -> Void in
+		error: { (fault: Fault?) -> Void in
 			print("User failed to login: \(fault)")
+			error((fault?.message)!)
 			
-			}
-		)
+		})
 	}
+	
+	func logoutUser(completion: @escaping () -> (), error: @escaping (String) -> ()) {
+        
+        // First, check if the user is actually logged in.
+        if isUserLoggedIn() {
+            
+            // If they are currently logged in - go ahead and log them out!
+            
+            backendless.userService.logout( { (user: Any!) -> Void in
+                    print("User logged out!")
+                    completion()
+                },
+                                            
+                error: { (fault: Fault?) -> Void in
+                    print("User failed to log out: \(fault)")
+                    error((fault?.message)!)
+                })
+            
+        } else {
+            
+            print("User is already logged out!");
+            completion()
+        }
+    }
 	
 	func saveTestData() {
 		
@@ -195,7 +220,7 @@ class BackendlessManager {
         })
     }
 	
-func saveMeal(mealData: MealData, completion: @escaping () -> (), error: @escaping () -> ()) {
+	func saveMeal(mealData: MealData, completion: @escaping () -> (), error: @escaping () -> ()) {
         
         if mealData.objectId == nil {
             
@@ -245,6 +270,75 @@ func saveMeal(mealData: MealData, completion: @escaping () -> (), error: @escapi
             // thumbnail image with a new one.
             //
             
+            let mealToSave = Meal()
+            
+            savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
+                                                       
+               completion: {
+
+                    let dataStore = self.backendless.persistenceService.of(Meal.ofClass())
+
+                    dataStore?.findID(mealData.objectId,
+                                      
+                        response: { (meal: Any?) -> Void in
+                            
+                            // We found the Meal to update.
+                            let meal = meal as! Meal
+                            
+                            // Cache old URLs for removal!
+                            let oldPhotoUrl = meal.photoUrl!
+                            let oldthumbnailUrl = meal.thumbnailUrl!
+                            
+                            // Update the Meal with the new data.
+                            meal.name = mealData.name
+                            meal.rating = mealData.rating
+                            meal.photoUrl = mealToSave.photoUrl
+                            meal.thumbnailUrl = mealToSave.thumbnailUrl
+                            
+                            // Save the updated Meal.
+                            self.backendless.data.save( meal,
+                                                   
+                                response: { (entity: Any?) -> Void in
+                                    
+                                    let meal = entity as! Meal
+                                    
+                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+                                    
+                                    // Update the mealData used by the UI with the new URLS!
+                                    mealData.photoUrl = meal.photoUrl
+                                    mealData.thumbnailUrl = meal.thumbnailUrl
+                                    
+                                    completion()
+                                    
+                                    // Attempt to remove the old photo and thumbnail images.
+                                    self.removePhotoAndThumbnail(photoUrl: oldPhotoUrl, thumbnailUrl: oldthumbnailUrl, completion: {}, error: {})
+                                },
+                                                   
+                               error: { (fault: Fault?) -> Void in
+                                    print("Failed to save Meal: \(fault)")
+                                    error()
+                            })
+                        },
+                         
+                        error: { (fault: Fault?) -> Void in
+                            print("Failed to find Meal: \(fault)")
+                            error()
+                        }
+                    )
+                },
+                                                       
+                error: {
+                    print("Failed to save photo and thumbnail!")
+                    error()
+                })
+            
+        } else if mealData.replacePhoto {
+            
+			//
+			// Update the Meal AND replace the existing photo and
+			// thumbnail image with a new one.
+			//
+			
             let mealToSave = Meal()
             
             savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
@@ -451,30 +545,4 @@ func saveMeal(mealData: MealData, completion: @escaping () -> (), error: @escapi
             }
         )
     }
-	
-	func logoutUser(completion: @escaping () -> (), error: @escaping (String) -> ()) {
-        
-        // First, check if the user is actually logged in.
-        if isUserLoggedIn() {
-            
-            // If they are currently logged in - go ahead and log them out!
-            
-            backendless.userService.logout( { (user: Any!) -> Void in
-                    print("User logged out!")
-                    completion()
-                },
-                                            
-                error: { (fault: Fault?) -> Void in
-                    print("User failed to log out: \(fault)")
-                    error((fault?.message)!)
-                })
-            
-        } else {
-            
-            print("User is already logged out!");
-            completion()
-        }
-    }
-	
-
 }

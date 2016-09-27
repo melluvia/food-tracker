@@ -4,26 +4,18 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Your Meals-->
         <scene sceneID="5aI-H9-wYb">
             <objects>
-                <tableViewController id="8yj-1U-KYg" customClass="MealTableViewController" customModule="food_tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="mealNavController" id="8yj-1U-KYg" customClass="MealTableViewController" customModule="food_tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="MRF-vG-MS3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fWY-dz-mSc">
-                            <rect key="frame" x="0.0" y="182" width="375" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <state key="normal" title="Log Out"/>
-                            <connections>
-                                <segue destination="wLa-aO-8YV" kind="show" identifier="gotoLoginFromMeals" id="I8u-Ev-ES7"/>
-                            </connections>
-                        </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="90" id="kjQ-c0-U9U" customClass="MealTableViewCell" customModule="food_tracker" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="90"/>
@@ -32,23 +24,39 @@
                                     <frame key="frameInset" width="375" height="89"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="V5P-nb-unr" userLabel="Photo Image View">
-                                            <frame key="frameInset" width="89" height="89"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="V5P-nb-unr" userLabel="Photo Image View">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="89" id="B7H-ZL-MNV"/>
+                                                <constraint firstAttribute="width" constant="89" id="ptE-sS-A5i"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8QF-IF-Wns">
-                                            <frame key="frameInset" minX="97" minY="8" width="309" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8QF-IF-Wns">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="309" id="2W2-LP-7B1"/>
+                                                <constraint firstAttribute="height" constant="21" id="Dqn-UE-dK7"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qap-i3-Gk3" customClass="RatingControl" customModule="food_tracker" customModuleProvider="target">
-                                            <frame key="frameInset" minX="97" minY="37" width="240" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qap-i3-Gk3" customClass="RatingControl" customModule="food_tracker" customModuleProvider="target">
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="UH1-hB-37y"/>
+                                                <constraint firstAttribute="width" constant="240" id="voV-Qb-OsP"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Qap-i3-Gk3" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="2P7-h5-6pE"/>
+                                        <constraint firstItem="Qap-i3-Gk3" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="AM4-Mg-b7x"/>
+                                        <constraint firstAttribute="bottom" secondItem="V5P-nb-unr" secondAttribute="bottom" id="j91-ee-91m"/>
+                                        <constraint firstItem="Qap-i3-Gk3" firstAttribute="top" secondItem="8QF-IF-Wns" secondAttribute="bottom" constant="8" id="ph7-Qg-j5l"/>
+                                        <constraint firstItem="V5P-nb-unr" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="piJ-3X-fKw"/>
+                                        <constraint firstItem="V5P-nb-unr" firstAttribute="leading" secondItem="esn-pb-Ci0" secondAttribute="leading" id="poZ-4a-nc6"/>
+                                        <constraint firstItem="8QF-IF-Wns" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="yBh-jw-gbb"/>
+                                        <constraint firstItem="Qap-i3-Gk3" firstAttribute="bottom" secondItem="esn-pb-Ci0" secondAttribute="bottomMargin" id="yP4-tb-PI7"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="nameLabel" destination="8QF-IF-Wns" id="VE7-eU-Qir"/>
@@ -77,7 +85,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0op-lb-LXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1586" y="116"/>
+            <point key="canvasLocation" x="-17" y="374"/>
         </scene>
         <!--New Meal-->
         <scene sceneID="tne-QT-ifu">
@@ -165,7 +173,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2018" y="881"/>
+            <point key="canvasLocation" x="769" y="875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P20-2N-2aO">
@@ -183,11 +191,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Lg-56-pSK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="809" y="116"/>
+            <point key="canvasLocation" x="-753" y="374"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4nQ-al-Rho">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9aj-XL-Skm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EJD-nR-RBM" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PAg-Jx-bzh">
@@ -199,84 +208,13 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ZL4-tA-ihH"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9aj-XL-Skm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1159" y="881"/>
-        </scene>
-        <!--Menu View Controller-->
-        <scene sceneID="05g-Nk-i5F">
-            <objects>
-                <viewController storyboardIdentifier="menuVC" id="rhk-N4-QZN" customClass="MenuViewController" customModule="food_tracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="efJ-lx-6Tf"/>
-                        <viewControllerLayoutGuide type="bottom" id="wMJ-04-qEu"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="NBS-fW-Tig">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DJ1-R3-t2p">
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Jc-gc-BfK">
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Create Comment"/>
-                                        <connections>
-                                            <action selector="createCommentBtn:" destination="rhk-N4-QZN" eventType="touchUpInside" id="qWX-C6-Xxy"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UyL-jb-bWH">
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Find All Comments"/>
-                                        <connections>
-                                            <action selector="findAllCommentsBtn:" destination="rhk-N4-QZN" eventType="touchUpInside" id="QFj-iF-e2t"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTU-WJ-Te2">
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Query Some Comments"/>
-                                        <connections>
-                                            <action selector="querySomeCommentsBtn:" destination="rhk-N4-QZN" eventType="touchUpInside" id="3yS-vm-CcE"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zFC-Cd-Q0U">
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="UCo-8o-ePc"/>
-                                        </constraints>
-                                        <state key="normal" title="Query &amp; Update Comments"/>
-                                        <connections>
-                                            <action selector="queryAndUpdateCommentsBtn:" destination="rhk-N4-QZN" eventType="touchUpInside" id="pvb-OC-0zZ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLw-cA-YoB">
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Remove All Comments"/>
-                                        <connections>
-                                            <action selector="removeAllCommentsBtn:" destination="rhk-N4-QZN" eventType="touchUpInside" id="MiM-d9-Twp"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jmu-gz-nqD">
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Log Out"/>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="DJ1-R3-t2p" firstAttribute="top" secondItem="efJ-lx-6Tf" secondAttribute="bottom" constant="20" id="KPK-kx-nSY"/>
-                            <constraint firstItem="DJ1-R3-t2p" firstAttribute="centerX" secondItem="NBS-fW-Tig" secondAttribute="centerX" id="Tjf-yG-Y9n"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="duI-Cu-2N1" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-187" y="-443"/>
+            <point key="canvasLocation" x="770" y="150"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="yRQ-cZ-ygW">
             <objects>
-                <viewController id="wLa-aO-8YV" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController id="wLa-aO-8YV" customClass="LoginViewController" customModule="food_tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Veu-Ch-cAZ"/>
                         <viewControllerLayoutGuide type="bottom" id="0tw-BM-MGM"/>
@@ -322,7 +260,7 @@
                                 </constraints>
                                 <state key="normal" title="Create a New Account"/>
                                 <connections>
-                                    <segue destination="3Zu-8Q-6nz" kind="presentation" identifier="gotoRegisterFromLogin" id="lgY-ru-F6t"/>
+                                    <segue destination="3Zu-8Q-6nz" kind="presentation" identifier="" id="lgY-ru-F6t"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lB7-Gk-BgS"/>
@@ -346,7 +284,7 @@
                         <outlet property="loginBtn" destination="2FC-Kt-D7C" id="1rK-P8-YXT"/>
                         <outlet property="passwordTextField" destination="EIy-Au-byO" id="Xca-tl-21s"/>
                         <outlet property="spinner" destination="lB7-Gk-BgS" id="8tU-o6-R2e"/>
-                        <segue destination="EzF-vf-7SE" kind="show" identifier="gotoMealsFromLogin" id="Av5-fB-9fV"/>
+                        <segue destination="EzF-vf-7SE" kind="show" identifier="gotoMenuFromLogin" id="Av5-fB-9fV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CMJ-Ii-PTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -440,12 +378,12 @@
                         <outlet property="passwordTextField" destination="ghP-pC-Vzu" id="8Kj-Xe-ow0"/>
                         <outlet property="registerBtn" destination="O8Y-5P-9Jq" id="cUJ-cq-ZCY"/>
                         <outlet property="spinner" destination="s3m-Fd-ieE" id="NfZ-I5-VIM"/>
-                        <segue destination="EzF-vf-7SE" kind="show" identifier="gotoMealsFromRegister" id="2m5-1t-NAp"/>
+                        <segue destination="EzF-vf-7SE" kind="show" identifier="gotoMenuFromRegister" id="2m5-1t-NAp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zlh-2g-xs4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-758" y="389"/>
+            <point key="canvasLocation" x="-1543" y="752"/>
         </scene>
     </scenes>
     <resources>

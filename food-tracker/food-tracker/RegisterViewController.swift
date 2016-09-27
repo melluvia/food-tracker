@@ -35,24 +35,62 @@ class RegisterViewController: UIViewController {
         }
     }
     
+    
+    func registerUser(email: String, password: String, completion: @escaping () -> (), error: @escaping (String) -> ()) {
+    
+        let user: BackendlessUser = BackendlessUser()
+        user.email = email as NSString!
+        user.password = password as NSString!
+        
+        backendless.userService.registering( user,
+                                              
+            response: { (user: BackendlessUser?) -> Void in
+            
+                print("User was registered: \(user?.objectId)")
+                completion()
+            },
+          
+            error: { (fault: Fault?) -> Void in
+                print("User failed to register: \(fault)")
+                error((fault?.message)!)
+            }
+        )
+    }
+    
+    func loginUser(email: String, password: String, completion: @escaping () -> (), error: @escaping (String) -> ()) {
+        
+        backendless.userService.login( email, password: password,
+                                        
+            response: { (user: BackendlessUser?) -> Void in
+                print("User logged in: \(user!.objectId)")
+                completion()
+            },
+            
+            error: { (fault: Fault?) -> Void in
+                print("User failed to login: \(fault)")
+                error((fault?.message)!)
+            })
+    }
+    
+
     @IBAction func register(_ sender: UIButton) {
-		
-		if !Utility.isValidEmail(emailAddress: emailTextField.text!) {
-			Utility.showAlert(viewController: self, title: "Registration Error", message: "Please enter a valid email address.")
-			return
-		}
-		
+        
+        if !Utility.isValidEmail(emailAddress: emailTextField.text!) {
+            Utility.showAlert(viewController: self, title: "Registration Error", message: "Please enter a valid email address.")
+            return
+        }
+
         if passwordTextField.text != passwordConfirmTextField.text {
             Utility.showAlert(viewController: self, title: "Registration Error", message: "Password confirmation failed. Plase enter your password try again.")
             return
         }
-
+        
         spinner.startAnimating()
         
         let email = emailTextField.text!
         let password = passwordTextField.text!
         
-        BackendlessManager.sharedInstance.registerTestUser(email: email, password: password,
+        BackendlessManager.sharedInstance.registerUser(email: email, password: password,
             completion: {
                 
                 BackendlessManager.sharedInstance.loginUser(email: email, password: password,
@@ -79,6 +117,30 @@ class RegisterViewController: UIViewController {
             })
     }
 
+    func logoutUser(completion: @escaping () -> (), error: @escaping (String) -> ()) {
+        
+        // First, check if the user is actually logged in.
+        if BackendlessManager.sharedInstance.isUserLoggedIn() {
+            
+            // If they are currently logged in - go ahead and log them out!
+            
+            backendless.userService.logout( { (user: Any!) -> Void in
+                print("User logged out!")
+                completion()
+                },
+                                            
+                                            error: { (fault: Fault?) -> Void in
+                                                print("User failed to log out: \(fault)")
+                                                error((fault?.message)!)
+            })
+            
+        } else {
+            
+            print("User is already logged out!");
+            completion()
+        }
+    }
+    
     @IBAction func cancel(_ sender: UIButton) {
         
         spinner.stopAnimating()

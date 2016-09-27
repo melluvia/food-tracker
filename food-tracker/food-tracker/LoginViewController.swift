@@ -8,82 +8,63 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var passwordConfirmTextField: UITextField!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var registerBtn: UIButton!
-    
-    let backendless = Backendless.sharedInstance()!
+    @IBOutlet weak var loginBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         emailTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
         passwordTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
-        passwordConfirmTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
-    }
-
-    func textFieldChanged(textField: UITextField) {
         
-        if emailTextField.text == "" || passwordTextField.text == "" || passwordConfirmTextField.text == "" {
-            registerBtn.isEnabled = false
-        } else {
-            registerBtn.isEnabled = true
+        Utility.delayTask(seconds: 2) {
+            
+            if BackendlessManager.sharedInstance.APP_ID == "<replace-with-your-app-id>" ||
+                BackendlessManager.sharedInstance.SECRET_KEY == "<replace-with-your-secret-key>" {
+                
+                Utility.showAlert(viewController: self, title: "Backendless Error", message: "To use this sample you must register with Backendless, create an app, and replace the APP_ID and SECRET_KEY in this sample's BackendlessManager class with the values from your app's settings.")
+            }
         }
     }
     
-    @IBAction func register(_ sender: UIButton) {
-		
-		if !Utility.isValidEmail(emailAddress: emailTextField.text!) {
-			Utility.showAlert(viewController: self, title: "Registration Error", message: "Please enter a valid email address.")
-			return
-		}
-		
-        if passwordTextField.text != passwordConfirmTextField.text {
-            Utility.showAlert(viewController: self, title: "Registration Error", message: "Password confirmation failed. Plase enter your password try again.")
+    func textFieldChanged(textField: UITextField) {
+        
+        if emailTextField.text == "" || passwordTextField.text == "" {
+            loginBtn.isEnabled = false
+        } else {
+            loginBtn.isEnabled = true
+        }
+    }
+    
+    @IBAction func login(_ sender: UIButton) {
+        
+        if !Utility.isValidEmail(emailAddress: emailTextField.text!) {
+            Utility.showAlert(viewController: self, title: "Login Error", message: "Please enter a valid email address.")
             return
         }
 
         spinner.startAnimating()
-        
+
         let email = emailTextField.text!
         let password = passwordTextField.text!
         
-        BackendlessManager.sharedInstance.registerUser(email: email, password: password,
+        BackendlessManager.sharedInstance.loginUser(email: email, password: password,
             completion: {
+            
+                self.spinner.stopAnimating()
                 
-                BackendlessManager.sharedInstance.loginUser(email: email, password: password,
-                    completion: {
-                    
-                        self.spinner.stopAnimating()
-                        
-                        self.performSegue(withIdentifier: "gotoMenuFromRegister", sender: sender)
-                    },
-                    
-                    error: { message in
-                        
-                        self.spinner.stopAnimating()
-                        
-                        Utility.showAlert(viewController: self, title: "Login Error", message: message)
-                    })
+                self.performSegue(withIdentifier: "gotoMenuFromLogin", sender: sender)
             },
             
             error: { message in
                 
                 self.spinner.stopAnimating()
                 
-                Utility.showAlert(viewController: self, title: "Register Error", message: message)
+                Utility.showAlert(viewController: self, title: "Login Error", message: message)
             })
     }
-
-    @IBAction func cancel(_ sender: UIButton) {
-        
-        spinner.stopAnimating()
-        
-        dismiss(animated: true, completion: nil)
-    }
 }
-
