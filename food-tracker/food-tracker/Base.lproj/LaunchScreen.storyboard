@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,12 +18,62 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch-screen-bg" translatesAutoresizingMaskIntoConstraints="NO" id="cQl-eo-iqe"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-cluster-1" translatesAutoresizingMaskIntoConstraints="NO" id="EoR-V3-hlu">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="9Hi-Zy-vo2"/>
+                                    <constraint firstAttribute="height" constant="65" id="U1A-VP-YBL"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-cluster-2" translatesAutoresizingMaskIntoConstraints="NO" id="09J-Zu-WrQ">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="76" id="Q3C-Fj-hPE"/>
+                                    <constraint firstAttribute="height" constant="57" id="SgE-dA-f1F"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dish-rate-branding" translatesAutoresizingMaskIntoConstraints="NO" id="PmD-KC-KOd">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="265" id="Y00-C3-CBi"/>
+                                    <constraint firstAttribute="height" constant="49" id="bgC-Qc-dNo"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your favorite dishes remembered" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y48-Ub-yab">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="228" id="WVa-Qn-xVr"/>
+                                    <constraint firstAttribute="height" constant="21" id="apk-TH-t5f"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="cQl-eo-iqe" secondAttribute="bottom" id="18h-yj-ABH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EoR-V3-hlu" secondAttribute="trailing" constant="9" id="AtP-Ym-A3m"/>
+                            <constraint firstItem="09J-Zu-WrQ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="DdE-Rb-bYT"/>
+                            <constraint firstItem="PmD-KC-KOd" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="109" id="Iv1-o5-KqE"/>
+                            <constraint firstItem="09J-Zu-WrQ" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="82" id="KcF-dp-oWW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Y48-Ub-yab" secondAttribute="trailing" constant="58" id="VEl-Wb-EB3"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Y48-Ub-yab" secondAttribute="bottom" constant="20" id="bkC-z1-d7L"/>
+                            <constraint firstItem="cQl-eo-iqe" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="eqz-gF-lkq"/>
+                            <constraint firstItem="PmD-KC-KOd" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="39" id="et8-EQ-Lyw"/>
+                            <constraint firstItem="EoR-V3-hlu" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="74" id="gFn-NU-Znf"/>
+                            <constraint firstAttribute="trailing" secondItem="cQl-eo-iqe" secondAttribute="trailing" id="o28-CH-etU"/>
+                            <constraint firstItem="cQl-eo-iqe" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="tJr-oB-qYg"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="dish-rate-branding" width="347" height="71"/>
+        <image name="launch-screen-bg" width="414" height="736"/>
+        <image name="star-cluster-1" width="110" height="91"/>
+        <image name="star-cluster-2" width="94" height="68"/>
+    </resources>
 </document>
