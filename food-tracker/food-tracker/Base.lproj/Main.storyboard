@@ -44,7 +44,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ax3-5i-mJN">
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ax3-5i-mJN" userLabel="spinner">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="XxJ-if-cwi"/>
                                                 <constraint firstAttribute="height" constant="20" id="ySi-aG-fFc"/>
@@ -64,6 +64,7 @@
                                     <outlet property="nameLabel" destination="8QF-IF-Wns" id="VE7-eU-Qir"/>
                                     <outlet property="photoImageView" destination="V5P-nb-unr" id="pxS-U7-0QK"/>
                                     <outlet property="ratingControl" destination="Qap-i3-Gk3" id="NFU-9Q-npr"/>
+                                    <outlet property="spinner" destination="ax3-5i-mJN" id="ryA-OT-hez"/>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="V4i-3B-om2"/>
                                 </connections>
                             </tableViewCell>
