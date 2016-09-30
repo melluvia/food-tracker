@@ -125,9 +125,9 @@ class MenuViewController: UIViewController {
 							} else {
 								print("No Comments were fetched using the whereClause '\(dataQuery.whereClause)'")
 							}
-			},
+						},
 		                 
-		                 error: { ( fault: Fault?) -> Void in
+				error: { ( fault: Fault?) -> Void in
 							print("Comments were not fetched: \(fault)")
 			}
 		)
@@ -167,15 +167,16 @@ class MenuViewController: UIViewController {
 									
 									self.backendless.data.save( comment,
 									                            
-									                            response: { (entity: Any?) -> Void in
+										response: { (entity: Any?) -> Void in
 																	
-																	let comment = entity as! Comment
+											let comment = entity as! Comment
 																	
-																	print("Comment was updated: \(comment.objectId!), topicId: \(comment.topicId), message: \"\(comment.message!)\"")
+											print("Comment was updated: \(comment.objectId!), topicId: \(comment.topicId), message: \"\(comment.message!)\"")
 										},
 									                            
-									                            error: { (fault: Fault?) -> Void in
-																	print("Comment failed to save: \(fault)")
+											error: { (fault: Fault?) -> Void in
+												
+											print("Comment failed to save: \(fault)")
 										}
 									)
 								}

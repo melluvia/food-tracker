@@ -16,6 +16,8 @@ class MealTableViewController: UITableViewController {
 	
 	let backendless = Backendless.sharedInstance()!
 	
+
+	
 	// Create cache that uses NSString keys to point to UIImages.
 	var imageCache = NSCache<NSString, UIImage>()
 	
@@ -32,6 +34,12 @@ class MealTableViewController: UITableViewController {
 			BackendlessManager.sharedInstance.loadMeals { mealData in
 				
 				self.meals += mealData
+				
+				self.meals.sort {
+					
+                       $0.rating > $1.rating
+				}
+                   
 				self.tableView.reloadData()
 			}
 			
