@@ -11,7 +11,7 @@
         <scene sceneID="5aI-H9-wYb">
             <objects>
                 <tableViewController id="8yj-1U-KYg" customClass="MealTableViewController" customModule="food_tracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="MRF-vG-MS3">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="MRF-vG-MS3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -73,9 +73,7 @@
                             <outlet property="delegate" destination="8yj-1U-KYg" id="rOO-Pg-y9a"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="PR3-br-uDS"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="FJ5-Is-Fy2">
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" image="edit-symbol" id="GkF-b8-RyU">
@@ -169,9 +167,7 @@
                                     <constraint firstAttribute="bottom" secondItem="3S3-1c-5TM" secondAttribute="bottom" id="tv2-Tu-euP"/>
                                 </constraints>
                             </scrollView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zpA-5m-LrH">
-                                <frame key="frameInset" minX="169" minY="315" width="37" height="37"/>
-                            </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zpA-5m-LrH"/>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -180,6 +176,7 @@
                             <constraint firstAttribute="bottom" secondItem="xfL-0O-dyb" secondAttribute="bottom" id="6G8-ym-Xz7"/>
                             <constraint firstAttribute="trailing" secondItem="wG0-yL-wli" secondAttribute="trailing" id="GhC-Xu-Vdq"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S3e-D8-e17"/>
+                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SXZ-fS-DeR"/>
                             <constraint firstItem="zpA-5m-LrH" firstAttribute="centerY" secondItem="xfL-0O-dyb" secondAttribute="centerY" id="ZH5-NB-glP"/>
                             <constraint firstItem="xfL-0O-dyb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aKF-kQ-NZ1"/>
                             <constraint firstAttribute="bottom" secondItem="wG0-yL-wli" secondAttribute="bottom" constant="-80" id="bXE-ul-OCM"/>
@@ -226,11 +223,16 @@
             <objects>
                 <navigationController storyboardIdentifier="mealNavController" automaticallyAdjustsScrollViewInsets="NO" id="EzF-vf-7SE" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="zkN-bk-WKD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="KSx-N4-MGe">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="8yj-1U-KYg" kind="relationship" relationship="rootViewController" id="r0b-bS-I9W"/>
                     </connections>

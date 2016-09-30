@@ -17,6 +17,10 @@ class MealTableViewController: UITableViewController {
 	let backendless = Backendless.sharedInstance()!
 	
 
+	func onEditBtn(sender: UIBarButtonItem) {
+		
+		self.tableView.isEditing = !self.tableView.isEditing
+	}
 	
 	// Create cache that uses NSString keys to point to UIImages.
 	var imageCache = NSCache<NSString, UIImage>()
@@ -26,14 +30,26 @@ class MealTableViewController: UITableViewController {
 		
 		imageCache.countLimit = 50 // sets cache limit to 50 images.
 		
-		// Use the edit button item provided by the table view controller.
-		navigationItem.leftBarButtonItem = editButtonItem
+	// set image on bar button item
 		
+		let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+		
+		let leftBarButtonItem = UIBarButtonItem(image: img,
+		                                        style: UIBarButtonItemStyle.plain,
+		                                        target: self,
+		                                        action: #selector(onEditBtn(sender:)))
+			
+			
+		self.navigationItem.leftBarButtonItem = leftBarButtonItem
+		
+
 		if BackendlessManager.sharedInstance.isUserLoggedIn() {
 			
 			BackendlessManager.sharedInstance.loadMeals { mealData in
 				
 				self.meals += mealData
+				
+				//sort the meals from highest to lowest rating
 				
 				self.meals.sort {
 					
@@ -300,7 +316,7 @@ class MealTableViewController: UITableViewController {
 	
 	// MARK: Logout Button
 	
-	@IBAction func logoutBtn(_ sender: UIButton) {
+	@IBAction func logoutBtn(_ sender: UIBarButtonItem) {
 		
 		print( "logoutBtn called!" )
 		
