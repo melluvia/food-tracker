@@ -117,7 +117,7 @@ class MealTableViewController: UITableViewController {
 						// retrieved data- using it to create a UIImage for our cell's ui imageview.
 						if let image = UIImage(data: data) {
 						
-							cell.photoImageView.image = meal.photo
+							cell.photoImageView.image = image
 							
 							// cache the pulled down UIImage using the URL as the key.
 							self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
