@@ -29,7 +29,14 @@ class MealTableViewController: UITableViewController {
 		super.viewDidLoad()
 		
 		imageCache.countLimit = 50 // sets cache limit to 50 images.
-		
+	// show toolbar
+//		let image = UIImage(named: "logout")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+//		
+//		let toolBarButtonItem = UIBarButtonItem(image: image,
+//		                                        style: UIBarButtonItemStyle.plain,
+//		                                        target: self,
+//		                                        action: #selector(on(sender:)))
+//		
 	// set image on bar button item
 		
 		let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
