@@ -198,6 +198,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0hd-kv-KXN"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="20y-Us-zO5"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2eC-aq-nFg"/>
                             <constraint firstItem="xfL-0O-dyb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="41l-Ec-vvn"/>
@@ -233,6 +234,7 @@
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="nameTextField" destination="JVV-pV-lvV" id="zGD-iL-b8w"/>
+                        <outlet property="notesField" destination="3S3-1c-5TM" id="pIN-qO-7Kw"/>
                         <outlet property="photoImageView" destination="VXP-mk-If4" id="1WG-cR-3jX"/>
                         <outlet property="ratingControl" destination="ICG-oO-6LN" id="yYU-xu-Ioj"/>
                         <outlet property="saveButton" destination="H54-sf-MR9" id="Q9e-02-Nox"/>
@@ -489,9 +491,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s3m-Fd-ieE">
-                                        <frame key="frameInset" minX="112" minY="192" width="37"/>
-                                    </activityIndicatorView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s3m-Fd-ieE"/>
                                     <button contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8Y-5P-9Jq">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="2rI-Up-oDu"/>
@@ -575,7 +575,7 @@
         <image name="sign-in-btn" width="320" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Av5-fB-9fV"/>
+        <segue reference="2m5-1t-NAp"/>
         <segue reference="lgY-ru-F6t"/>
         <segue reference="V4i-3B-om2"/>
     </inferredMetricsTieBreakers>

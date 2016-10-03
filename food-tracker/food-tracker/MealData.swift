@@ -14,6 +14,7 @@ class MealData: NSObject, NSCoding {
 	
 	var name: String
 	var rating: Int
+	var note: String?
 	
 	// MARK: Archiver Only Properties
 	
@@ -39,16 +40,18 @@ class MealData: NSObject, NSCoding {
 		static let nameKey = "name"
 		static let photoKey = "photo"
 		static let ratingKey = "rating"
+		static let noteKey = "note"
 	}
 	
 //	 MARK: Initialization
  
-	init?(name: String, photo: UIImage?, rating: Int) {
+	init?(name: String, photo: UIImage?, rating: Int, note: String) {
 		
 		// Initialize stored properties.
 		self.name = name
 		self.photo = photo
 		self.rating = rating
+		self.note = note
 		
 		super.init()
 		
@@ -65,6 +68,7 @@ class MealData: NSObject, NSCoding {
 		aCoder.encode(name, forKey: PropertyKey.nameKey)
 		aCoder.encode(photo, forKey: PropertyKey.photoKey)
 		aCoder.encode(rating, forKey: PropertyKey.ratingKey)
+		aCoder.encode(note, forKey: PropertyKey.noteKey)
 	}
 	
 	required convenience init?(coder aDecoder: NSCoder) {
@@ -76,7 +80,9 @@ class MealData: NSObject, NSCoding {
 		
 		let rating = aDecoder.decodeInteger(forKey: PropertyKey.ratingKey)
 		
+		let note = aDecoder.decodeObject(forKey: PropertyKey.noteKey) as! String
+		
 		// Must call designated initializer.
-		self.init(name: name, photo: photo, rating: rating)
+		self.init(name: name, photo: photo, rating: rating, note: note)
 	}
 }

@@ -125,6 +125,7 @@ class BackendlessManager {
 		newMeal.name = "Test Meal #1"
 		newMeal.photoUrl = "https://guildsa.org/wp-content/uploads/2016/09/meal1.png"
 		newMeal.rating = 5
+		newMeal.note = "Test Note"
 		
 		backendless.data.save( newMeal,
 		                       
@@ -132,7 +133,7 @@ class BackendlessManager {
 			
 				let meal = entity as! Meal
 			
-				print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+				print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
 			},
 				   
 			error: { (fault: Fault?) -> Void in
@@ -156,7 +157,7 @@ class BackendlessManager {
 					
 					let meal = meal as! Meal
 					
-					print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+					print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
 				}
 			},
 			
@@ -231,7 +232,8 @@ class BackendlessManager {
             let mealToSave = Meal()
             mealToSave.name = mealData.name
             mealToSave.rating = mealData.rating
-            
+            mealToSave.note = mealData.note
+			
             savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
                                                        
                completion: {
@@ -291,6 +293,7 @@ class BackendlessManager {
                             
                             // Update the Meal with the new data.
                             meal.name = mealData.name
+							meal.note = mealData.note
                             meal.rating = mealData.rating
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
@@ -302,7 +305,7 @@ class BackendlessManager {
                                     
                                     let meal = entity as! Meal
                                     
-                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
                                     
                                     // Update the mealData used by the UI with the new URLS!
                                     mealData.photoUrl = meal.photoUrl
@@ -360,6 +363,7 @@ class BackendlessManager {
                             
                             // Update the Meal with the new data.
                             meal.name = mealData.name
+							meal.note = mealData.note
                             meal.rating = mealData.rating
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
@@ -371,7 +375,7 @@ class BackendlessManager {
                                     
                                     let meal = entity as! Meal
                                     
-                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\" note: \"\(meal.note)\"")
                                     
                                     // Update the mealData used by the UI with the new URLS!
                                     mealData.photoUrl = meal.photoUrl
@@ -419,6 +423,7 @@ class BackendlessManager {
                     // Update the Meal with the new data
                     meal.name = mealData.name
                     meal.rating = mealData.rating
+					meal.note = mealData.note
                     
                     // Save the updated Meal.
                     self.backendless.data.save( meal,
@@ -427,7 +432,7 @@ class BackendlessManager {
                             
                             let meal = entity as! Meal
                             
-                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
                             
                             completion()
                         },
@@ -467,15 +472,16 @@ class BackendlessManager {
                     
                     let meal = meal as! Meal
                     
-                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
                     
-                    let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating)
-                    
+					let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "))
+					
                     if let newMealData = newMealData {
                         
                         newMealData.objectId = meal.objectId
                         newMealData.photoUrl = meal.photoUrl
                         newMealData.thumbnailUrl = meal.thumbnailUrl
+						newMealData.note = meal.note
                         
                         mealData.append(newMealData)
                     }

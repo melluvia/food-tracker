@@ -17,6 +17,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	@IBOutlet weak var ratingControl: RatingControl!
 	@IBOutlet weak var saveButton: UIBarButtonItem!
 	@IBOutlet weak var saveSpinner: UIActivityIndicatorView!
+	@IBOutlet weak var notesField: UITextView!
 
 	/*
 	This value is either passed by `MealTableViewController` in `prepareForSegue(_:sender:)`
@@ -42,6 +43,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             }
             
             ratingControl.rating = meal.rating
+			notesField.text = meal.note
         }
         
         // Enable the Save button only if the text field has a valid Meal name.
@@ -109,19 +111,21 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		let name = nameTextField.text ?? ""
 		let rating = ratingControl.rating
 		let photo = photoImageView.image
+		let note = notesField.text ?? ""
 		
 		saveSpinner.isHidden = false
 		saveSpinner.startAnimating()
 		
 		if meal == nil {
 			
-			meal = MealData(name: name, photo: photo, rating: rating)
+			meal = MealData(name: name, photo: photo, rating: rating, note: note)
 			
 		} else {
 			
 			meal?.name = name
 			meal?.photo = photo
 			meal?.rating = rating
+			meal?.note = note
 		}
 		
 		if BackendlessManager.sharedInstance.isUserLoggedIn() {

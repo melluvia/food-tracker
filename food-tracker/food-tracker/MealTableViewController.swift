@@ -80,19 +80,19 @@ class MealTableViewController: UITableViewController {
 		}
 	}
 	
-	func loadSampleMeals() {
-		
-		let photo1 = UIImage(named: "meal1")!
-		let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4)!
-		
-		let photo2 = UIImage(named: "meal2")!
-		let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5)!
-		
-		let photo3 = UIImage(named: "meal3")!
-		let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3)!
-		
-		meals += [meal1, meal2, meal3]
-	}
+//	func loadSampleMeals() {
+//		
+//		let photo1 = UIImage(named: "meal1")!
+//		let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4)!
+//		
+//		let photo2 = UIImage(named: "meal2")!
+//		let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5)!
+//		
+//		let photo3 = UIImage(named: "meal3")!
+//		let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3)!
+//		
+//		meals += [meal1, meal2, meal3]
+//	}
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -323,9 +323,28 @@ class MealTableViewController: UITableViewController {
 	
 	// MARK: Logout Button
 	
+//	var refreshAlert = UIAlertController(title: "Refresh", message: "All data will be lost.", preferredStyle: UIAlertControllerStyle.Alert)
+//	
+//	refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+//	print("Handle Ok logic here")
+//	}))
+//	
+//	refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
+//	print("Handle Cancel Logic here")
+//	}))
+//	
+//	presentViewController(refreshAlert, animated: true, completion: nil)
 	@IBAction func logoutBtn(_ sender: UIBarButtonItem) {
 		
-		print( "logoutBtn called!" )
+		let alert = UIAlertController(title: "Logout", message: "logout now?", preferredStyle: UIAlertControllerStyle.alert)
+		
+		alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+			print("Handle Ok logic here")
+		}))
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+			print("Handle Ok logic here")
+		}))
 		
 		BackendlessManager.sharedInstance.logoutUser(
 			
@@ -336,6 +355,12 @@ class MealTableViewController: UITableViewController {
 			error: { message in
 				print("User failed to log out: \(message)")
 		})
+
+		self.present(alert, animated: true, completion: nil)
+		
+		print( "logoutBtn called!" )
+		
+
 	}
-	
+
 }
