@@ -339,22 +339,30 @@ class MealTableViewController: UITableViewController {
 		let alert = UIAlertController(title: "Logout", message: "logout now?", preferredStyle: UIAlertControllerStyle.alert)
 		
 		alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-			print("Handle Ok logic here")
+			BackendlessManager.sharedInstance.logoutUser(
+				
+				completion: {
+					self.performSegue(withIdentifier: "gotoLoginFromMenu", sender: sender)
+				},
+				
+				error: { message in
+					print("User failed to log out: \(message)")
+			})
 		}))
 		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
 			print("Handle Ok logic here")
 		}))
 		
-		BackendlessManager.sharedInstance.logoutUser(
-			
-			completion: {
-				self.performSegue(withIdentifier: "gotoLoginFromMenu", sender: sender)
-			},
-			
-			error: { message in
-				print("User failed to log out: \(message)")
-		})
+//		BackendlessManager.sharedInstance.logoutUser(
+//			
+//			completion: {
+//				self.performSegue(withIdentifier: "gotoLoginFromMenu", sender: sender)
+//			},
+//			
+//			error: { message in
+//				print("User failed to log out: \(message)")
+//		})
 
 		self.present(alert, animated: true, completion: nil)
 		
