@@ -208,7 +208,7 @@
                             <constraint firstItem="zpA-5m-LrH" firstAttribute="centerX" secondItem="xfL-0O-dyb" secondAttribute="centerX" id="Ghw-FV-9VZ"/>
                             <constraint firstAttribute="trailing" secondItem="wG0-yL-wli" secondAttribute="trailing" id="M40-6v-YmX"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S3e-D8-e17"/>
-                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerY" secondItem="xfL-0O-dyb" secondAttribute="centerY" constant="-58.5" id="ZH5-NB-glP"/>
+                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerY" secondItem="xfL-0O-dyb" secondAttribute="centerY" constant="-96.5" id="ZH5-NB-glP"/>
                             <constraint firstItem="xfL-0O-dyb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aKF-kQ-NZ1"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eJQ-HP-4Wx"/>
                             <constraint firstAttribute="trailing" secondItem="wG0-yL-wli" secondAttribute="trailing" id="lRd-1l-1BF"/>
@@ -230,6 +230,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
@@ -345,9 +346,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lB7-Gk-BgS">
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lB7-Gk-BgS">
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="37" id="3Xn-9n-5ap"/>
                                             <constraint firstAttribute="width" constant="37" id="ql0-pG-pka"/>
                                         </constraints>
                                     </activityIndicatorView>
@@ -473,15 +473,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E6C-QL-A4Y">
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="014-CL-w8L"/>
-                                            <constraint firstAttribute="width" constant="260" id="Ito-hf-r4b"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                    </textField>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s3m-Fd-ieE"/>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Confirm Password" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="xyy-Rt-p2x">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="BME-n2-5V0"/>
@@ -491,7 +483,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s3m-Fd-ieE"/>
                                     <button contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8Y-5P-9Jq">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="2rI-Up-oDu"/>
@@ -508,14 +499,15 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="XmQ-HP-LlN"/>
                                     <constraint firstAttribute="width" constant="260" id="bgV-lK-7h3"/>
+                                    <constraint firstItem="s3m-Fd-ieE" firstAttribute="top" secondItem="ghP-pC-Vzu" secondAttribute="bottom" constant="13" id="slh-Sj-7MJ"/>
                                 </constraints>
                             </stackView>
                             <navigationBar contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="roZ-6G-ffG">
                                 <items>
                                     <navigationItem title="Register" id="rUO-27-ohn">
-                                        <barButtonItem key="leftBarButtonItem" id="n5D-gp-sLj">
+                                        <barButtonItem key="leftBarButtonItem" image="exit" id="n5D-gp-sLj">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RD8-HD-VTX">
-                                                <rect key="frame" x="16" y="7" width="34" height="30"/>
+                                                <rect key="frame" x="16" y="7" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="2CV-rd-9bb"/>
