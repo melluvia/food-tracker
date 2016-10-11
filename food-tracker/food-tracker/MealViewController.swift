@@ -65,6 +65,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		
 		if textField == notesView {
 			notesView.resignFirstResponder()
+			return true
 		}
 		
 		return true
@@ -244,17 +245,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         task.resume()
     }
 	
-//	// Method gets called when the keyboard return key pressed
-//	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//		print("textFieldShouldReturn")
-//		
-//		notesView.resignFirstResponder()
-//		
-//		return true
-//	}
-//	
-	//Make the text field move up upon keyboard popping up
-	
 	func registerForKeyboardNotifications() {
 		
 		//Adding notifies on keyboard appearing
@@ -271,42 +261,22 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	
 	func keyboardWasShown(notification: NSNotification) {
 		
-		//Need to calculate keyboard exact size due to Apple suggestions
-		self.scrollView.isScrollEnabled = true
-		let info : NSDictionary = notification.userInfo! as NSDictionary
-		let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-		let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+		// Find out how high the keyboard is on the device.
+		var userInfo = notification.userInfo!
+		var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+		keyboardFrame = self.view.convert(keyboardFrame, from: nil)
 		
-		self.scrollView.contentInset = contentInsets
-		self.scrollView.scrollIndicatorInsets = contentInsets
-		
-		var aRect : CGRect = self.view.frame
-		aRect.size.height -= keyboardSize!.height
-		if (notesView) != nil {
-			if (!aRect.contains(notesView!.frame.origin)) {
-				self.scrollView.scrollRectToVisible(notesView!.frame, animated: true)
-			}
-		}
+		// Pad the bottom of the contentInset by the keyboard's hieght.
+		// This will cause the scroll view to animate up if required.
+		var contentInset: UIEdgeInsets = self.scrollView.contentInset
+		contentInset.bottom = keyboardFrame.size.height
+		self.scrollView.contentInset = contentInset
 	}
 	
 	func keyboardWillBeHidden(notification: NSNotification) {
 		
-		//Once keyboard disappears, restore original positions
-		let info : NSDictionary = notification.userInfo! as NSDictionary
-		let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-		let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, -keyboardSize!.height, 0.0)
-		self.scrollView.contentInset = contentInsets
-		self.scrollView.scrollIndicatorInsets = contentInsets
-		self.view.endEditing(true)
-		self.scrollView.isScrollEnabled = false
-	}
-	
-	func textViewDidBeginEditing(_ textView: UITextView) {
-		//notesView = textView
-	}
-	
-	func textViewDidEndEditing(_ textView: UITextView) {
-		//notesView = nil
+		// Reset the scroll view back to where it was!
+		self.scrollView.contentInset = UIEdgeInsets.zero
 	}
 }
 
