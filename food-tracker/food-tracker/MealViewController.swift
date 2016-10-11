@@ -31,6 +31,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Handle the text field’s user input through delegate callbacks.
 		nameTextField.delegate = self
 		notesView.delegate = self
+		notesView.text = "Placeholder"
+		notesView.textColor = UIColor.lightGray
         // Set up views if editing an existing Meal.
         if let meal = meal {
             navigationItem.title = meal.name
@@ -277,6 +279,20 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		
 		// Reset the scroll view back to where it was!
 		self.scrollView.contentInset = UIEdgeInsets.zero
+	}
+	
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		if notesView.textColor == UIColor.lightGray {
+			notesView.text = nil
+			notesView.textColor = UIColor.black
+		}
+	}
+	
+	func textViewDidEndEditing(_ textView: UITextView) {
+		if notesView.text.isEmpty {
+			notesView.text = "Placeholder"
+			notesView.textColor = UIColor.lightGray
+		}
 	}
 }
 

@@ -46,18 +46,21 @@
                                                 <constraint firstAttribute="height" constant="37" id="dlT-fb-pow"/>
                                             </constraints>
                                         </view>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ax3-5i-mJN" userLabel="spinner">
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ax3-5i-mJN" userLabel="spinner">
                                             <frame key="frameInset" minX="34" minY="35.5" width="20" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="8QF-IF-Wns" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="3Yh-3s-ibq"/>
+                                        <constraint firstItem="8QF-IF-Wns" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="0AZ-dg-dYs"/>
                                         <constraint firstItem="V5P-nb-unr" firstAttribute="leading" secondItem="esn-pb-Ci0" secondAttribute="leading" id="Az4-aX-fAy"/>
-                                        <constraint firstAttribute="trailing" secondItem="Qap-i3-Gk3" secondAttribute="trailing" constant="8" id="JqP-eb-h7k"/>
                                         <constraint firstAttribute="bottom" secondItem="Qap-i3-Gk3" secondAttribute="bottom" id="MCo-zj-vQA"/>
                                         <constraint firstItem="V5P-nb-unr" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="OPO-El-YAE"/>
+                                        <constraint firstAttribute="trailing" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="8" id="QnB-Hv-ROk"/>
+                                        <constraint firstAttribute="bottom" secondItem="Qap-i3-Gk3" secondAttribute="bottom" id="e7T-Rg-sxH"/>
                                         <constraint firstAttribute="trailing" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="8" id="tBL-7g-i36"/>
+                                        <constraint firstItem="Qap-i3-Gk3" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="wLh-PL-mxI"/>
+                                        <constraint firstItem="8QF-IF-Wns" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="yN0-es-QpL"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -575,6 +578,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="2m5-1t-NAp"/>
         <segue reference="lgY-ru-F6t"/>
-        <segue reference="ZL4-tA-ihH"/>
+        <segue reference="V4i-3B-om2"/>
     </inferredMetricsTieBreakers>
 </document>
