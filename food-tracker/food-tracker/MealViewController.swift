@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
 	// MARK: Properties
 	
@@ -17,8 +17,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	@IBOutlet weak var ratingControl: RatingControl!
 	@IBOutlet weak var saveButton: UIBarButtonItem!
 	@IBOutlet weak var saveSpinner: UIActivityIndicatorView!
-	@IBOutlet weak var notesField: UITextView!
-
+	@IBOutlet weak var notesView: UITextView!
+	@IBOutlet weak var scrollView: UIScrollView!
 	/*
 	This value is either passed by `MealTableViewController` in `prepareForSegue(_:sender:)`
 	or constructed as part of adding a new meal.
@@ -30,7 +30,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	
 		// Handle the text field’s user input through delegate callbacks.
 		nameTextField.delegate = self
-		
+		notesView.delegate = self
         // Set up views if editing an existing Meal.
         if let meal = meal {
             navigationItem.title = meal.name
@@ -43,11 +43,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             }
             
             ratingControl.rating = meal.rating
-			notesField.text = meal.note
+			notesView.text = meal.note
         }
         
         // Enable the Save button only if the text field has a valid Meal name.
         checkValidMealName()
+		
+		registerForKeyboardNotifications()
     }
 	
 	override func didReceiveMemoryWarning() {
@@ -59,7 +61,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		// Hide the keyboard.
-		textField.resignFirstResponder()
+		//textField.resignFirstResponder()
+		
+		if textField == notesView {
+			notesView.resignFirstResponder()
+		}
+		
 		return true
 	}
 	
@@ -111,7 +118,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		let name = nameTextField.text ?? ""
 		let rating = ratingControl.rating
 		let photo = photoImageView.image
-		let note = notesField.text ?? ""
+		let note = notesView.text ?? ""
 		
 		saveSpinner.isHidden = false
 		saveSpinner.startAnimating()
@@ -236,5 +243,70 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         task.resume()
     }
+	
+//	// Method gets called when the keyboard return key pressed
+//	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//		print("textFieldShouldReturn")
+//		
+//		notesView.resignFirstResponder()
+//		
+//		return true
+//	}
+//	
+	//Make the text field move up upon keyboard popping up
+	
+	func registerForKeyboardNotifications() {
+		
+		//Adding notifies on keyboard appearing
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+	}
+	
+	func deregisterFromKeyboardNotifications() {
+		
+		//Removing notifies on keyboard appearing
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+	}
+	
+	func keyboardWasShown(notification: NSNotification) {
+		
+		//Need to calculate keyboard exact size due to Apple suggestions
+		self.scrollView.isScrollEnabled = true
+		let info : NSDictionary = notification.userInfo! as NSDictionary
+		let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+		let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+		
+		self.scrollView.contentInset = contentInsets
+		self.scrollView.scrollIndicatorInsets = contentInsets
+		
+		var aRect : CGRect = self.view.frame
+		aRect.size.height -= keyboardSize!.height
+		if (notesView) != nil {
+			if (!aRect.contains(notesView!.frame.origin)) {
+				self.scrollView.scrollRectToVisible(notesView!.frame, animated: true)
+			}
+		}
+	}
+	
+	func keyboardWillBeHidden(notification: NSNotification) {
+		
+		//Once keyboard disappears, restore original positions
+		let info : NSDictionary = notification.userInfo! as NSDictionary
+		let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+		let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, -keyboardSize!.height, 0.0)
+		self.scrollView.contentInset = contentInsets
+		self.scrollView.scrollIndicatorInsets = contentInsets
+		self.view.endEditing(true)
+		self.scrollView.isScrollEnabled = false
+	}
+	
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		//notesView = textView
+	}
+	
+	func textViewDidEndEditing(_ textView: UITextView) {
+		//notesView = nil
+	}
 }
 

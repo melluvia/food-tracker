@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var loginBtn: UIButton!
+	@IBOutlet weak var facebookLoginBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +31,40 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    
-    func textFieldChanged(textField: UITextField) {
+	
+	func isAppIdSetInPlist() -> Bool {
+		
+		// If the developer has not replaced the string "backendlessREPLACE_WITH_YOUR_APP_ID"
+		// in the info.plist - notify them of the issue.
+		
+		var foundPlaceHolderText = false
+		
+		if let urlTypesArray = Bundle.main.infoDictionary?["CFBundleURLTypes"] as? Array<Dictionary<String, Array<String>>> {
+			
+			for urlSchemesDict in urlTypesArray {
+				
+				if let urlSchemes = urlSchemesDict["CFBundleURLSchemes"] {
+					
+					for urlScheme in urlSchemes {
+						
+						if urlScheme == "backendlessREPLACE_WITH_YOUR_APP_ID" {
+							foundPlaceHolderText = true
+						}
+					}
+				}
+			}
+		}
+		
+		if foundPlaceHolderText {
+            Utility.showAlert(viewController: self, title: "Backendless Error", message: "For Facebook & Twitter login to work, open the project's info.plist and replace the string \"REPLACE_WITH_YOUR_APP_ID\" with YOUR App's ID from YOUR Backendless Dashboard!")
+            return false
+        }
         
+        return true
+    }
+		
+    func textFieldChanged(textField: UITextField) {
+		
         if emailTextField.text == "" || passwordTextField.text == "" {
             loginBtn.isEnabled = false
         } else {
@@ -58,6 +90,48 @@ class LoginViewController: UIViewController {
                 self.spinner.stopAnimating()
                 
                 self.performSegue(withIdentifier: "gotoMenuFromLogin", sender: sender)
+            },
+            
+            error: { message in
+                
+                self.spinner.stopAnimating()
+                
+                Utility.showAlert(viewController: self, title: "Login Error", message: message)
+            })
+    }
+	
+    @IBAction func loginViaFacebook(_ sender: UIButton) {
+        
+        if !isAppIdSetInPlist() {
+            return
+        }
+        
+        spinner.startAnimating()
+        
+        BackendlessManager.sharedInstance.loginViaFacebook( completion: {
+            
+                self.spinner.stopAnimating()
+			
+				self.performSegue(withIdentifier: "gotoMenuFromLogin", sender: sender)
+            },
+            
+            error: { message in
+                
+                self.spinner.stopAnimating()
+                
+                Utility.showAlert(viewController: self, title: "Login Error", message: message)
+            })
+    }
+	
+	@IBAction func loginViaTwitter(_ sender: UIButton) {
+        
+        if !isAppIdSetInPlist() {
+            return
+        }
+        
+        BackendlessManager.sharedInstance.loginViaTwitter( completion: {
+            
+                self.spinner.stopAnimating()
             },
             
             error: { message in

@@ -123,8 +123,8 @@
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Dish Title" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="JVV-pV-lvV">
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="ATw-W1-8PV"/>
                                                             <constraint firstAttribute="width" constant="260" id="pBn-2H-r1p"/>
+                                                            <constraint firstAttribute="height" constant="40" id="vYF-Y3-dme"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -138,16 +138,15 @@
                                                             <outletCollection property="gestureRecognizers" destination="rha-yQ-bJs" appends="YES" id="W5f-NI-HxX"/>
                                                         </connections>
                                                     </imageView>
-                                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="44" translatesAutoresizingMaskIntoConstraints="NO" id="ICG-oO-6LN" customClass="RatingControl" customModule="food_tracker" customModuleProvider="target">
+                                                    <view contentMode="center" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="44" translatesAutoresizingMaskIntoConstraints="NO" id="ICG-oO-6LN" customClass="RatingControl" customModule="food_tracker" customModuleProvider="target">
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="240" id="F4o-mi-CWd"/>
-                                                            <constraint firstAttribute="height" constant="44" id="TgV-DX-QPJ"/>
+                                                            <constraint firstAttribute="width" constant="180" id="F4o-mi-CWd"/>
+                                                            <constraint firstAttribute="height" constant="30" id="TgV-DX-QPJ"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="260" id="B8S-Nr-a4y"/>
-                                                    <constraint firstAttribute="height" constant="368" id="But-O9-SyJ"/>
                                                     <constraint firstItem="VXP-mk-If4" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="PHE-lu-7MQ"/>
                                                     <constraint firstItem="JVV-pV-lvV" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="Pud-VC-sqw"/>
                                                     <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="437-ZG-kFT" secondAttribute="leading" id="TXK-iY-3NH"/>
@@ -156,16 +155,20 @@
                                                     <constraint firstItem="JVV-pV-lvV" firstAttribute="top" secondItem="437-ZG-kFT" secondAttribute="top" id="lbD-90-7RH"/>
                                                 </constraints>
                                             </stackView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="3S3-1c-5TM">
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" indicatorStyle="black" minimumZoomScale="2" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="3S3-1c-5TM" userLabel="Notes View">
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="547" id="0Z1-9Q-Z0P"/>
                                                 </constraints>
                                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no" keyboardAppearance="light"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 <dataDetectorType key="dataDetectorTypes" link="YES" lookupSuggestion="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="DED-Xy-RMh"/>
+                                                </connections>
                                             </textView>
                                         </subviews>
                                         <constraints>
@@ -174,7 +177,6 @@
                                             <constraint firstAttribute="bottom" secondItem="437-ZG-kFT" secondAttribute="bottom" constant="361" id="5Yz-aL-1DX"/>
                                             <constraint firstItem="437-ZG-kFT" firstAttribute="top" secondItem="t2G-2v-YF2" secondAttribute="top" constant="71" id="Dyn-Zq-DXg"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" id="FTI-FJ-Ira"/>
-                                            <constraint firstItem="437-ZG-kFT" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" constant="57" id="HXS-Nw-zlI"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="R01-QG-Tbw"/>
                                             <constraint firstAttribute="trailing" secondItem="437-ZG-kFT" secondAttribute="trailing" constant="58" id="kgX-b9-jAh"/>
                                             <constraint firstItem="437-ZG-kFT" firstAttribute="centerX" secondItem="t2G-2v-YF2" secondAttribute="centerX" id="weh-HO-Z0X"/>
@@ -182,10 +184,10 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="t2G-2v-YF2" secondAttribute="bottom" id="CCA-IJ-wAS"/>
+                                    <constraint firstAttribute="bottom" secondItem="t2G-2v-YF2" secondAttribute="bottom" constant="-119" id="CCA-IJ-wAS"/>
                                     <constraint firstItem="t2G-2v-YF2" firstAttribute="leading" secondItem="wG0-yL-wli" secondAttribute="leading" id="ECL-9Q-djH"/>
                                     <constraint firstAttribute="width" constant="375" id="Gic-1a-uYM"/>
-                                    <constraint firstAttribute="bottom" secondItem="t2G-2v-YF2" secondAttribute="bottom" id="HfD-w6-THx"/>
+                                    <constraint firstAttribute="bottom" secondItem="t2G-2v-YF2" secondAttribute="bottom" constant="-119" id="HfD-w6-THx"/>
                                     <constraint firstItem="t2G-2v-YF2" firstAttribute="top" secondItem="wG0-yL-wli" secondAttribute="top" id="I22-eo-Boe"/>
                                     <constraint firstAttribute="trailing" secondItem="t2G-2v-YF2" secondAttribute="trailing" id="IdA-AX-syv"/>
                                     <constraint firstItem="t2G-2v-YF2" firstAttribute="centerX" secondItem="wG0-yL-wli" secondAttribute="centerX" id="Jr6-Do-Ufg"/>
@@ -199,20 +201,18 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="zpA-5m-LrH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0hd-kv-KXN"/>
+                            <constraint firstItem="xfL-0O-dyb" firstAttribute="leading" secondItem="wG0-yL-wli" secondAttribute="leading" id="1w8-24-w87"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="20y-Us-zO5"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2eC-aq-nFg"/>
-                            <constraint firstItem="xfL-0O-dyb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="41l-Ec-vvn"/>
                             <constraint firstAttribute="bottomMargin" secondItem="zpA-5m-LrH" secondAttribute="bottom" constant="440" id="5XI-OV-Zef"/>
-                            <constraint firstAttribute="bottom" secondItem="wG0-yL-wli" secondAttribute="bottom" constant="20" symbolic="YES" id="6ps-Fz-dbX"/>
-                            <constraint firstAttribute="trailing" secondItem="wG0-yL-wli" secondAttribute="trailing" id="GhC-Xu-Vdq"/>
-                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerX" secondItem="xfL-0O-dyb" secondAttribute="centerX" id="Ghw-FV-9VZ"/>
+                            <constraint firstAttribute="bottom" secondItem="wG0-yL-wli" secondAttribute="bottom" id="6ps-Fz-dbX"/>
+                            <constraint firstItem="xfL-0O-dyb" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="FcW-5Y-6iv"/>
                             <constraint firstAttribute="trailing" secondItem="wG0-yL-wli" secondAttribute="trailing" id="M40-6v-YmX"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="S3e-D8-e17"/>
-                            <constraint firstItem="zpA-5m-LrH" firstAttribute="centerY" secondItem="xfL-0O-dyb" secondAttribute="centerY" constant="-96.5" id="ZH5-NB-glP"/>
-                            <constraint firstItem="xfL-0O-dyb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aKF-kQ-NZ1"/>
+                            <constraint firstItem="xfL-0O-dyb" firstAttribute="trailing" secondItem="wG0-yL-wli" secondAttribute="trailing" id="YUm-vL-Kx8"/>
                             <constraint firstItem="wG0-yL-wli" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eJQ-HP-4Wx"/>
                             <constraint firstAttribute="trailing" secondItem="wG0-yL-wli" secondAttribute="trailing" id="lRd-1l-1BF"/>
-                            <constraint firstAttribute="trailing" secondItem="xfL-0O-dyb" secondAttribute="trailing" id="pzR-8Z-ZBD"/>
+                            <constraint firstItem="xfL-0O-dyb" firstAttribute="top" secondItem="wG0-yL-wli" secondAttribute="top" id="xtN-VD-una"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Dish" id="mVr-Wg-uo0">
@@ -235,11 +235,12 @@
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="nameTextField" destination="JVV-pV-lvV" id="zGD-iL-b8w"/>
-                        <outlet property="notesField" destination="3S3-1c-5TM" id="pIN-qO-7Kw"/>
+                        <outlet property="notesView" destination="3S3-1c-5TM" id="VV2-y5-TDX"/>
                         <outlet property="photoImageView" destination="VXP-mk-If4" id="1WG-cR-3jX"/>
                         <outlet property="ratingControl" destination="ICG-oO-6LN" id="yYU-xu-Ioj"/>
                         <outlet property="saveButton" destination="H54-sf-MR9" id="Q9e-02-Nox"/>
                         <outlet property="saveSpinner" destination="zpA-5m-LrH" id="iaY-Z9-aDZ"/>
+                        <outlet property="scrollView" destination="wG0-yL-wli" id="tS3-HI-jYp"/>
                         <segue destination="peH-xY-lBr" kind="unwind" identifier="unwindToMealList" unwindAction="unwindToMealList:" id="VYC-EL-sth"/>
                     </connections>
                 </viewController>
@@ -284,6 +285,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EJD-nR-RBM" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="PAg-Jx-bzh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -327,6 +329,9 @@
                                         <state key="normal" title="    Login with Facebook" image="facebook-icon" backgroundImage="facebook-login-btn">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="loginViaFacebook:" destination="wLa-aO-8YV" eventType="touchUpInside" id="vQh-kc-C0B"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="     Email" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="KSk-Vq-hdg">
                                         <constraints>
@@ -405,6 +410,7 @@
                             <constraint firstAttribute="trailing" secondItem="tIj-la-yDI" secondAttribute="trailing" id="s43-Nk-tPF"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="emailTextField" destination="KSk-Vq-hdg" id="BOX-5T-TYp"/>
                         <outlet property="loginBtn" destination="2FC-Kt-D7C" id="1rK-P8-YXT"/>
@@ -569,6 +575,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="2m5-1t-NAp"/>
         <segue reference="lgY-ru-F6t"/>
-        <segue reference="V4i-3B-om2"/>
+        <segue reference="ZL4-tA-ihH"/>
     </inferredMetricsTieBreakers>
 </document>

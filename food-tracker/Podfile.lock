@@ -1,11 +1,11 @@
 PODS:
-  - Backendless (3.0.37)
+  - Backendless (3.0.42)
 
 DEPENDENCIES:
   - Backendless
 
 SPEC CHECKSUMS:
-  Backendless: 9fcde1637d92a04380ba5d558e43c9b42d9fb1dd
+  Backendless: 29f14d550e0c063368929c2e686d4f0db41cbd1b
 
 PODFILE CHECKSUM: 3297905d98ff34271e2e4484d3382e9b9d98b5c1
 

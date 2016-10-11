@@ -55,8 +55,8 @@
                             <constraint firstItem="09J-Zu-WrQ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="DdE-Rb-bYT"/>
                             <constraint firstItem="PmD-KC-KOd" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="109" id="Iv1-o5-KqE"/>
                             <constraint firstItem="09J-Zu-WrQ" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="82" id="KcF-dp-oWW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Y48-Ub-yab" secondAttribute="trailing" constant="58" id="VEl-Wb-EB3"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Y48-Ub-yab" secondAttribute="bottom" constant="20" id="bkC-z1-d7L"/>
+                            <constraint firstItem="Y48-Ub-yab" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="dCs-Lk-2sL"/>
                             <constraint firstItem="cQl-eo-iqe" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="eqz-gF-lkq"/>
                             <constraint firstItem="EoR-V3-hlu" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="74" id="gFn-NU-Znf"/>
                             <constraint firstItem="PmD-KC-KOd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="kUp-oo-Pwi"/>
