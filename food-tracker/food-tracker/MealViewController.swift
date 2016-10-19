@@ -194,21 +194,54 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     // MARK: Actions
 
+    // Added actionsheet to allow user to pick photo library or camera
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         
         // Hide the keyboard.
         nameTextField.resignFirstResponder()
         
-        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
-        let imagePickerController = UIImagePickerController()
+        let alertController = UIAlertController(title: nil,
+            message: "How would you like to add the dish image?",
+            preferredStyle: .actionSheet)
+
+        let cameraAction = UIAlertAction(title: "By Camera", style: .default) { action in
+            print("Camera was selected!")
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+                imagePicker.allowsEditing = true
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
         
-        // Only allow photos to be picked, not taken.
-        imagePickerController.sourceType = .photoLibrary
+        alertController.addAction(cameraAction)
+
+        let photoLibraryAction = UIAlertAction(title: "By Photo Library", style: .default) { action in
+            print("Photo Library was selected!")
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+                // SIMILAR TO WHAT WE HAD BEFORE
+                // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+                let imagePicker = UIImagePickerController()
+                // Make sure ViewController is notified when the user picks an image.
+                imagePicker.delegate = self
+                imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+                imagePicker.allowsEditing = true
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
         
-        // Make sure ViewController is notified when the user picks an image.
-        imagePickerController.delegate = self
+        alertController.addAction(photoLibraryAction)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            print("Cancel was selected!")
+        }
         
-        present(imagePickerController, animated: true, completion: nil)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true) {
+            print("Show the Action Sheet!")
+        }
     }
     
     func loadImageFromUrl(imageView: UIImageView, photoUrl: String) {

@@ -206,7 +206,7 @@
 				TargetAttributes = {
 					6C12C9BE1D89E2C500C82247 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = ZP2BP59U4V;
+						DevelopmentTeam = MGZJFP2D98;
 						LastSwiftMigration = 0800;
 					};
 					6C12C9D71D8AEB2D00C82247 = {
@@ -459,7 +459,7 @@
 			baseConfigurationReference = 408A748B7C57887CBC253DEB /* Pods-food-tracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZP2BP59U4V;
+				DEVELOPMENT_TEAM = MGZJFP2D98;
 				INFOPLIST_FILE = "food-tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melissaphillipsdesign.food-tracker";
@@ -473,7 +473,7 @@
 			baseConfigurationReference = DE659380D209F91483A25C31 /* Pods-food-tracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZP2BP59U4V;
+				DEVELOPMENT_TEAM = MGZJFP2D98;
 				INFOPLIST_FILE = "food-tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melissaphillipsdesign.food-tracker";
