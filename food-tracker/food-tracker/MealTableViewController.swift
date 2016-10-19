@@ -119,6 +119,13 @@ class MealTableViewController: UITableViewController {
 		// Fetches the appropriate meal for the data source layout.
 		let meal = meals[(indexPath as NSIndexPath).row]
 		
+        //string literal for avg star rating..always stays the same
+        let avgStars = "Avg Stars"
+        cell.avgStarHeader.text = avgStars // not showing- will fix glitch later****
+        
+        //the actual rating for the cell will go here
+        //call the function to calculate rating and set = to cell.avgStarlabel.text (Dbl?)
+        
 		cell.nameLabel.text = meal.name
 		
 		cell.photoImageView.image = nil
