@@ -33,7 +33,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8QF-IF-Wns">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="38" id="Bzw-FX-7uF"/>
-                                                <constraint firstAttribute="width" constant="270" id="OIq-a2-120"/>
+                                                <constraint firstAttribute="width" constant="150" id="OIq-a2-120"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -42,7 +42,7 @@
                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qap-i3-Gk3" customClass="RatingControl" customModule="food_tracker" customModuleProvider="target">
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="270" id="TYt-Wg-zvO"/>
+                                                <constraint firstAttribute="width" constant="200" id="TYt-Wg-zvO"/>
                                                 <constraint firstAttribute="height" constant="37" id="dlT-fb-pow"/>
                                             </constraints>
                                         </view>
@@ -50,20 +50,42 @@
                                             <frame key="frameInset" minX="34" minY="35.5" width="20" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </activityIndicatorView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avg" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30T-IC-0s8">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="42" id="IpD-53-MHj"/>
+                                                <constraint firstAttribute="width" constant="30" id="kqv-uk-bYo"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.5" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WIX-do-IdZ">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="Aug-dC-Vrh"/>
+                                                <constraint firstAttribute="height" constant="42" id="enD-FU-gku"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="8QF-IF-Wns" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="0AZ-dg-dYs"/>
                                         <constraint firstItem="V5P-nb-unr" firstAttribute="leading" secondItem="esn-pb-Ci0" secondAttribute="leading" id="Az4-aX-fAy"/>
+                                        <constraint firstItem="30T-IC-0s8" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="topMargin" constant="-8" id="BYi-Qh-vLM"/>
                                         <constraint firstAttribute="bottom" secondItem="Qap-i3-Gk3" secondAttribute="bottom" id="MCo-zj-vQA"/>
                                         <constraint firstItem="V5P-nb-unr" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="OPO-El-YAE"/>
-                                        <constraint firstAttribute="trailing" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="8" id="QnB-Hv-ROk"/>
+                                        <constraint firstItem="30T-IC-0s8" firstAttribute="leading" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="1" id="cz6-q4-o02"/>
                                         <constraint firstAttribute="bottom" secondItem="Qap-i3-Gk3" secondAttribute="bottom" id="e7T-Rg-sxH"/>
-                                        <constraint firstAttribute="trailing" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="8" id="tBL-7g-i36"/>
+                                        <constraint firstItem="WIX-do-IdZ" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="topMargin" constant="-8" id="tz2-TW-Q96"/>
                                         <constraint firstItem="Qap-i3-Gk3" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="wLh-PL-mxI"/>
                                         <constraint firstItem="8QF-IF-Wns" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="yN0-es-QpL"/>
+                                        <constraint firstItem="WIX-do-IdZ" firstAttribute="leading" secondItem="30T-IC-0s8" secondAttribute="trailing" constant="1" id="zUr-4N-4gF"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="avgRatingLabel" destination="WIX-do-IdZ" id="7dC-iy-UVH"/>
+                                    <outlet property="avgStarHeader" destination="30T-IC-0s8" id="rf7-cb-3lp"/>
                                     <outlet property="nameLabel" destination="8QF-IF-Wns" id="VE7-eU-Qir"/>
                                     <outlet property="photoImageView" destination="V5P-nb-unr" id="pxS-U7-0QK"/>
                                     <outlet property="ratingControl" destination="Qap-i3-Gk3" id="NFU-9Q-npr"/>
@@ -106,7 +128,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0op-lb-LXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-127" y="456"/>
+            <point key="canvasLocation" x="-127.2" y="455.62218890554726"/>
         </scene>
         <!--New Dish-->
         <scene sceneID="tne-QT-ifu">
