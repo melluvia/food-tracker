@@ -20,6 +20,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	@IBOutlet weak var saveSpinner: UIActivityIndicatorView!
 	@IBOutlet weak var notesView: UITextView!
 	@IBOutlet weak var scrollView: UIScrollView!
+    
+    
 	/*
 	This value is either passed by `MealTableViewController` in `prepareForSegue(_:sender:)`
 	or constructed as part of adding a new meal.
