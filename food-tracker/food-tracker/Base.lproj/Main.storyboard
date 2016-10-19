@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kjQ-c0-U9U" id="esn-pb-Ci0">
-                                    <frame key="frameInset" width="375" height="89"/>
+                                    <frame key="frameInset" width="375" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="V5P-nb-unr" userLabel="Photo Image View">
@@ -156,14 +156,13 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="yes" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
-                                                <dataDetectorType key="dataDetectorTypes" link="YES" lookupSuggestion="YES"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="BYZ-38-t0r" id="DED-Xy-RMh"/>
                                                 </connections>
                                             </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="437-ZG-kFT">
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  Restaurant Name" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="Q8f-xr-nDZ">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Restaurant Name" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="Q8f-xr-nDZ">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="EZ2-UO-WhJ"/>
                                                         </constraints>
@@ -295,7 +294,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="669.60000000000002" y="764.16791604197908"/>
+            <point key="canvasLocation" x="670" y="960"/>
         </scene>
         <!--logout-->
         <scene sceneID="P20-2N-2aO">
@@ -427,7 +426,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="3Zu-8Q-6nz" kind="presentation" identifier="" id="lgY-ru-F6t"/>
+                                            <segue destination="3Zu-8Q-6nz" kind="presentation" id="qnZ-1F-2Nw"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nki-UZ-1Wk">
@@ -475,22 +474,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CMJ-Ii-PTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1586" y="90"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="TDS-MV-NAK">
-            <objects>
-                <navigationController id="d6t-7t-4iY" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3hG-c3-MdN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="3Zu-8Q-6nz" kind="presentation" identifier="register-screen" id="J7n-wK-Xwt"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="swT-Oc-zVV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2262" y="830"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="cYZ-YW-VlC">
@@ -571,11 +554,14 @@
                                 </constraints>
                             </stackView>
                             <navigationBar contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="roZ-6G-ffG">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="cBm-kn-YO4"/>
+                                </constraints>
                                 <items>
                                     <navigationItem title="Register" id="rUO-27-ohn">
                                         <barButtonItem key="leftBarButtonItem" image="exit" id="n5D-gp-sLj">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="RD8-HD-VTX">
-                                                <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                                <rect key="frame" x="16" y="18" width="30" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="2CV-rd-9bb"/>
@@ -583,7 +569,6 @@
                                                 <state key="normal" image="exit"/>
                                                 <connections>
                                                     <action selector="cancel:" destination="3Zu-8Q-6nz" eventType="touchUpInside" id="uyU-sZ-EoI"/>
-                                                    <segue destination="d6t-7t-4iY" kind="presentation" identifier="exitbtn" id="ISo-Uq-msn"/>
                                                 </connections>
                                             </button>
                                         </barButtonItem>
@@ -593,17 +578,17 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="roZ-6G-ffG" firstAttribute="leading" secondItem="lPb-Ga-REg" secondAttribute="leading" id="0Al-y4-gwp"/>
                             <constraint firstItem="npl-Kv-7Lz" firstAttribute="top" secondItem="SL5-d2-bvm" secondAttribute="bottom" constant="77" id="4TS-IX-ck0"/>
+                            <constraint firstItem="roZ-6G-ffG" firstAttribute="leading" secondItem="T54-vb-PlZ" secondAttribute="leading" id="Es3-y7-TqE"/>
+                            <constraint firstAttribute="trailing" secondItem="roZ-6G-ffG" secondAttribute="trailing" id="KZg-rL-D7q"/>
                             <constraint firstItem="lPb-Ga-REg" firstAttribute="top" secondItem="T54-vb-PlZ" secondAttribute="top" id="QR3-T6-QfT"/>
                             <constraint firstItem="fbn-16-coh" firstAttribute="centerX" secondItem="T54-vb-PlZ" secondAttribute="centerX" id="Qgj-xX-sOh"/>
                             <constraint firstAttribute="trailing" secondItem="lPb-Ga-REg" secondAttribute="trailing" id="Vm2-W8-xiK"/>
-                            <constraint firstItem="fbn-16-coh" firstAttribute="top" secondItem="roZ-6G-ffG" secondAttribute="bottom" constant="66" id="Y1t-0r-Vpd"/>
-                            <constraint firstItem="roZ-6G-ffG" firstAttribute="trailing" secondItem="lPb-Ga-REg" secondAttribute="trailing" id="cqj-RZ-FF4"/>
                             <constraint firstItem="lPb-Ga-REg" firstAttribute="leading" secondItem="T54-vb-PlZ" secondAttribute="leading" id="d9C-cc-KAG"/>
                             <constraint firstItem="npl-Kv-7Lz" firstAttribute="centerX" secondItem="T54-vb-PlZ" secondAttribute="centerX" id="qgg-qm-eS4"/>
                             <constraint firstItem="W4Z-Tt-Jyl" firstAttribute="top" secondItem="lPb-Ga-REg" secondAttribute="bottom" id="tcS-V2-XyP"/>
                             <constraint firstItem="fbn-16-coh" firstAttribute="top" secondItem="SL5-d2-bvm" secondAttribute="bottom" constant="90" id="zYJ-6P-Ol4"/>
+                            <constraint firstItem="roZ-6G-ffG" firstAttribute="top" secondItem="T54-vb-PlZ" secondAttribute="top" id="zkH-ve-Cze"/>
                         </constraints>
                     </view>
                     <connections>
@@ -617,7 +602,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zlh-2g-xs4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1586" y="830"/>
+            <point key="canvasLocation" x="-1626" y="944"/>
         </scene>
     </scenes>
     <resources>
@@ -635,8 +620,7 @@
         <image name="sign-in-btn" width="320" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lgY-ru-F6t"/>
-        <segue reference="Av5-fB-9fV"/>
+        <segue reference="2m5-1t-NAp"/>
         <segue reference="V4i-3B-om2"/>
     </inferredMetricsTieBreakers>
 </document>
