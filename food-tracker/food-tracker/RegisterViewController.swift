@@ -24,6 +24,7 @@ class RegisterViewController: UIViewController {
         emailTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
         passwordTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
         passwordConfirmTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
+        
     }
 
     func textFieldChanged(textField: UITextField) {
@@ -140,6 +141,24 @@ class RegisterViewController: UIViewController {
         }
         
         return true
+    }
+    
+    // UITextFieldDelegate, called when editing session begins, or when keyboard displayed
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        // Create padding for textFields
+        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
+        
+        textField.leftView = paddingView
+        textField.leftViewMode = UITextFieldViewMode.always
+        
+        if textField == emailTextField {
+            emailTextField.placeholder = "Email"
+        } else if textField == passwordTextField {
+            passwordTextField.placeholder = "Password"
+        } else {
+            passwordConfirmTextField.placeholder = "Confirm Password"
+        }
     }
 
 
