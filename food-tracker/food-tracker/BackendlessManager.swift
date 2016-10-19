@@ -501,15 +501,16 @@ class BackendlessManager {
         
         let dataStore = backendless.persistenceService.of(Meal.ofClass())
         
-        let dataQuery = BackendlessDataQuery()
-        // Only get the Meals that belong to our logged in user!
-        dataQuery.whereClause = "ownerId = '\(backendless.userService.currentUser.objectId!)'"
+        // Lets find ALL meals not just those that belong to the currentuser
+//        let dataQuery = BackendlessDataQuery()
+//        // Only get the Meals that belong to our logged in user!
+//        dataQuery.whereClause = "ownerId = '\(backendless.userService.currentUser.objectId!)'"
         
-        dataStore?.find( dataQuery,
+        dataStore?.find( /*dataQuery,
             
-            response: { (meals: BackendlessCollection?) -> Void in
+            response:*/ { (meals: BackendlessCollection?) -> Void in
                 
-                print("Find attempt on all Meals has completed without error!")
+                print("Find attempt on ALL Meals has completed without error!")
                 print("Number of Meals found = \((meals?.data.count)!)")
                 
                 var mealData = [MealData]()

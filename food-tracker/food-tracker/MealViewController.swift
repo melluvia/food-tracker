@@ -31,7 +31,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Handle the text field’s user input through delegate callbacks.
 		nameTextField.delegate = self
 		notesView.delegate = self
-		notesView.text = "Placeholder"
+		notesView.text = "Describe the dish or recipe..."
 		notesView.textColor = UIColor.lightGray
         // Set up views if editing an existing Meal.
         if let meal = meal {
@@ -65,12 +65,14 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Hide the keyboard.
 		//textField.resignFirstResponder()
 		
-		if textField == notesView {
-			notesView.resignFirstResponder()
-			return true
-		}
-		
-		return true
+//		if textField == nameTextField {
+//			notesView.becomeFirstResponder()
+//        } else {
+            textField.resignFirstResponder()
+//        }
+        
+        return true
+
 	}
 	
 	func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -88,6 +90,52 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		checkValidMealName()
 		navigationItem.title = textField.text
 	}
+    
+    // MARK: UITextViewDelegate methods
+    
+    // Chance to edit Content upon editing
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        // Removes All Content upon editing
+        if notesView.text == "Describe the dish or recipe..." {
+            notesView.text = nil
+            notesView.textColor = UIColor.white
+        }
+    }
+    
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        if notesView.textColor == UIColor.lightGray {
+//            notesView.text = nil
+//            notesView.textColor = UIColor.black
+//        }
+//    }
+    
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        if notesView.text.isEmpty {
+//            notesView.text = "Placeholder"
+//            notesView.textColor = UIColor.lightGray
+//        }
+//    }
+    
+    
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        
+//        // Resign keyboard upon return
+//        if(text == "\n") {
+//            view.endEditing(true)
+//            return false
+//        } else {
+//            return true
+//        }
+//    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Add a Description..."
+            textView.textColor = UIColor.lightGray
+        }
+    }
+
 	
 	// MARK: UIImagePickerControllerDelegate
 	
@@ -313,19 +361,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Reset the scroll view back to where it was!
 		self.scrollView.contentInset = UIEdgeInsets.zero
 	}
-	
-	func textViewDidBeginEditing(_ textView: UITextView) {
-		if notesView.textColor == UIColor.lightGray {
-			notesView.text = nil
-			notesView.textColor = UIColor.black
-		}
-	}
-	
-	func textViewDidEndEditing(_ textView: UITextView) {
-		if notesView.text.isEmpty {
-			notesView.text = "Placeholder"
-			notesView.textColor = UIColor.lightGray
-		}
-	}
+
 }
 
