@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -30,15 +30,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 Utility.showAlert(viewController: self, title: "Backendless Error", message: "To use this sample you must register with Backendless, create an app, and replace the APP_ID and SECRET_KEY in this sample's BackendlessManager class with the values from your app's settings.")
             }
         }
-        
-        // Add the created padding to the textFields
-    //    emailTextField.leftView = paddingView
-    //    emailTextField.leftViewMode = UITextFieldViewMode.always
-    //    emailTextField.placeholder = "Email"
-        
-     //   passwordTextField.leftView = paddingView
-     //   passwordTextField.leftViewMode = UITextFieldViewMode.always
-    //    passwordTextField.placeholder = "Password"
     }
 	
 	func isAppIdSetInPlist() -> Bool {
@@ -172,22 +163,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         return true
-    }
-    
-    // UITextFieldDelegate, called when editing session begins, or when keyboard displayed
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-
-        // Create padding for textFields
-        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
-        
-        textField.leftView = paddingView
-        textField.leftViewMode = UITextFieldViewMode.always
-        
-        if textField == emailTextField {
-            emailTextField.placeholder = "Email"
-        } else {
-            passwordTextField.placeholder = "Password"
-        }
     }
 
     

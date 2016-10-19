@@ -16,5 +16,4 @@ class Meal : NSObject {
 	var thumbnailUrl: String?
 	var rating: Int = 0
 	var note: String?
-    var restaurantName: String?
 }

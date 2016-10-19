@@ -12,7 +12,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
 	// MARK: Properties
 	
-    @IBOutlet weak var restaurantNameTextField: UITextField!
+    @IBOutlet weak var restaurantName: UITextField!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var photoImageView: UIImageView!
 	@IBOutlet weak var ratingControl: RatingControl!
@@ -20,8 +20,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	@IBOutlet weak var saveSpinner: UIActivityIndicatorView!
 	@IBOutlet weak var notesView: UITextView!
 	@IBOutlet weak var scrollView: UIScrollView!
-    
-    
 	/*
 	This value is either passed by `MealTableViewController` in `prepareForSegue(_:sender:)`
 	or constructed as part of adding a new meal.
@@ -34,9 +32,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Handle the text field’s user input through delegate callbacks.
 		nameTextField.delegate = self
 		notesView.delegate = self
-		notesView.text = "Describe the dish or recipe..."
+		notesView.text = "Placeholder"
 		notesView.textColor = UIColor.lightGray
-        
         // Set up views if editing an existing Meal.
         if let meal = meal {
             navigationItem.title = meal.name
@@ -62,9 +59,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-    
-    
-    
 	
 	// MARK: UITextFieldDelegate
 	
@@ -72,33 +66,18 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Hide the keyboard.
 		//textField.resignFirstResponder()
 		
-		if textField == restaurantNameTextField {
-			nameTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-        }
-        
-        return true
-
+		if textField == notesView {
+			notesView.resignFirstResponder()
+			return true
+		}
+		
+		return true
 	}
-    
-    // UITextFieldDelegate, called when editing session begins, or when keyboard displayed
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        saveButton.isEnabled = false
-        
-        // Create padding for textFields
-        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
-        
-        textField.leftView = paddingView
-        textField.leftViewMode = UITextFieldViewMode.always
-        
-        if textField == restaurantNameTextField {
-            restaurantNameTextField.placeholder = "Restaurant Name"
-        } else {
-            nameTextField.placeholder = "Dish Title"
-        }
-    }
+	
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		// Disable the Save button while editing.
+		saveButton.isEnabled = false
+	}
 	
 	func checkValidMealName() {
 		// Disable the Save button if the text field is empty.
@@ -110,52 +89,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		checkValidMealName()
 		navigationItem.title = textField.text
 	}
-    
-    // MARK: UITextViewDelegate methods
-    
-    // Chance to edit Content upon editing
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        
-        // Removes All Content upon editing
-        if notesView.text == "Describe the dish or recipe..." {
-            notesView.text = nil
-            notesView.textColor = UIColor.white
-        }
-    }
-    
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        if notesView.textColor == UIColor.lightGray {
-//            notesView.text = nil
-//            notesView.textColor = UIColor.black
-//        }
-//    }
-    
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        if notesView.text.isEmpty {
-//            notesView.text = "Placeholder"
-//            notesView.textColor = UIColor.lightGray
-//        }
-//    }
-    
-    
-//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        
-//        // Resign keyboard upon return
-//        if(text == "\n") {
-//            view.endEditing(true)
-//            return false
-//        } else {
-//            return true
-//        }
-//    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Add a Description..."
-            textView.textColor = UIColor.lightGray
-        }
-    }
-
 	
 	// MARK: UIImagePickerControllerDelegate
 	
@@ -190,14 +123,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		let rating = ratingControl.rating
 		let photo = photoImageView.image
 		let note = notesView.text ?? ""
-        let restaurantName = restaurantNameTextField.text ?? ""
 		
 		saveSpinner.isHidden = false
 		saveSpinner.startAnimating()
 		
 		if meal == nil {
 			
-            meal = MealData(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName)
+			meal = MealData(name: name, photo: photo, rating: rating, note: note)
 			
 		} else {
 			
@@ -205,7 +137,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 			meal?.photo = photo
 			meal?.rating = rating
 			meal?.note = note
-            meal?.restaurantName = restaurantName
 		}
 		
 		if BackendlessManager.sharedInstance.isUserLoggedIn() {
@@ -383,6 +314,19 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Reset the scroll view back to where it was!
 		self.scrollView.contentInset = UIEdgeInsets.zero
 	}
-
+	
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		if notesView.textColor == UIColor.lightGray {
+			notesView.text = nil
+			notesView.textColor = UIColor.black
+		}
+	}
+	
+	func textViewDidEndEditing(_ textView: UITextView) {
+		if notesView.text.isEmpty {
+			notesView.text = "Placeholder"
+			notesView.textColor = UIColor.lightGray
+		}
+	}
 }
 

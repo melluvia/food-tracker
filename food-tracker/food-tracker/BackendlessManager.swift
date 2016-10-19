@@ -279,7 +279,6 @@ class BackendlessManager {
             mealToSave.name = mealData.name
             mealToSave.rating = mealData.rating
             mealToSave.note = mealData.note
-            mealToSave.restaurantName = mealData.restaurantName 
 			
             savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
                                                        
@@ -502,16 +501,15 @@ class BackendlessManager {
         
         let dataStore = backendless.persistenceService.of(Meal.ofClass())
         
-        // Lets find ALL meals not just those that belong to the currentuser
-//        let dataQuery = BackendlessDataQuery()
-//        // Only get the Meals that belong to our logged in user!
-//        dataQuery.whereClause = "ownerId = '\(backendless.userService.currentUser.objectId!)'"
+        let dataQuery = BackendlessDataQuery()
+        // Only get the Meals that belong to our logged in user!
+        dataQuery.whereClause = "ownerId = '\(backendless.userService.currentUser.objectId!)'"
         
-        dataStore?.find( /*dataQuery,
+        dataStore?.find( dataQuery,
             
-            response:*/ { (meals: BackendlessCollection?) -> Void in
+            response: { (meals: BackendlessCollection?) -> Void in
                 
-                print("Find attempt on ALL Meals has completed without error!")
+                print("Find attempt on all Meals has completed without error!")
                 print("Number of Meals found = \((meals?.data.count)!)")
                 
                 var mealData = [MealData]()
@@ -522,7 +520,7 @@ class BackendlessManager {
                     
                     print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
                     
-                    let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "))
+					let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "))
 					
                     if let newMealData = newMealData {
                         
