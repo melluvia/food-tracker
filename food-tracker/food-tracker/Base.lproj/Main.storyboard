@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -33,7 +33,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8QF-IF-Wns">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="38" id="Bzw-FX-7uF"/>
-                                                <constraint firstAttribute="width" constant="270" id="OIq-a2-120"/>
+                                                <constraint firstAttribute="width" constant="200" id="OIq-a2-120"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -42,7 +42,7 @@
                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qap-i3-Gk3" customClass="RatingControl" customModule="food_tracker" customModuleProvider="target">
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="270" id="TYt-Wg-zvO"/>
+                                                <constraint firstAttribute="width" constant="200" id="TYt-Wg-zvO"/>
                                                 <constraint firstAttribute="height" constant="37" id="dlT-fb-pow"/>
                                             </constraints>
                                         </view>
@@ -50,20 +50,44 @@
                                             <frame key="frameInset" minX="34" minY="35.5" width="20" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </activityIndicatorView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avg Stars" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcC-nq-kdN">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="m2d-l7-VgQ"/>
+                                                <constraint firstAttribute="width" constant="70" id="taA-U5-l5J"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v10-Iy-HWc">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="7k2-cj-baK"/>
+                                                <constraint firstAttribute="width" constant="70" id="j7o-bj-EER"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="8QF-IF-Wns" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="0AZ-dg-dYs"/>
+                                        <constraint firstItem="v10-Iy-HWc" firstAttribute="leading" secondItem="Qap-i3-Gk3" secondAttribute="trailing" constant="8" id="4m4-z0-U8k"/>
                                         <constraint firstItem="V5P-nb-unr" firstAttribute="leading" secondItem="esn-pb-Ci0" secondAttribute="leading" id="Az4-aX-fAy"/>
                                         <constraint firstAttribute="bottom" secondItem="Qap-i3-Gk3" secondAttribute="bottom" id="MCo-zj-vQA"/>
                                         <constraint firstItem="V5P-nb-unr" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="top" id="OPO-El-YAE"/>
+                                        <constraint firstItem="dcC-nq-kdN" firstAttribute="leading" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="8" id="Odb-Vk-qje"/>
                                         <constraint firstAttribute="trailing" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="8" id="QnB-Hv-ROk"/>
+                                        <constraint firstItem="v10-Iy-HWc" firstAttribute="top" secondItem="dcC-nq-kdN" secondAttribute="bottom" constant="2" id="R5t-aM-k0W"/>
                                         <constraint firstAttribute="bottom" secondItem="Qap-i3-Gk3" secondAttribute="bottom" id="e7T-Rg-sxH"/>
                                         <constraint firstAttribute="trailing" secondItem="8QF-IF-Wns" secondAttribute="trailing" constant="8" id="tBL-7g-i36"/>
+                                        <constraint firstItem="dcC-nq-kdN" firstAttribute="top" secondItem="esn-pb-Ci0" secondAttribute="topMargin" constant="2" id="vYx-Ys-iSE"/>
                                         <constraint firstItem="Qap-i3-Gk3" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="wLh-PL-mxI"/>
                                         <constraint firstItem="8QF-IF-Wns" firstAttribute="leading" secondItem="V5P-nb-unr" secondAttribute="trailing" constant="8" id="yN0-es-QpL"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="avgRatingLabel" destination="v10-Iy-HWc" id="tGx-Da-71Y"/>
+                                    <outlet property="avgStarHeader" destination="dcC-nq-kdN" id="xE7-Lr-6gV"/>
                                     <outlet property="nameLabel" destination="8QF-IF-Wns" id="VE7-eU-Qir"/>
                                     <outlet property="photoImageView" destination="V5P-nb-unr" id="pxS-U7-0QK"/>
                                     <outlet property="ratingControl" destination="Qap-i3-Gk3" id="NFU-9Q-npr"/>
@@ -103,7 +127,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0op-lb-LXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-127" y="456"/>
+            <point key="canvasLocation" x="-127.2" y="455.62218890554726"/>
         </scene>
         <!--New Dish-->
         <scene sceneID="tne-QT-ifu">
