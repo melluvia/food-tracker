@@ -272,6 +272,7 @@
                         <outlet property="photoImageView" destination="VXP-mk-If4" id="1WG-cR-3jX"/>
                         <outlet property="ratingControl" destination="ICG-oO-6LN" id="yYU-xu-Ioj"/>
                         <outlet property="restaurantName" destination="Q8f-xr-nDZ" id="eKe-F6-NbS"/>
+                        <outlet property="restaurantNameTextField" destination="Q8f-xr-nDZ" id="PVR-MX-jVh"/>
                         <outlet property="saveButton" destination="H54-sf-MR9" id="Q9e-02-Nox"/>
                         <outlet property="saveSpinner" destination="zpA-5m-LrH" id="iaY-Z9-aDZ"/>
                         <outlet property="scrollView" destination="wG0-yL-wli" id="tS3-HI-jYp"/>

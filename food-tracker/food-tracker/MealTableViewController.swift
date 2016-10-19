@@ -29,7 +29,31 @@ class MealTableViewController: UITableViewController {
 		super.viewDidLoad()
 		
 		imageCache.countLimit = 50 // sets cache limit to 50 images.
+
 	// show toolbar
+        // Add support for pull-to-refresh on the table view.
+        
+        self.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: UIControlEvents.valueChanged)
+        
+        // Use the edit button item provided by the table view controller.
+        navigationItem.leftBarButtonItem = editButtonItem
+        
+        if BackendlessManager.sharedInstance.isUserLoggedIn() {
+            
+            refresh(sender: self)
+            
+        } else {
+            
+            // Load any saved meals, otherwise load sample data.
+            if let savedMeals = loadMealsFromArchiver() {
+                meals += savedMeals
+            } else {
+                // Load the sample data.
+            }
+            
+        }
+  
+        
 //		let image = UIImage(named: "logout")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
 //		
 //		let toolBarButtonItem = UIBarButtonItem(image: image,
@@ -373,5 +397,25 @@ class MealTableViewController: UITableViewController {
 		
 
 	}
+    
+    func refresh(sender: AnyObject) {
+        
+        if BackendlessManager.sharedInstance.isUserLoggedIn() {
+            
+            BackendlessManager.sharedInstance.loadMeals(
+                
+                completion: { mealData in
+                    
+                    self.meals = mealData
+                    
+                    //                    self.meals.sort {
+                    //                        $0.rating > $1.rating
+                    //                    }
+                    
+                    self.tableView.reloadData()
+                    self.refreshControl?.endRefreshing()
+            })
+        }
+    }
 
 }

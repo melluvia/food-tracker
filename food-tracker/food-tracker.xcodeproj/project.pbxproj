@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33DB926E5585A6D52DB89DD6 /* Pods_food_tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC54008F474C05054705EA65 /* Pods_food_tracker.framework */; };
+		3741DF7B1DB83D5B0023FED9 /* AvgRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3741DF7A1DB83D5B0023FED9 /* AvgRating.swift */; };
 		6C0E0B2E1D92FD3D00442321 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0E0B2D1D92FD3D00442321 /* Meal.swift */; };
 		6C12C9C31D89E2C500C82247 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C12C9C21D89E2C500C82247 /* AppDelegate.swift */; };
 		6C12C9C51D89E2C500C82247 /* MealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C12C9C41D89E2C500C82247 /* MealViewController.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3741DF7A1DB83D5B0023FED9 /* AvgRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvgRating.swift; sourceTree = "<group>"; };
 		408A748B7C57887CBC253DEB /* Pods-food-tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-food-tracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-food-tracker/Pods-food-tracker.debug.xcconfig"; sourceTree = "<group>"; };
 		6C0E0B2D1D92FD3D00442321 /* Meal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		6C12C9BF1D89E2C500C82247 /* food-tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "food-tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 				6CF5C0C81D9473E200450F52 /* BackendlessManager.swift */,
 				6C0E0B2D1D92FD3D00442321 /* Meal.swift */,
 				6C12C9E21D8AF4B800C82247 /* RatingControl.swift */,
+				3741DF7A1DB83D5B0023FED9 /* AvgRating.swift */,
 				6C12C9C61D89E2C500C82247 /* Main.storyboard */,
 				6C12C9E71D8B116200C82247 /* MealTableViewCell.swift */,
 				6C12C9E91D8B15B200C82247 /* MealTableViewController.swift */,
@@ -310,6 +313,7 @@
 			files = (
 				6C1AE4A91D9AD9E700ECF971 /* Utility.swift in Sources */,
 				6C1AE4AB1D9ADA0600ECF971 /* RegisterViewController.swift in Sources */,
+				3741DF7B1DB83D5B0023FED9 /* AvgRating.swift in Sources */,
 				6C1AE4A71D9AD9CD00ECF971 /* LoginViewController.swift in Sources */,
 				6C12C9E51D8B069A00C82247 /* MealData.swift in Sources */,
 				6C12C9C51D89E2C500C82247 /* MealViewController.swift in Sources */,
