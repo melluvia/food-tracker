@@ -60,6 +60,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
+    
+    
+    
 	
 	// MARK: UITextFieldDelegate
 	
@@ -76,11 +79,24 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         return true
 
 	}
-	
-	func textFieldDidBeginEditing(_ textField: UITextField) {
-		// Disable the Save button while editing.
-		saveButton.isEnabled = false
-	}
+    
+    // UITextFieldDelegate, called when editing session begins, or when keyboard displayed
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        saveButton.isEnabled = false
+        
+        // Create padding for textFields
+        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
+        
+        textField.leftView = paddingView
+        textField.leftViewMode = UITextFieldViewMode.always
+        
+        if textField == restaurantNameTextField {
+            restaurantNameTextField.placeholder = "Restaurant Name"
+        } else {
+            nameTextField.placeholder = "Dish Title"
+        }
+    }
 	
 	func checkValidMealName() {
 		// Disable the Save button if the text field is empty.
