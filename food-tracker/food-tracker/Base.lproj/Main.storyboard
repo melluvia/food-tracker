@@ -131,7 +131,7 @@
                                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="yes" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
                                                 <dataDetectorType key="dataDetectorTypes" link="YES" lookupSuggestion="YES"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="BYZ-38-t0r" id="DED-Xy-RMh"/>
@@ -144,14 +144,20 @@
                                                             <constraint firstAttribute="height" constant="40" id="EZ2-UO-WhJ"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="yes" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="tPX-ce-hx0"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Dish Title" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="JVV-pV-lvV">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="0eA-9l-fjq"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="yes" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="2W7-mw-psc"/>
+                                                        </connections>
                                                     </textField>
                                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="VXP-mk-If4" userLabel="Photo Image View">
                                                         <gestureRecognizers/>
@@ -170,12 +176,16 @@
                                                     </view>
                                                 </subviews>
                                                 <constraints>
+                                                    <constraint firstItem="VXP-mk-If4" firstAttribute="top" secondItem="JVV-pV-lvV" secondAttribute="bottom" constant="12" id="0do-6j-V6V"/>
                                                     <constraint firstAttribute="width" constant="260" id="B8S-Nr-a4y"/>
-                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="Q8f-xr-nDZ" secondAttribute="leading" id="HZS-tM-ncn"/>
+                                                    <constraint firstItem="Q8f-xr-nDZ" firstAttribute="leading" secondItem="437-ZG-kFT" secondAttribute="leading" id="Ens-KU-xaN"/>
+                                                    <constraint firstItem="Q8f-xr-nDZ" firstAttribute="top" secondItem="437-ZG-kFT" secondAttribute="top" id="HaE-8g-Ccd"/>
+                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="437-ZG-kFT" secondAttribute="leading" id="MyD-Qr-w4P"/>
                                                     <constraint firstItem="VXP-mk-If4" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="PHE-lu-7MQ"/>
-                                                    <constraint firstItem="Q8f-xr-nDZ" firstAttribute="centerY" secondItem="437-ZG-kFT" secondAttribute="centerY" constant="-183" id="WGh-eF-tI6"/>
-                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="VXP-mk-If4" secondAttribute="leading" id="a1U-3c-OZI"/>
+                                                    <constraint firstAttribute="trailing" secondItem="JVV-pV-lvV" secondAttribute="trailing" id="QYt-xj-0yt"/>
                                                     <constraint firstItem="ICG-oO-6LN" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="g5D-uq-tSC"/>
+                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="top" secondItem="Q8f-xr-nDZ" secondAttribute="bottom" constant="12" id="gMR-No-eaQ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Q8f-xr-nDZ" secondAttribute="trailing" id="pLw-e7-vu9"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
@@ -246,7 +256,7 @@
                         <outlet property="notesView" destination="3S3-1c-5TM" id="VV2-y5-TDX"/>
                         <outlet property="photoImageView" destination="VXP-mk-If4" id="1WG-cR-3jX"/>
                         <outlet property="ratingControl" destination="ICG-oO-6LN" id="yYU-xu-Ioj"/>
-                        <outlet property="restaurantName" destination="Q8f-xr-nDZ" id="eKe-F6-NbS"/>
+                        <outlet property="restaurantNameTextField" destination="Q8f-xr-nDZ" id="PcJ-j2-5pM"/>
                         <outlet property="saveButton" destination="H54-sf-MR9" id="Q9e-02-Nox"/>
                         <outlet property="saveSpinner" destination="zpA-5m-LrH" id="iaY-Z9-aDZ"/>
                         <outlet property="scrollView" destination="wG0-yL-wli" id="tS3-HI-jYp"/>
@@ -601,8 +611,8 @@
         <image name="sign-in-btn" width="320" height="46"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2m5-1t-NAp"/>
         <segue reference="lgY-ru-F6t"/>
+        <segue reference="Av5-fB-9fV"/>
         <segue reference="V4i-3B-om2"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -12,7 +12,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
 	// MARK: Properties
 	
-    @IBOutlet weak var restaurantName: UITextField!
+    @IBOutlet weak var restaurantNameTextField: UITextField!
 	@IBOutlet weak var nameTextField: UITextField!
 	@IBOutlet weak var photoImageView: UIImageView!
 	@IBOutlet weak var ratingControl: RatingControl!
@@ -34,6 +34,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		notesView.delegate = self
 		notesView.text = "Describe the dish or recipe..."
 		notesView.textColor = UIColor.lightGray
+        
         // Set up views if editing an existing Meal.
         if let meal = meal {
             navigationItem.title = meal.name
@@ -66,11 +67,11 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Hide the keyboard.
 		//textField.resignFirstResponder()
 		
-//		if textField == nameTextField {
-//			notesView.becomeFirstResponder()
-//        } else {
+		if textField == restaurantNameTextField {
+			nameTextField.becomeFirstResponder()
+        } else {
             textField.resignFirstResponder()
-//        }
+        }
         
         return true
 
@@ -171,13 +172,14 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		let rating = ratingControl.rating
 		let photo = photoImageView.image
 		let note = notesView.text ?? ""
+        let restaurantName = restaurantNameTextField.text ?? ""
 		
 		saveSpinner.isHidden = false
 		saveSpinner.startAnimating()
 		
 		if meal == nil {
 			
-			meal = MealData(name: name, photo: photo, rating: rating, note: note)
+            meal = MealData(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName)
 			
 		} else {
 			
@@ -185,6 +187,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 			meal?.photo = photo
 			meal?.rating = rating
 			meal?.note = note
+            meal?.restaurantName = restaurantName
 		}
 		
 		if BackendlessManager.sharedInstance.isUserLoggedIn() {

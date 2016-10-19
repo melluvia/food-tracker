@@ -279,6 +279,7 @@ class BackendlessManager {
             mealToSave.name = mealData.name
             mealToSave.rating = mealData.rating
             mealToSave.note = mealData.note
+            mealToSave.restaurantName = mealData.restaurantName 
 			
             savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
                                                        
@@ -521,7 +522,7 @@ class BackendlessManager {
                     
                     print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
                     
-					let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "))
+                    let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "))
 					
                     if let newMealData = newMealData {
                         
