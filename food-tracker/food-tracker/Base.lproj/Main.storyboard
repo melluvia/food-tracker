@@ -122,12 +122,33 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t2G-2v-YF2" userLabel="Container View">
                                         <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" indicatorStyle="black" minimumZoomScale="2" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="3S3-1c-5TM" userLabel="Notes View">
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="466" id="0Z1-9Q-Z0P"/>
+                                                </constraints>
+                                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES" lookupSuggestion="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="DED-Xy-RMh"/>
+                                                </connections>
+                                            </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="437-ZG-kFT">
                                                 <subviews>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  Restaurant Name" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="Q8f-xr-nDZ">
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="EZ2-UO-WhJ"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    </textField>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Dish Title" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="JVV-pV-lvV">
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="260" id="pBn-2H-r1p"/>
-                                                            <constraint firstAttribute="height" constant="40" id="vYF-Y3-dme"/>
+                                                            <constraint firstAttribute="height" constant="40" id="0eA-9l-fjq"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
@@ -150,35 +171,19 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="260" id="B8S-Nr-a4y"/>
+                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="Q8f-xr-nDZ" secondAttribute="leading" id="HZS-tM-ncn"/>
                                                     <constraint firstItem="VXP-mk-If4" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="PHE-lu-7MQ"/>
-                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="Pud-VC-sqw"/>
-                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="437-ZG-kFT" secondAttribute="leading" id="TXK-iY-3NH"/>
+                                                    <constraint firstItem="Q8f-xr-nDZ" firstAttribute="centerY" secondItem="437-ZG-kFT" secondAttribute="centerY" constant="-183" id="WGh-eF-tI6"/>
+                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="VXP-mk-If4" secondAttribute="leading" id="a1U-3c-OZI"/>
                                                     <constraint firstItem="ICG-oO-6LN" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="g5D-uq-tSC"/>
-                                                    <constraint firstAttribute="trailing" secondItem="JVV-pV-lvV" secondAttribute="trailing" id="hs3-D2-qpk"/>
-                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="top" secondItem="437-ZG-kFT" secondAttribute="top" id="lbD-90-7RH"/>
                                                 </constraints>
                                             </stackView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" indicatorStyle="black" minimumZoomScale="2" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="3S3-1c-5TM" userLabel="Notes View">
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="547" id="0Z1-9Q-Z0P"/>
-                                                </constraints>
-                                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                                <dataDetectorType key="dataDetectorTypes" link="YES" lookupSuggestion="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="DED-Xy-RMh"/>
-                                                </connections>
-                                            </textView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="3S3-1c-5TM" firstAttribute="top" secondItem="437-ZG-kFT" secondAttribute="bottom" constant="8" symbolic="YES" id="2if-Q9-qH2"/>
+                                            <constraint firstItem="3S3-1c-5TM" firstAttribute="top" secondItem="437-ZG-kFT" secondAttribute="bottom" constant="16" id="2if-Q9-qH2"/>
                                             <constraint firstAttribute="width" constant="375" id="59T-9c-eSl"/>
-                                            <constraint firstAttribute="bottom" secondItem="437-ZG-kFT" secondAttribute="bottom" constant="361" id="5Yz-aL-1DX"/>
-                                            <constraint firstItem="437-ZG-kFT" firstAttribute="top" secondItem="t2G-2v-YF2" secondAttribute="top" constant="71" id="Dyn-Zq-DXg"/>
+                                            <constraint firstAttribute="bottom" secondItem="437-ZG-kFT" secondAttribute="bottom" constant="340" id="5Yz-aL-1DX"/>
+                                            <constraint firstItem="437-ZG-kFT" firstAttribute="top" secondItem="t2G-2v-YF2" secondAttribute="top" constant="92" id="Dyn-Zq-DXg"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" id="FTI-FJ-Ira"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="R01-QG-Tbw"/>
                                             <constraint firstAttribute="trailing" secondItem="437-ZG-kFT" secondAttribute="trailing" constant="58" id="kgX-b9-jAh"/>
@@ -241,6 +246,7 @@
                         <outlet property="notesView" destination="3S3-1c-5TM" id="VV2-y5-TDX"/>
                         <outlet property="photoImageView" destination="VXP-mk-If4" id="1WG-cR-3jX"/>
                         <outlet property="ratingControl" destination="ICG-oO-6LN" id="yYU-xu-Ioj"/>
+                        <outlet property="restaurantName" destination="Q8f-xr-nDZ" id="eKe-F6-NbS"/>
                         <outlet property="saveButton" destination="H54-sf-MR9" id="Q9e-02-Nox"/>
                         <outlet property="saveSpinner" destination="zpA-5m-LrH" id="iaY-Z9-aDZ"/>
                         <outlet property="scrollView" destination="wG0-yL-wli" id="tS3-HI-jYp"/>
