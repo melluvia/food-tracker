@@ -141,4 +141,31 @@ class LoginViewController: UIViewController {
                 Utility.showAlert(viewController: self, title: "Login Error", message: message)
             })
     }
+    
+    @IBAction func onSkipWithoutLogin(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: "gotoMenuFromLogin", sender: sender)
+    }
+    
+    // MARK: UITextFieldDelegate
+    
+    // UITextFieldDelegate, called when Return tapped on keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        
+        if textField == emailTextField {
+            
+            passwordTextField.becomeFirstResponder()
+            
+        } else {
+            textField.resignFirstResponder()
+            
+        }
+        
+        return true
+    }
+
+    
+    
+    
 }

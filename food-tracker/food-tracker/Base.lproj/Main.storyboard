@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -98,7 +98,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="wLa-aO-8YV" kind="show" identifier="gotoLoginFromMenu" id="hap-bA-pZT"/>
+                        <segue destination="wLa-aO-8YV" kind="presentation" identifier="gotoLoginFromMenu" id="hap-bA-pZT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0op-lb-LXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -281,7 +281,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Lg-56-pSK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-794" y="456"/>
+            <point key="canvasLocation" x="-876" y="1029"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4nQ-al-Rho">
@@ -336,23 +336,29 @@
                                             <action selector="loginViaFacebook:" destination="wLa-aO-8YV" eventType="touchUpInside" id="vQh-kc-C0B"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="     Email" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="KSk-Vq-hdg">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="     Email" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="KSk-Vq-hdg">
                                         <constraints>
                                             <constraint firstAttribute="width" constant="260" id="WfL-UY-aZL"/>
                                             <constraint firstAttribute="height" constant="40" id="YbD-n6-Xzz"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wLa-aO-8YV" id="lME-gW-bJD"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Password" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="EIy-Au-byO">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Password" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="EIy-Au-byO">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="VEx-Es-HMg"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="260" id="wNe-Sp-ZBq"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wLa-aO-8YV" id="dJW-ag-Qbl"/>
+                                        </connections>
                                     </textField>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lB7-Gk-BgS">
                                         <constraints>
@@ -388,6 +394,9 @@
                                         <state key="normal" title="Or start using without Login">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onSkipWithoutLogin:" destination="wLa-aO-8YV" eventType="touchUpInside" id="qkp-nJ-xmB"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -416,6 +425,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="emailTextField" destination="KSk-Vq-hdg" id="BOX-5T-TYp"/>
+                        <outlet property="facebookLoginBtn" destination="gfH-dC-tTi" id="oIP-f0-NDo"/>
                         <outlet property="loginBtn" destination="2FC-Kt-D7C" id="1rK-P8-YXT"/>
                         <outlet property="passwordTextField" destination="EIy-Au-byO" id="Xca-tl-21s"/>
                         <outlet property="spinner" destination="lB7-Gk-BgS" id="8tU-o6-R2e"/>
@@ -471,7 +481,10 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="yes" keyboardType="emailAddress" returnKeyType="next"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3Zu-8Q-6nz" id="xxy-dI-uyQ"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Password" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="ghP-pC-Vzu">
                                         <constraints>
@@ -480,7 +493,10 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3Zu-8Q-6nz" id="iY7-6D-V18"/>
+                                        </connections>
                                     </textField>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s3m-Fd-ieE"/>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Confirm Password" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="xyy-Rt-p2x">
@@ -490,7 +506,10 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="3Zu-8Q-6nz" id="xHb-bS-zg3"/>
+                                        </connections>
                                     </textField>
                                     <button contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8Y-5P-9Jq">
                                         <constraints>

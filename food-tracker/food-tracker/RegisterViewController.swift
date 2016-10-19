@@ -116,6 +116,32 @@ class RegisterViewController: UIViewController {
                 Utility.showAlert(viewController: self, title: "Register Error", message: message)
             })
     }
+    
+    // MARK: UITextFieldDelegate
+    
+    // UITextFieldDelegate, called when Return tapped on keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        
+        if textField == emailTextField {
+            
+            passwordTextField.becomeFirstResponder()
+            
+        } else if textField == passwordTextField {
+            
+            passwordConfirmTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            
+            if passwordTextField.text != passwordConfirmTextField.text {
+                
+                registerBtn.isEnabled = false                
+            }
+        }
+        
+        return true
+    }
+
 
     func logoutUser(completion: @escaping () -> (), error: @escaping (String) -> ()) {
         
