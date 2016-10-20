@@ -24,6 +24,7 @@ class MealData: NSObject, NSCoding {
 	// MARK: Backendless Only Properties
 	
 	var objectId: String?
+    var ownerId: String?
 	var photoUrl: String?
 	var thumbnailUrl: String?
 	
@@ -55,6 +56,8 @@ class MealData: NSObject, NSCoding {
 		self.rating = rating
 		self.note = note
         self.restaurantName = restaurantName
+        
+        var touches: Int? = 1
 		
 		super.init()
 		

@@ -21,6 +21,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	@IBOutlet weak var notesView: UITextView!
 	@IBOutlet weak var scrollView: UIScrollView!
     
+    var addingNewItem: Bool? = false
+    
     
 	/*
 	This value is either passed by `MealTableViewController` in `prepareForSegue(_:sender:)`
@@ -30,6 +32,17 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        let userId = BackendlessManager.sharedInstance.backendless.userService.currentUser.objectId!
+        
+        if addingNewItem == false && userId as String != meal?.ownerId {
+            
+            restaurantNameTextField.isEnabled = false
+            nameTextField.isEnabled = false
+            photoImageView.isUserInteractionEnabled = false
+            notesView.isEditable = false
+        }
+
 	
 		// Handle the text field’s user input through delegate callbacks.
 		nameTextField.delegate = self
@@ -384,6 +397,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Reset the scroll view back to where it was!
 		self.scrollView.contentInset = UIEdgeInsets.zero
 	}
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        
+//        if segue.identifier == "unwindToMealList" {
+//            
+//        }
+//    }
 
 }
 

@@ -13,6 +13,9 @@ class MealTableViewController: UITableViewController {
 	// MARK: Properties
 	
 	var meals = [MealData]()
+    var filteredMeals = [MealData]()
+    
+    var isDeleting: Bool = false
     
 	// Create cache that uses NSString keys to point to UIImages.
 	var imageCache = NSCache<NSString, UIImage>()
@@ -90,7 +93,39 @@ class MealTableViewController: UITableViewController {
     
     func onEditBtn(sender: UIBarButtonItem) {
         
+        if isDeleting == true {
+            
+            isDeleting = false
+            
+        } else {
+            
+           isDeleting = true
+        }
+        
+        print("\(isDeleting)")
+        
+        filterMealsByOwner()
+        
         self.tableView.isEditing = !self.tableView.isEditing
+        
+        refresh(sender: self)
+        
+    }
+    
+    func filterMealsByOwner() {
+        
+        filteredMeals = []
+        
+        let userId = BackendlessManager.sharedInstance.backendless.userService.currentUser.objectId!
+        
+        for meal in meals {
+            
+            if meal.ownerId  == userId as String {
+                
+                filteredMeals.append(meal)
+            }
+        }
+        tableView.reloadData()
     }
     
     func loadSampleMeals() {
@@ -119,21 +154,26 @@ class MealTableViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		
-		return meals.count
-	}
+        if isDeleting == true {
+            return filteredMeals.count
+        }
+        
+        return meals.count
+
+    }
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		
 		// Table view cells are reused and should be dequeued using a cell identifier.
-		let cellIdentifier = "MealTableViewCell"
-		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! MealTableViewCell
-		
-		// Fetches the appropriate meal for the data source layout.
-		let meal = meals[(indexPath as NSIndexPath).row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: "MealTableViewCell", for: indexPath) as! MealTableViewCell
         
-        //the actual rating for the cell will go here
-        //call the function to calculate rating and set = to cell.avgStarlabel.text (Dbl?)
+        let meal: MealData
+        
+        if isDeleting == true {
+            meal = filteredMeals[indexPath.row]
+        } else {
+            meal = meals[indexPath.row]
+        }
         
 		cell.nameLabel.text = meal.name
         cell.ratingControl.rating = meal.rating
@@ -174,7 +214,7 @@ class MealTableViewController: UITableViewController {
         else {
             cell.photoImageView.image = meal.photo
         }
-		
+  //      }
 		return cell
 	}
 	
@@ -232,31 +272,30 @@ class MealTableViewController: UITableViewController {
 			if BackendlessManager.sharedInstance.isUserLoggedIn() {
 				
 				// Find the MealData in the data source that we wish to delete.
-				let mealToRemove = meals[indexPath.row]
-				
-				BackendlessManager.sharedInstance.removeMeal(mealToRemove: mealToRemove,
+				let mealToRemove = filteredMeals[indexPath.row]
+                
+                    BackendlessManager.sharedInstance.removeMeal(mealToRemove: mealToRemove,
 				                                             
-					completion: {
+                        completion: {
 						
-						// It was removed from the database, now delete the row from the data source.
-						self.meals.remove(at: (indexPath as NSIndexPath).row)
-						tableView.deleteRows(at: [indexPath], with: .fade)
-					},
+                            // It was removed from the database, now delete the row from the data source.
+                            self.filteredMeals.remove(at: (indexPath as NSIndexPath).row)
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                        },
 									 
-					error: {
+                        error: {
 						
-						// It was NOT removed - tell the user and DON'T delete the row from the data source.
-						let alertController = UIAlertController(title: "Remove Failed",
-															message: "Oops! We couldn't remove your Meal at this time.",
-															preferredStyle: .alert)
+                            // It was NOT removed - tell the user and DON'T delete the row from the data source.
+                            let alertController = UIAlertController(title: "Remove Failed",
+                                message: "Oops! We couldn't remove your Meal at this time.",
+                                preferredStyle: .alert)
 
-						let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-						alertController.addAction(okAction)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alertController.addAction(okAction)
 					
-						self.present(alertController, animated: true, completion: nil)
-					}
-				)
-				
+                            self.present(alertController, animated: true, completion: nil)
+                    })
+
 			} else {
 				
 				// Delete the row from the data source
@@ -292,6 +331,12 @@ class MealTableViewController: UITableViewController {
 			
 		} else if segue.identifier == "AddItem" {
 			print("Adding new meal.")
+            
+            let navVC = segue.destination as! UINavigationController
+            let nextVC = navVC.topViewController as! MealViewController
+            
+            nextVC.addingNewItem = true 
+            
 		}
 	}
 	
@@ -304,6 +349,8 @@ class MealTableViewController: UITableViewController {
 				// Update an existing meal.
 				meals[(selectedIndexPath as NSIndexPath).row] = meal
 				tableView.reloadRows(at: [selectedIndexPath], with: .none)
+//!!!!!!!!!!!!!!!!!!!!!!!
+                
 				
 			} else {
 				
@@ -318,6 +365,7 @@ class MealTableViewController: UITableViewController {
 				saveMealsToArchiver()
 			}
 		}
+        refresh(sender: sender)
 	}
 	
 	// MARK: NSCoding

@@ -279,7 +279,8 @@ class BackendlessManager {
             mealToSave.name = mealData.name
             mealToSave.rating = mealData.rating
             mealToSave.note = mealData.note
-            mealToSave.restaurantName = mealData.restaurantName 
+            mealToSave.restaurantName = mealData.restaurantName
+            mealToSave.ownerId = mealData.ownerId
 			
             savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
                                                        
@@ -292,7 +293,7 @@ class BackendlessManager {
 
                             let meal = entity as! Meal
 
-                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\"")
+                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
 
                             mealData.objectId = meal.objectId
                             mealData.photoUrl = meal.photoUrl
@@ -345,6 +346,7 @@ class BackendlessManager {
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
                             meal.restaurantName = mealToSave.restaurantName
+                            meal.ownerId = mealToSave.ownerId
                             
                             // Save the updated Meal.
                             self.backendless.data.save( meal,
@@ -353,7 +355,7 @@ class BackendlessManager {
                                     
                                     let meal = entity as! Meal
                                     
-                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
+                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
                                     
                                     // Update the mealData used by the UI with the new URLS!
                                     mealData.photoUrl = meal.photoUrl
@@ -416,6 +418,7 @@ class BackendlessManager {
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
                             meal.restaurantName = mealToSave.restaurantName
+                            meal.ownerId = mealToSave.ownerId
                             
                             // Save the updated Meal.
                             self.backendless.data.save( meal,
@@ -424,7 +427,7 @@ class BackendlessManager {
                                     
                                     let meal = entity as! Meal
                                     
-                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\" note: \"\(meal.note)\"")
+                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
                                     
                                     // Update the mealData used by the UI with the new URLS!
                                     mealData.photoUrl = meal.photoUrl
@@ -474,6 +477,7 @@ class BackendlessManager {
                     meal.rating = mealData.rating
 					meal.note = mealData.note
                     meal.restaurantName = mealData.restaurantName
+                    meal.ownerId = mealData.ownerId
                     
                     // Save the updated Meal.
                     self.backendless.data.save( meal,
@@ -482,7 +486,7 @@ class BackendlessManager {
                             
                             let meal = entity as! Meal
                             
-                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
+                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
                             
                             completion()
                         },
@@ -525,6 +529,8 @@ class BackendlessManager {
                     
                     print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
                     
+                    print("OwnerId: \(meal.ownerId!)")
+                    
                     let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "))
 					
                     if let newMealData = newMealData {
@@ -534,6 +540,7 @@ class BackendlessManager {
                         newMealData.thumbnailUrl = meal.thumbnailUrl
 						newMealData.note = meal.note
                         newMealData.restaurantName = meal.restaurantName
+                        newMealData.ownerId = meal.ownerId
                         
                         mealData.append(newMealData)
                     }
@@ -569,6 +576,49 @@ class BackendlessManager {
             }
         )
     }
+    
+//    // Load meals from that owner
+//    func loadUserOnlyMeals(user: BackendlessUser, completion: @escaping ([MealData]) -> (), error: @escaping () -> ()) {
+//        
+//        let userId = backendless.userService.currentUser.objectId
+//        
+//        let dataStore = self.backendless.data.of(Meal.ofClass())
+//        
+//        let dataQuery = BackendlessDataQuery()
+//        dataQuery.whereClause = "ownerId = \(userId!)"
+//        
+//        dataStore?.find(dataQuery,
+//        
+//            response: { (meals: BackendlessCollection?) -> Void in
+//                
+//                print("Find attempt on Meals with a certain ownerId has completed without error!")
+//                print("Number of Meals found = \((meals?.data.count)!)")
+//                
+//                let mealData = [MealData]()
+//                
+//                if (meals?.data.count)! > 0 {
+//                    
+//                    for meal in (meals?.data)! {
+//                        
+//                        let meal = meal as! Meal
+//                        
+//                        print("Id: \(meal.objectId!), name: \(meal.name!)")
+//                    }
+//                    
+//                    completion(mealData)
+//                    
+//                } else {
+//                    print("No Meals were fetched using the whereClause '\(dataQuery.whereClause)'")
+//                }
+//            },
+//                        
+//            error: { ( fault: Fault?) -> Void in
+//                print("Meals were not fetched: \(fault)")
+//            })
+//        
+//        
+//    
+//    }
     
     func removePhotoAndThumbnail(photoUrl: String, thumbnailUrl: String, completion: @escaping () -> (), error: @escaping () -> ()) {
         

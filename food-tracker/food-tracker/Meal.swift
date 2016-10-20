@@ -9,6 +9,8 @@
 import Foundation
 
 class Meal : NSObject {
+    
+    var ownerId: String?
 	
 	var objectId: String?
 	var name: String?
@@ -17,4 +19,6 @@ class Meal : NSObject {
 	var rating: Int = 0
 	var note: String?
     var restaurantName: String?
+    
+    var touches: Int? = 1
 }
