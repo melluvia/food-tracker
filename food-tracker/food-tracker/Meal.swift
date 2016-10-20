@@ -20,5 +20,4 @@ class Meal : NSObject {
 	var note: String?
     var restaurantName: String?
     
-    var touches: Int? = 1
 }

@@ -56,9 +56,7 @@ class MealData: NSObject, NSCoding {
 		self.rating = rating
 		self.note = note
         self.restaurantName = restaurantName
-        
-        var touches: Int? = 1
-		
+        		
 		super.init()
 		
 		// Initialization should fail if there is no name or if the rating is negative.

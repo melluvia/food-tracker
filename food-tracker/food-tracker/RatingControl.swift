@@ -22,22 +22,6 @@ class RatingControl: UIView {
 	let spacing = 5
 	let starCount = 5
     
-    /////////////////////////////////////////////////// Meal, MealData
-    var touches = 1
-    
-    func averageStars(touches: Int...) -> Float {
-        
-        var sum = 0
-        for amount in touches {
-            sum += amount
-        }
-        let average: Float = (Float(sum) / Float(touches.count))
-        
-        return average
-    }
-    
-    
-    ////////////////////////////////////////////////////
 	
 	// MARK: Initialization
 	
@@ -91,9 +75,6 @@ class RatingControl: UIView {
 	// MARK: Button Action
 	
 	func ratingButtonTapped(_ button: UIButton) {
-        
-///////////////////////////////////
-		touches += 1
         
 		rating = ratingButtons.index(of: button)! + 1
 		
