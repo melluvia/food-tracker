@@ -192,5 +192,6 @@ class RegisterViewController: UIViewController {
         
         dismiss(animated: true, completion: nil)
     }
+    
 }
 

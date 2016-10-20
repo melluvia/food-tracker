@@ -13,15 +13,7 @@ class MealTableViewController: UITableViewController {
 	// MARK: Properties
 	
 	var meals = [MealData]()
-	
-	let backendless = Backendless.sharedInstance()!
-	
-
-	func onEditBtn(sender: UIBarButtonItem) {
-		
-		self.tableView.isEditing = !self.tableView.isEditing
-	}
-	
+    
 	// Create cache that uses NSString keys to point to UIImages.
 	var imageCache = NSCache<NSString, UIImage>()
 	
@@ -30,39 +22,13 @@ class MealTableViewController: UITableViewController {
 		
 		imageCache.countLimit = 50 // sets cache limit to 50 images.
 
-	// show toolbar
         // Add support for pull-to-refresh on the table view.
-        
         self.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: UIControlEvents.valueChanged)
         
         // Use the edit button item provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem
         
-        if BackendlessManager.sharedInstance.isUserLoggedIn() {
-            
-            refresh(sender: self)
-            
-        } else {
-            
-            // Load any saved meals, otherwise load sample data.
-            if let savedMeals = loadMealsFromArchiver() {
-                meals += savedMeals
-            } else {
-                // Load the sample data.
-            }
-            
-        }
-  
-        
-//		let image = UIImage(named: "logout")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-//		
-//		let toolBarButtonItem = UIBarButtonItem(image: image,
-//		                                        style: UIBarButtonItemStyle.plain,
-//		                                        target: self,
-//		                                        action: #selector(on(sender:)))
-//		
-	// set image on bar button item
-		
+        // set image on bar button item
 		let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
 		
 		let leftBarButtonItem = UIBarButtonItem(image: img,
@@ -73,50 +39,73 @@ class MealTableViewController: UITableViewController {
 			
 		self.navigationItem.leftBarButtonItem = leftBarButtonItem
 		
+        if !BackendlessManager.sharedInstance.isUserLoggedIn() {
+            
+            // Load any saved meals, otherwise load sample data.
+            // if user is not logged in, we use the archiver
+            if let savedMeals = loadMealsFromArchiver() {
+                meals += savedMeals
+            } else {
+                
+                loadSampleMeals()
+            }
+        } else {
+    
+        refresh(sender: self)
+    }
 
-		if BackendlessManager.sharedInstance.isUserLoggedIn() {
-			
-			BackendlessManager.sharedInstance.loadMeals { mealData in
-				
-				self.meals += mealData
-				
-				//sort the meals from highest to lowest rating
-				
-				self.meals.sort {
-					
-                       $0.rating > $1.rating
-				}
-                   
-				self.tableView.reloadData()
-			}
-			
-		} else {
-			
-			// Load any saved meals, otherwise load sample data.
-			if let savedMeals = loadMealsFromArchiver() {
-				meals += savedMeals
-			} else {
-				// Load the sample data.
-				
-				// HACK: Disabled sample meal data for now!
-				//loadSampleMeals()
-			}
-		}
-	}
-	
-//	func loadSampleMeals() {
-//		
-//		let photo1 = UIImage(named: "meal1")!
-//		let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4)!
-//		
-//		let photo2 = UIImage(named: "meal2")!
-//		let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5)!
-//		
-//		let photo3 = UIImage(named: "meal3")!
-//		let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3)!
-//		
-//		meals += [meal1, meal2, meal3]
-//	}
+		///				//sort the meals from highest to lowest rating
+////TODO: WHO IS SORTING MEALS???????????????????????????????????
+//				self.meals.sort {
+//					
+//                       $0.rating > $1.rating
+
+        
+    }
+    
+    func refresh(sender: AnyObject) {
+        
+        if BackendlessManager.sharedInstance.isUserLoggedIn() {
+            
+            // Updated loadMeals in BEManager to throw error if fails
+            BackendlessManager.sharedInstance.loadMeals(
+                
+                completion: { mealData in
+                    
+                    // remove the += or else we duplicate the meals
+                    self.meals = mealData
+                    self.tableView.reloadData()
+                    self.refreshControl?.endRefreshing()
+                },
+                
+                error: {
+                    self.tableView.reloadData()
+                    self.refreshControl?.endRefreshing()
+            })
+        } else {
+            refreshControl!.endRefreshing()
+        }
+
+    }
+    
+    func onEditBtn(sender: UIBarButtonItem) {
+        
+        self.tableView.isEditing = !self.tableView.isEditing
+    }
+    
+    func loadSampleMeals() {
+        
+        let photo1 = UIImage(named: "meal1")!
+        let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4, note: "A great Salad!", restaurantName: "My Kitchen!!")!
+        
+        let photo2 = UIImage(named: "meal2")!
+        let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5, note: "Gotta Love Chicken!", restaurantName: "My mom's house")!
+        
+        let photo3 = UIImage(named: "meal3")!
+        let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3, note: "Just average.", restaurantName: "Denny's")!
+        
+        meals += [meal1, meal2, meal3]
+    }
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -147,45 +136,44 @@ class MealTableViewController: UITableViewController {
         //call the function to calculate rating and set = to cell.avgStarlabel.text (Dbl?)
         
 		cell.nameLabel.text = meal.name
-		
-		cell.photoImageView.image = nil
-		
-		if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {
-			
-			if imageCache.object(forKey: meal.thumbnailUrl! as NSString) != nil {
-				
-				// If the URL for the thumbnail is in the cache already - get the UIImage that belongs to it.
-				cell.photoImageView.image = imageCache.object(forKey: meal.thumbnailUrl! as NSString)
-				
-			} else {
-				
-				cell.spinner.startAnimating()
-				
-				loadImageFromUrl(thumbnailUrl: meal.thumbnailUrl!,
-					
-					completion: { data in
-						// retrieved data- using it to create a UIImage for our cell's ui imageview.
-						if let image = UIImage(data: data) {
-						
-							cell.photoImageView.image = image
-							
-							// cache the pulled down UIImage using the URL as the key.
-							self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
-						}
-						
-						cell.spinner.stopAnimating()
-					},
-					
-					loadError: {
-						cell.spinner.stopAnimating()
-					})
-			}
-			
-		} else {
-			cell.photoImageView.image = meal.photo
-		}
-		
-		cell.ratingControl.rating = meal.rating
+        cell.ratingControl.rating = meal.rating
+        
+        // For NSCache, if we have the cache key we put it on the cell when it gets created
+        if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {
+            
+            if imageCache.object(forKey: meal.thumbnailUrl! as NSString) != nil {
+                
+                // If the URL for the thumbnail is in the cache already - get the UIImage that belongs to it.
+                cell.photoImageView.image = imageCache.object(forKey: meal.thumbnailUrl! as NSString)
+                
+            } else {
+                
+                cell.spinner.startAnimating()
+                
+                loadImageFromUrl(thumbnailUrl: meal.thumbnailUrl!,
+                                 
+                    completion: { data in
+                        // retrieved data- using it to create a UIImage for our cell's ui imageview.
+                        if let image = UIImage(data: data) {
+                                        
+                            cell.photoImageView.image = image
+                                        
+                            // cache the pulled down UIImage using the URL as the key.
+                            self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
+                        }
+                                    
+                        cell.spinner.stopAnimating()
+                    },
+                                 
+                    loadError: {
+                        cell.spinner.stopAnimating()
+                })
+            }
+            
+        }
+        else {
+            cell.photoImageView.image = meal.photo
+        }
 		
 		return cell
 	}
@@ -398,24 +386,6 @@ class MealTableViewController: UITableViewController {
 
 	}
     
-    func refresh(sender: AnyObject) {
-        
-        if BackendlessManager.sharedInstance.isUserLoggedIn() {
-            
-            BackendlessManager.sharedInstance.loadMeals(
-                
-                completion: { mealData in
-                    
-                    self.meals = mealData
-                    
-                    //                    self.meals.sort {
-                    //                        $0.rating > $1.rating
-                    //                    }
-                    
-                    self.tableView.reloadData()
-                    self.refreshControl?.endRefreshing()
-            })
-        }
-    }
+    
 
 }

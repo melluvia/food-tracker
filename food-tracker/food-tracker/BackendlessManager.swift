@@ -501,7 +501,7 @@ class BackendlessManager {
         }
     }
     
-    func loadMeals(completion: @escaping ([MealData]) -> ()) {
+    func loadMeals(completion: @escaping ([MealData]) -> (), error: @escaping () -> ()) {
         
         let dataStore = backendless.persistenceService.of(Meal.ofClass())
         

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -114,12 +114,12 @@
                         <barButtonItem key="rightBarButtonItem" image="plus" id="56J-8c-c9J">
                             <color key="tintColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="EJD-nR-RBM" kind="presentation" identifier="AddItem" id="4Df-Wv-jVt"/>
+                                <segue destination="EJD-nR-RBM" kind="presentation" identifier="AddItem" id="hz2-aX-Cwx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="QLt-QE-Dko">
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="oXu-fk-V10">
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
@@ -164,19 +164,22 @@
                                             </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="437-ZG-kFT">
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  Restaurant Name" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="Q8f-xr-nDZ">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant Name" textAlignment="center" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="Q8f-xr-nDZ">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="EZ2-UO-WhJ"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="yes" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="y7u-yF-rxV"/>
+                                                        </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="     Dish Title" textAlignment="natural" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="JVV-pV-lvV">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Dish Title" textAlignment="center" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="JVV-pV-lvV">
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="0eA-9l-fjq"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="yes" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     </textField>
                                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="VXP-mk-If4" userLabel="Photo Image View">
                                                         <gestureRecognizers/>
@@ -196,19 +199,23 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="260" id="B8S-Nr-a4y"/>
-                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="Q8f-xr-nDZ" secondAttribute="leading" id="HZS-tM-ncn"/>
+                                                    <constraint firstItem="Q8f-xr-nDZ" firstAttribute="top" secondItem="437-ZG-kFT" secondAttribute="top" id="LIQ-A5-YOJ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Q8f-xr-nDZ" secondAttribute="trailing" id="LJc-ii-KT9"/>
                                                     <constraint firstItem="VXP-mk-If4" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="PHE-lu-7MQ"/>
-                                                    <constraint firstItem="Q8f-xr-nDZ" firstAttribute="centerY" secondItem="437-ZG-kFT" secondAttribute="centerY" constant="-183" id="WGh-eF-tI6"/>
-                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="VXP-mk-If4" secondAttribute="leading" id="a1U-3c-OZI"/>
+                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="top" secondItem="Q8f-xr-nDZ" secondAttribute="bottom" constant="12" id="ZJD-04-6O7"/>
+                                                    <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="437-ZG-kFT" secondAttribute="leading" id="ZkV-NV-gNC"/>
                                                     <constraint firstItem="ICG-oO-6LN" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="g5D-uq-tSC"/>
+                                                    <constraint firstAttribute="trailing" secondItem="JVV-pV-lvV" secondAttribute="trailing" id="gfM-8r-Zro"/>
+                                                    <constraint firstItem="VXP-mk-If4" firstAttribute="top" secondItem="JVV-pV-lvV" secondAttribute="bottom" constant="12" id="vqn-wR-21X"/>
+                                                    <constraint firstItem="Q8f-xr-nDZ" firstAttribute="leading" secondItem="437-ZG-kFT" secondAttribute="leading" id="xgG-JD-kmn"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="top" secondItem="437-ZG-kFT" secondAttribute="bottom" constant="16" id="2if-Q9-qH2"/>
+                                            <constraint firstItem="437-ZG-kFT" firstAttribute="top" secondItem="t2G-2v-YF2" secondAttribute="top" constant="92" id="38A-BZ-sdG"/>
                                             <constraint firstAttribute="width" constant="375" id="59T-9c-eSl"/>
                                             <constraint firstAttribute="bottom" secondItem="437-ZG-kFT" secondAttribute="bottom" constant="340" id="5Yz-aL-1DX"/>
-                                            <constraint firstItem="437-ZG-kFT" firstAttribute="top" secondItem="t2G-2v-YF2" secondAttribute="top" constant="92" id="Dyn-Zq-DXg"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" id="FTI-FJ-Ira"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="centerX" secondItem="437-ZG-kFT" secondAttribute="centerX" id="R01-QG-Tbw"/>
                                             <constraint firstAttribute="trailing" secondItem="437-ZG-kFT" secondAttribute="trailing" constant="58" id="kgX-b9-jAh"/>
@@ -271,8 +278,7 @@
                         <outlet property="notesView" destination="3S3-1c-5TM" id="VV2-y5-TDX"/>
                         <outlet property="photoImageView" destination="VXP-mk-If4" id="1WG-cR-3jX"/>
                         <outlet property="ratingControl" destination="ICG-oO-6LN" id="yYU-xu-Ioj"/>
-                        <outlet property="restaurantName" destination="Q8f-xr-nDZ" id="eKe-F6-NbS"/>
-                        <outlet property="restaurantNameTextField" destination="Q8f-xr-nDZ" id="PVR-MX-jVh"/>
+                        <outlet property="restaurantNameTextField" destination="Q8f-xr-nDZ" id="dmi-Gc-zeh"/>
                         <outlet property="saveButton" destination="H54-sf-MR9" id="Q9e-02-Nox"/>
                         <outlet property="saveSpinner" destination="zpA-5m-LrH" id="iaY-Z9-aDZ"/>
                         <outlet property="scrollView" destination="wG0-yL-wli" id="tS3-HI-jYp"/>

@@ -88,17 +88,17 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         saveButton.isEnabled = false
         
-        // Create padding for textFields
-        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
-        
-        textField.leftView = paddingView
-        textField.leftViewMode = UITextFieldViewMode.always
-        
-        if textField == restaurantNameTextField {
-            restaurantNameTextField.placeholder = "Restaurant Name"
-        } else {
-            nameTextField.placeholder = "Dish Title"
-        }
+//        // Create padding for textFields
+//        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
+//        
+//        textField.leftView = paddingView
+//        textField.leftViewMode = UITextFieldViewMode.always
+//        
+//        if textField == restaurantNameTextField {
+//            restaurantNameTextField.placeholder = "Restaurant Name"
+//        } else {
+//            nameTextField.placeholder = "Dish Title"
+//        }
     }
 	
 	func checkValidMealName() {
