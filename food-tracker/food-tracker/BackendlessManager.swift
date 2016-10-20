@@ -344,6 +344,7 @@ class BackendlessManager {
                             meal.rating = mealData.rating
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
+                            meal.restaurantName = mealToSave.restaurantName
                             
                             // Save the updated Meal.
                             self.backendless.data.save( meal,
@@ -414,6 +415,7 @@ class BackendlessManager {
                             meal.rating = mealData.rating
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
+                            meal.restaurantName = mealToSave.restaurantName
                             
                             // Save the updated Meal.
                             self.backendless.data.save( meal,
@@ -471,6 +473,7 @@ class BackendlessManager {
                     meal.name = mealData.name
                     meal.rating = mealData.rating
 					meal.note = mealData.note
+                    meal.restaurantName = mealData.restaurantName
                     
                     // Save the updated Meal.
                     self.backendless.data.save( meal,
@@ -530,6 +533,7 @@ class BackendlessManager {
                         newMealData.photoUrl = meal.photoUrl
                         newMealData.thumbnailUrl = meal.thumbnailUrl
 						newMealData.note = meal.note
+                        newMealData.restaurantName = meal.restaurantName
                         
                         mealData.append(newMealData)
                     }
