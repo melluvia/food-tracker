@@ -39,7 +39,7 @@ class AvgRating {
             tempAvg = sum / Double(2)
         }
 
-    //function that creates an array to store all ratings for each meal (this way we can continue to update average by tracking all previous ratings from all users) backendless stored
+    //function that creates an array to store all ratings for each meal (this way we can continue to update average by tracking all previous ratings from all users) backendless stored..nvm
        
         
         //calculating avg rating based on half star system
@@ -81,11 +81,7 @@ class AvgRating {
     //***create a class for changing the textfield to show average stars..not needed
     
     
-    func prevRatingArray() {
-        
-        
-        
-    }
+    
     
     
     

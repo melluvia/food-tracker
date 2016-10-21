@@ -77,8 +77,8 @@ class RatingControl: UIView {
 	
 	func ratingButtonTapped(_ button: UIButton) {
 
-        
-		rating = Double(ratingButtons.index(of: button)! + 1)
+        //**why is this here twice????
+	//	rating = Double(ratingButtons.index(of: button)! + 1)
 
 		
 		rating = Double(ratingButtons.index(of: button)! + 1)

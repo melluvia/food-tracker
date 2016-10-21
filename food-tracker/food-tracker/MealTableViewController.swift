@@ -180,9 +180,12 @@ class MealTableViewController: UITableViewController {
         
         var pastR: [Double] = [6.0]
         //set pastR to prevRating if its != nil
-        if Meal.init().starRatings != nil {
+        if meal.prevRating != nil {
+            //prev ratings needs to be stored in backendless
+            //Meal[indexPath.row].starRating = meal.prevRating
             //splitting up ratings into seperate number(but in quotes)
-            let prevRatArray = Meal.init().starRatings!.components(separatedBy: ".")
+            var prevRatArray = meal.prevRating!.components(separatedBy: ".")
+            prevRatArray.removeLast()
             var tempArray: [Double] = []
             //this loop will change strings into Doubles
             for i in prevRatArray{
@@ -341,6 +344,11 @@ class MealTableViewController: UITableViewController {
 				let indexPath = tableView.indexPath(for: selectedMealCell)!
 				let selectedMeal = meals[(indexPath as NSIndexPath).row]
 				mealDetailViewController.meal = selectedMeal
+                //dont forget to save the current rating as previous rating 
+                 selectedMeal.prevRating = ""
+                    selectedMeal.prevRating!.append(String(selectedMeal.rating) + ".")
+                    print("the culprit is \(selectedMeal.prevRating!.append(String(selectedMeal.rating) + "."))")
+                
 			}
 			
 		} else if segue.identifier == "AddItem" {

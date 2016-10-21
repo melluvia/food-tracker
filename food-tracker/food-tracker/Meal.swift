@@ -22,6 +22,6 @@ class Meal : NSObject {
     var starRatings: String?
     
 
-    var prevRating: Double?
+    
 
 }

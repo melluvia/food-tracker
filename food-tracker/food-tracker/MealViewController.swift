@@ -213,17 +213,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		if meal == nil {
 			
             meal = MealData(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName)
-            if meal?.rating != nil {
-                meal?.prevRating?.append(String(rating) + ".")
-               // print("star ratings is \(meal?.prevRating!)")
-            }
             
 		} else {
 			
 			meal?.name = name
 			meal?.photo = photo
 			meal?.rating = rating
-            meal?.prevRating?.append(String(rating) + ".")
 			meal?.note = note
             meal?.restaurantName = restaurantName
 		}
@@ -241,7 +236,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                     self.saveSpinner.stopAnimating()
                 
                     self.meal?.replacePhoto = false // Reset this just in case we did a photo replacement.
-
+                
                     self.performSegue(withIdentifier: "unwindToMealList", sender: self)
                 },
                                                        
