@@ -176,7 +176,21 @@ class MealTableViewController: UITableViewController {
         }
         
 		cell.nameLabel.text = meal.name
-        cell.ratingControl.rating = meal.rating
+        cell.ratingControl.rating = meal.rating 
+        
+        var pastR: [Double] = [6.0]
+        //set pastR to prevRating if its != nil
+        if Meal.init().starRatings != nil {
+            //splitting up ratings into seperate number(but in quotes)
+            let prevRatArray = Meal.init().starRatings!.components(separatedBy: ".")
+            var tempArray: [Double] = []
+            //this loop will change strings into Doubles
+            for i in prevRatArray{
+                tempArray.append(Double(i)!)
+            }
+            pastR = tempArray
+        }
+        cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: pastR))
         
         // For NSCache, if we have the cache key we put it on the cell when it gets created
         if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {

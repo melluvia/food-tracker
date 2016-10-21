@@ -13,9 +13,12 @@ class MealData: NSObject, NSCoding {
 	// MARK: Common Properties Shared by Archiver and Backendless
 	
 	var name: String
-	var rating: Int
+	var rating: Double
 	var note: String?
     var restaurantName: String?
+    
+    //will append/concatenate every rating followed by a period(no space)
+    var prevRating: String? //this is copy of starRatings, the backendless column
 	
 	// MARK: Archiver Only Properties
 	
@@ -48,7 +51,7 @@ class MealData: NSObject, NSCoding {
 	
 //	 MARK: Initialization
  
-    init?(name: String, photo: UIImage?, rating: Int, note: String, restaurantName: String) {
+    init?(name: String, photo: UIImage?, rating: Double, note: String, restaurantName: String) {
 		
 		// Initialize stored properties.
 		self.name = name
@@ -83,7 +86,7 @@ class MealData: NSObject, NSCoding {
 		// Because photo is an optional property of Meal, use conditional cast.
 		let photo = aDecoder.decodeObject(forKey: PropertyKey.photoKey) as? UIImage
 		
-		let rating = aDecoder.decodeInteger(forKey: PropertyKey.ratingKey)
+		let rating = aDecoder.decodeDouble(forKey: PropertyKey.ratingKey)
 		
 		let note = aDecoder.decodeObject(forKey: PropertyKey.noteKey) as! String
         

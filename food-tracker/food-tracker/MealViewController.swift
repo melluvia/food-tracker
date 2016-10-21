@@ -202,6 +202,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		
 		let name = nameTextField.text ?? ""
 		let rating = ratingControl.rating
+       // Meal.init().starRatings?.append(String(rating) + ".")
 		let photo = photoImageView.image
 		let note = notesView.text ?? ""
         let restaurantName = restaurantNameTextField.text ?? ""
@@ -212,12 +213,17 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		if meal == nil {
 			
             meal = MealData(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName)
-			
+            if meal?.rating != nil {
+                meal?.prevRating?.append(String(rating) + ".")
+               // print("star ratings is \(meal?.prevRating!)")
+            }
+            
 		} else {
 			
 			meal?.name = name
 			meal?.photo = photo
 			meal?.rating = rating
+            meal?.prevRating?.append(String(rating) + ".")
 			meal?.note = note
             meal?.restaurantName = restaurantName
 		}

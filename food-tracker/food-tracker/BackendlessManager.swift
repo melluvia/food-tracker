@@ -529,7 +529,7 @@ class BackendlessManager {
                     
                     print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
                     
-                    print("OwnerId: \(meal.ownerId!)")
+                   // print("OwnerId: \(meal.ownerId!)")
                     
                     let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "))
 					
@@ -541,6 +541,7 @@ class BackendlessManager {
 						newMealData.note = meal.note
                         newMealData.restaurantName = meal.restaurantName
                         newMealData.ownerId = meal.ownerId
+                        newMealData.prevRating = meal.starRatings
                         
                         mealData.append(newMealData)
                     }

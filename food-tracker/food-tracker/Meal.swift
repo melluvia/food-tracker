@@ -16,8 +16,12 @@ class Meal : NSObject {
 	var name: String?
 	var photoUrl: String?
 	var thumbnailUrl: String?
-	var rating: Int = 0
+	var rating: Double = 0  //use to be an int
 	var note: String?
     var restaurantName: String?
+    var starRatings: String?
     
+
+    var prevRating: Double?
+
 }
