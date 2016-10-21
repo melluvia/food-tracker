@@ -178,22 +178,11 @@ class MealTableViewController: UITableViewController {
 		cell.nameLabel.text = meal.name
         cell.ratingControl.rating = meal.rating 
         
-        var pastR: [Double] = [6.0]
-        //set pastR to prevRating if its != nil
-        if meal.prevRating != nil {
-            //prev ratings needs to be stored in backendless
-            //Meal[indexPath.row].starRating = meal.prevRating
-            //splitting up ratings into seperate number(but in quotes)
-            var prevRatArray = meal.prevRating!.components(separatedBy: ".")
-            prevRatArray.removeLast()
-            var tempArray: [Double] = []
-            //this loop will change strings into Doubles
-            for i in prevRatArray{
-                tempArray.append(Double(i)!)
-            }
-            pastR = tempArray
-        }
-        cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: pastR))
+        cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: meal.prevRating))
+        
+        
+        print("the avg rating label is at \(cell.avgRatingLabel.text)")
+        
         
         // For NSCache, if we have the cache key we put it on the cell when it gets created
         if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {
@@ -344,11 +333,18 @@ class MealTableViewController: UITableViewController {
 				let indexPath = tableView.indexPath(for: selectedMealCell)!
 				let selectedMeal = meals[(indexPath as NSIndexPath).row]
 				mealDetailViewController.meal = selectedMeal
-                //dont forget to save the current rating as previous rating 
-                 selectedMeal.prevRating = ""
-                    selectedMeal.prevRating!.append(String(selectedMeal.rating) + ".")
-                    print("the culprit is \(selectedMeal.prevRating!.append(String(selectedMeal.rating) + "."))")
                 
+                //dont forget to save the current rating as previous rating 
+                if selectedMeal.prevRating != nil{
+                    selectedMeal.prevRating!.append(String(selectedMeal.rating) + ",")
+                    //save it to backendless
+                    //Backendless.sharedInstance().data.
+                } else {
+                    selectedMeal.prevRating = String(selectedMeal.rating) + ","
+                    //save it to backendless
+                    
+                    print("the culprit is \(selectedMeal.prevRating)")
+                }
 			}
 			
 		} else if segue.identifier == "AddItem" {
@@ -387,7 +383,8 @@ class MealTableViewController: UITableViewController {
 				saveMealsToArchiver()
 			}
 		}
-        refresh(sender: sender)
+        
+        //refresh(sender: sender)
 	}
 	
 	// MARK: NSCoding

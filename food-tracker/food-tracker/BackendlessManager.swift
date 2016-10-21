@@ -418,6 +418,7 @@ class BackendlessManager {
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
                             meal.restaurantName = mealToSave.restaurantName
+                            meal.starRatings = mealData.prevRating //this should do it!
                             meal.ownerId = mealToSave.ownerId
                             
                             // Save the updated Meal.

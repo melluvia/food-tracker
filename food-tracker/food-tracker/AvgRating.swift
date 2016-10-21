@@ -20,26 +20,54 @@ class AvgRating {
     
     
     //function that calculates average rating (using star system..round up or down to the nearest half-star)
-    func calcAvgRating(_ mealRating: Double, pastRating: [Double]) -> Double {
+    func calcAvgRating(_ mealRating: Double, pastRating: String?) -> Double {
         
         currentRating = mealRating
-        let pastR = pastRating //either equal to [6.0] or array of Doubles
-        var tempAvg: Double = 0.0
+        var pastR: [Double] = [6.0]
         
-        var sum: Double = 0.0
-        if (pastR == [6.0]) {
-            sum = currentRating
-            tempAvg = sum
-        } else {
-       // sum = currentRating + pastR
-            for i in pastR {
-                sum = sum + i
+        //set pastR to prevRating if its != nil
+        if pastRating != nil {
+            
+            //splitting up ratings into seperate numbers(but in quotes)
+            var prevRatArray = pastRating!.components(separatedBy: ",")
+            //prevRatArray.removeLast() //to remove "" in array
+            print("prevRatArray is \(prevRatArray)") //delete after debugging
+            
+            var tempArray: [Double] = []
+            //this loop will change strings into Doubles
+            //!!!***WE must clean up duplicates here!!!!!
+            for i in prevRatArray{
+                if i != "" {
+                    tempArray.append(Double(i)!)
+                }
+         
             }
-            sum = sum + currentRating
-            tempAvg = sum / Double(2)
+            pastR = tempArray
+        } else {
+            pastR = [6.0]
         }
 
-    //function that creates an array to store all ratings for each meal (this way we can continue to update average by tracking all previous ratings from all users) backendless stored..nvm
+            var tempAvg: Double = 0.00
+            var sum: Double = 0.0
+        
+            if (pastR == [6.0]) {
+                sum = currentRating
+                tempAvg = sum
+            } else {
+                // sum = currentRating + pastR s'
+                var count = 0
+                for i in pastR {
+                    sum = sum + i
+                    count = count + 1
+                }
+                sum = sum + currentRating
+                count = count + 1 //for currentRating
+                print("pastR is \(pastR)")
+                print("sum is \(sum)")     //delete after debugging
+                print("in avg area the count is \(count)")
+                tempAvg = sum / Double(count)
+                print("the tempAvg is \(tempAvg)") //delete after debugging
+            }
        
         
         //calculating avg rating based on half star system
@@ -71,14 +99,11 @@ class AvgRating {
         default:
             avgRating = 0
         }
-        
+        print("the final avg for \(mealRating) is \(avgRating)")
         return avgRating
     }
     
-    //function that creates an array to store all ratings for each meal (this way we can continue to update average by tracking all previous ratings from all users)  ... this function will also need a database (backendless) side..just make a backendless side
-    
-    
-    //***create a class for changing the textfield to show average stars..not needed
+
     
     
     
