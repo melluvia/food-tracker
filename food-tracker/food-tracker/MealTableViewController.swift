@@ -30,17 +30,20 @@ class MealTableViewController: UITableViewController {
         
         // Use the edit button item provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem
-        
-        // set image on bar button item
-		let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
 		
-		let leftBarButtonItem = UIBarButtonItem(image: img,
-		                                        style: UIBarButtonItemStyle.plain,
-		                                        target: self,
-		                                        action: #selector(onEditBtn(sender:)))
-			
-			
-		self.navigationItem.leftBarButtonItem = leftBarButtonItem
+		// sets edit button to white
+		self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+//        // set image on bar button item
+//		let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+//		
+//		let leftBarButtonItem = UIBarButtonItem(image: img,
+//		                                        style: UIBarButtonItemStyle.plain,
+//		                                        target: self,
+//		                                        action: #selector(onEditBtn(sender:)))
+//			
+//			
+//		self.navigationItem.leftBarButtonItem = leftBarButtonItem
 		
         if !BackendlessManager.sharedInstance.isUserLoggedIn() {
             
