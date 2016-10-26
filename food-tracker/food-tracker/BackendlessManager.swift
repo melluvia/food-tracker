@@ -165,53 +165,53 @@ class BackendlessManager {
         }
     }
 	
-	func saveTestData() {
-		
-		let newMeal = Meal()
-		newMeal.name = "Test Meal #1"
-		newMeal.photoUrl = "https://guildsa.org/wp-content/uploads/2016/09/meal1.png"
-		newMeal.rating = 5
-		newMeal.note = "Test Note"
-		
-		backendless.data.save( newMeal,
-		                       
-		   response: { (entity: Any?) -> Void in
-			
-				let meal = entity as! Meal
-			
-				print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
-			},
-				   
-			error: { (fault: Fault?) -> Void in
-				print("Meal failed to save: \(fault)")
-			}
-		)
-	}
+//	func saveTestData() {
+//		
+//		let newMeal = Meal()
+//		newMeal.name = "Test Meal #1"
+//		newMeal.photoUrl = "https://guildsa.org/wp-content/uploads/2016/09/meal1.png"
+//		newMeal.rating = 5
+//		newMeal.note = "Test Note"
+//		
+//		backendless.data.save( newMeal,
+//		                       
+//		   response: { (entity: Any?) -> Void in
+//			
+//				let meal = entity as! Meal
+//			
+//				print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
+//			},
+//				   
+//			error: { (fault: Fault?) -> Void in
+//				print("Meal failed to save: \(fault)")
+//			}
+//		)
+//	}
 	
-	func loadTestData() {
-		
-		let dataStore = backendless.persistenceService.of(Meal.ofClass())
-		
-		dataStore?.find(
-			
-			{ (meals: BackendlessCollection?) -> Void in
-				
-				print("Find attempt on all Meals has completed without error!")
-				print("Number of Meals found = \((meals?.data.count)!)")
-				
-				for meal in (meals?.data)! {
-					
-					let meal = meal as! Meal
-					
-					print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
-				}
-			},
-			
-			error: { (fault: Fault?) -> Void in
-				print("Meals were not fetched: \(fault)")
-			}
-		)
-	}
+//	func loadTestData() {
+//		
+//		let dataStore = backendless.persistenceService.of(Meal.ofClass())
+//		
+//		dataStore?.find(
+//			
+//			{ (meals: BackendlessCollection?) -> Void in
+//				
+//				print("Find attempt on all Meals has completed without error!")
+//				print("Number of Meals found = \((meals?.data.count)!)")
+//				
+//				for meal in (meals?.data)! {
+//					
+//					let meal = meal as! Meal
+//					
+//					print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
+//				}
+//			},
+//			
+//			error: { (fault: Fault?) -> Void in
+//				print("Meals were not fetched: \(fault)")
+//			}
+//		)
+//	}
 	
 	func savePhotoAndThumbnail(mealToSave: Meal, photo: UIImage, completion: @escaping () -> (), error: @escaping () -> ()) {
 		
@@ -475,10 +475,12 @@ class BackendlessManager {
                     
                     // Update the Meal with the new data
                     meal.name = mealData.name
+                    
                     meal.rating = mealData.rating
 					meal.note = mealData.note
                     meal.restaurantName = mealData.restaurantName
                     meal.ownerId = mealData.ownerId
+                    meal.prevRating = mealData.prevRating
                     
                     // Save the updated Meal.
                     self.backendless.data.save( meal,
@@ -487,7 +489,7 @@ class BackendlessManager {
                             
                             let meal = entity as! Meal
                             
-                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
+                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
                             
                             completion()
                         },
@@ -515,9 +517,9 @@ class BackendlessManager {
 //        // Only get the Meals that belong to our logged in user!
 //        dataQuery.whereClause = "ownerId = '\(backendless.userService.currentUser.objectId!)'"
         
-        dataStore?.find( /*dataQuery,
+        dataStore?.find(
             
-            response:*/ { (meals: BackendlessCollection?) -> Void in
+            { (meals: BackendlessCollection?) -> Void in
                 
                 print("Find attempt on ALL Meals has completed without error!")
                 print("Number of Meals found = \((meals?.data.count)!)")
@@ -532,7 +534,7 @@ class BackendlessManager {
                     
                    // print("OwnerId: \(meal.ownerId!)")
                     
-                    let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "))
+                    let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "), prevRating: meal.starRatings ?? ("5"))
 					
                     if let newMealData = newMealData {
                         
@@ -542,7 +544,6 @@ class BackendlessManager {
 						newMealData.note = meal.note
                         newMealData.restaurantName = meal.restaurantName
                         newMealData.ownerId = meal.ownerId
-                        newMealData.prevRating = meal.starRatings
                         
                         mealData.append(newMealData)
                     }

@@ -134,13 +134,13 @@ class MealTableViewController: UITableViewController {
     func loadSampleMeals() {
         
         let photo1 = UIImage(named: "meal1")!
-        let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4, note: "A great Salad!", restaurantName: "My Kitchen!!")!
+        let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4, note: "A great Salad!", restaurantName: "My Kitchen!!", prevRating: "4")!
         
         let photo2 = UIImage(named: "meal2")!
-        let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5, note: "Gotta Love Chicken!", restaurantName: "My mom's house")!
+        let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5, note: "Gotta Love Chicken!", restaurantName: "My mom's house", prevRating: "5")!
         
         let photo3 = UIImage(named: "meal3")!
-        let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3, note: "Just average.", restaurantName: "Denny's")!
+        let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3, note: "Just average.", restaurantName: "Denny's", prevRating: "3")!
         
         meals += [meal1, meal2, meal3]
     }
@@ -179,7 +179,9 @@ class MealTableViewController: UITableViewController {
         }
         
 		cell.nameLabel.text = meal.name
-        cell.ratingControl.rating = meal.rating 
+        cell.ratingControl.rating = meal.rating
+        
+        print("meal.rating: \(meal.rating), pastRating: \(meal.prevRating)")
         
         cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: meal.prevRating))
         

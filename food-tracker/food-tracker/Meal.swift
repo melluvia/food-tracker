@@ -21,6 +21,10 @@ class Meal : NSObject {
     var restaurantName: String?
     var starRatings: String?
     
+    
+    
+    // add prevRating to be saved to BE
+    var prevRating: String?
 
     
 

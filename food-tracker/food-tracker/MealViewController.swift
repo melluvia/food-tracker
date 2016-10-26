@@ -206,13 +206,16 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		let photo = photoImageView.image
 		let note = notesView.text ?? ""
         let restaurantName = restaurantNameTextField.text ?? ""
+        
+//TODO: Save prev rating to BE
+        let prevRating = String(ratingControl.rating)
 		
 		saveSpinner.isHidden = false
 		saveSpinner.startAnimating()
 		
 		if meal == nil {
 			
-            meal = MealData(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName)
+            meal = MealData(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName, prevRating: prevRating)
             
 		} else {
 			

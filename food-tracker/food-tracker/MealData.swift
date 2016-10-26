@@ -47,11 +47,12 @@ class MealData: NSObject, NSCoding {
 		static let ratingKey = "rating"
 		static let noteKey = "note"
         static let restaurantNameKey = "restaurant"
+        static let prevRating = "prevRating"
 	}
 	
 //	 MARK: Initialization
  
-    init?(name: String, photo: UIImage?, rating: Double, note: String, restaurantName: String) {
+    init?(name: String, photo: UIImage?, rating: Double, note: String, restaurantName: String , prevRating: String) {
 		
 		// Initialize stored properties.
 		self.name = name
@@ -59,6 +60,7 @@ class MealData: NSObject, NSCoding {
 		self.rating = rating
 		self.note = note
         self.restaurantName = restaurantName
+        self.prevRating = prevRating
         		
 		super.init()
 		
@@ -77,6 +79,7 @@ class MealData: NSObject, NSCoding {
 		aCoder.encode(rating, forKey: PropertyKey.ratingKey)
 		aCoder.encode(note, forKey: PropertyKey.noteKey)
         aCoder.encode(restaurantName, forKey: PropertyKey.restaurantNameKey)
+        aCoder.encode(prevRating, forKey: PropertyKey.prevRating)
 	}
 	
 	required convenience init?(coder aDecoder: NSCoder) {
@@ -91,8 +94,10 @@ class MealData: NSObject, NSCoding {
 		let note = aDecoder.decodeObject(forKey: PropertyKey.noteKey) as! String
         
         let restaurantName = aDecoder.decodeObject(forKey: PropertyKey.restaurantNameKey) as! String
+        
+        let prevRating = aDecoder.decodeObject(forKey: PropertyKey.prevRating) as! String
 		
 		// Must call designated initializer.
-        self.init(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName)
+        self.init(name: name, photo: photo, rating: rating, note: note, restaurantName: restaurantName, prevRating: prevRating)
 	}
 }

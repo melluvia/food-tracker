@@ -29,7 +29,7 @@ class AvgRating {
         if pastRating != nil {
             
             //splitting up ratings into seperate numbers(but in quotes)
-            var prevRatArray = pastRating!.components(separatedBy: ",")
+            let prevRatArray = pastRating!.components(separatedBy: ",")
             //prevRatArray.removeLast() //to remove "" in array
             print("prevRatArray is \(prevRatArray)") //delete after debugging
             
