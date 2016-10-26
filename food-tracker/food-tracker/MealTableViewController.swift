@@ -17,6 +17,12 @@ class MealTableViewController: UITableViewController {
     
     var isDeleting: Bool = false
     
+    // set image on bar button item
+    let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    let img2 = UIImage(named: "exit")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    
+    var leftBarButtonItem = UIBarButtonItem()
+    
 	// Create cache that uses NSString keys to point to UIImages.
 	var imageCache = NSCache<NSString, UIImage>()
 	
@@ -36,14 +42,17 @@ class MealTableViewController: UITableViewController {
         
 //        // set image on bar button item
 //		let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-//		
-//		let leftBarButtonItem = UIBarButtonItem(image: img,
-//		                                        style: UIBarButtonItemStyle.plain,
-//		                                        target: self,
-//		                                        action: #selector(onEditBtn(sender:)))
-//			
-//			
-//		self.navigationItem.leftBarButtonItem = leftBarButtonItem
+//        let img2 = UIImage(named: "exit")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+
+		
+		leftBarButtonItem = UIBarButtonItem(image: img,
+		                                        style: UIBarButtonItemStyle.plain,
+		                                        target: self,
+		                                        action: #selector(onEditBtn(sender:)))
+			
+			
+		self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        
 		
         if !BackendlessManager.sharedInstance.isUserLoggedIn() {
             
@@ -98,11 +107,15 @@ class MealTableViewController: UITableViewController {
         
         if isDeleting == true {
             
+            leftBarButtonItem.image = img
+            
             isDeleting = false
             
         } else {
             
-           isDeleting = true
+            leftBarButtonItem.image = img2 
+            
+            isDeleting = true
         }
         
         print("\(isDeleting)")
@@ -274,6 +287,15 @@ class MealTableViewController: UITableViewController {
 		// Return false if you do not want the specified item to be editable.
 		return true
 	}
+    
+    // Disables the swipe to delete
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if tableView.isEditing {
+            return .delete
+        }
+        
+        return .none
+    }
 	
 	// Override to support editing the table view.
 	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
