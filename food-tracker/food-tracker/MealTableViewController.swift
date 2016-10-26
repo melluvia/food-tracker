@@ -191,56 +191,76 @@ class MealTableViewController: UITableViewController {
             meal = meals[indexPath.row]
         }
         
-		cell.nameLabel.text = meal.name
-        cell.ratingControl.rating = meal.rating
+                cell.nameLabel.text = meal.name
+                cell.ratingControl.rating = meal.rating
         
-        print("meal.rating: \(meal.rating), pastRating: \(meal.prevRating)")
-        
-        cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: meal.prevRating))
-        
-        
-        print("the avg rating label is at \(cell.avgRatingLabel.text)")
-        
+            // Move to a background thread to do some long running work
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
+            
+            // Bounce back to the main thread to update the UI
+            DispatchQueue.main.async {
+                
+                print("meal.rating: \(meal.rating), pastRating: \(meal.prevRating)")
+                
+                cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: meal.prevRating))
+                
+                
+                print("the avg rating label is at \(cell.avgRatingLabel.text)")
+            }
+        }
+
         
         // For NSCache, if we have the cache key we put it on the cell when it gets created
         if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {
             
             if imageCache.object(forKey: meal.thumbnailUrl! as NSString) != nil {
-                
-                // If the URL for the thumbnail is in the cache already - get the UIImage that belongs to it.
-                cell.photoImageView.image = imageCache.object(forKey: meal.thumbnailUrl! as NSString)
-                
+                    
+                    // Bounce back to the main thread to update the UI
+                    DispatchQueue.main.async {
+                        
+                        // If the URL for the thumbnail is in the cache already - get the UIImage that belongs to it.
+                        cell.photoImageView.image = self.imageCache.object(forKey: meal.thumbnailUrl! as NSString)
+                    }
+        
             } else {
                 
                 cell.spinner.startAnimating()
                 
                 loadImageFromUrl(thumbnailUrl: meal.thumbnailUrl!,
                                  
-                    completion: { data in
-                        // retrieved data- using it to create a UIImage for our cell's ui imageview.
-                        if let image = UIImage(data: data) {
+                                 completion: { data in
+                                    // retrieved data- using it to create a UIImage for our cell's ui imageview.
+                                    if let image = UIImage(data: data) {
+                                            
+                                            // Bounce back to the main thread to update the UI
+                                            DispatchQueue.main.async {
+                                                
+                                                cell.photoImageView.image = image
+                                        }
                                         
-                            cell.photoImageView.image = image
+                                        // Bounce back to the main thread to update the UI
+                                         DispatchQueue.main.async {
+                                            
+                                            // cache the pulled down UIImage using the URL as the key.
+                                            self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
+                                            
+                                        }
                                         
-                            // cache the pulled down UIImage using the URL as the key.
-                            self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
-                        }
+                                    }
                                     
-                        cell.spinner.stopAnimating()
+                                    cell.spinner.stopAnimating()
                     },
                                  
-                    loadError: {
-                        cell.spinner.stopAnimating()
+                                 loadError: {
+                                    cell.spinner.stopAnimating()
                 })
             }
             
-        }
-        else {
+        } else {
             cell.photoImageView.image = meal.photo
         }
-  //      }
-		return cell
-	}
+        return cell
+    }
 	
 	func loadImageFromUrl(thumbnailUrl: String, completion: @escaping (Data) -> (), loadError: @escaping () -> ()) {
 		
