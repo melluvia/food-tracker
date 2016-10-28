@@ -253,80 +253,8 @@ class BackendlessManager {
                     print("Failed to save photo and thumbnail!")
                     error()
                 })
-
-        } else if mealData.replacePhoto {
-            
-            //
-            // Update the Meal AND replace the existing photo and 
-            // thumbnail image with a new one.
-            //
-            
-            let mealToSave = Meal()
-            
-            savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
-                                                       
-               completion: {
-
-                    let dataStore = self.backendless.persistenceService.of(Meal.ofClass())
-
-                    dataStore?.findID(mealData.objectId,
-                                      
-                        response: { (meal: Any?) -> Void in
-                            
-                            // We found the Meal to update.
-                            let meal = meal as! Meal
-                            
-                            // Cache old URLs for removal!
-                            let oldPhotoUrl = meal.photoUrl!
-                            let oldthumbnailUrl = meal.thumbnailUrl!
-                            
-                            // Update the Meal with the new data.
-                            meal.name = mealData.name
-							meal.note = mealData.note
-                            meal.rating = mealData.rating
-                            meal.photoUrl = mealToSave.photoUrl
-                            meal.thumbnailUrl = mealToSave.thumbnailUrl
-                            meal.restaurantName = mealToSave.restaurantName
-                            meal.ownerId = mealToSave.ownerId
-                            
-                            // Save the updated Meal.
-                            self.backendless.data.save( meal,
-                                                   
-                                response: { (entity: Any?) -> Void in
-                                    
-                                    let meal = entity as! Meal
-                                    
-                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
-                                    
-                                    // Update the mealData used by the UI with the new URLS!
-                                    mealData.photoUrl = meal.photoUrl
-                                    mealData.thumbnailUrl = meal.thumbnailUrl
-                                    
-                                    completion()
-                                    
-                                    // Attempt to remove the old photo and thumbnail images.
-                                    self.removePhotoAndThumbnail(photoUrl: oldPhotoUrl, thumbnailUrl: oldthumbnailUrl, completion: {}, error: {})
-                                },
-                                                   
-                               error: { (fault: Fault?) -> Void in
-                                    print("Failed to save Meal: \(fault)")
-                                    error()
-                            })
-                        },
-                         
-                        error: { (fault: Fault?) -> Void in
-                            print("Failed to find Meal: \(fault)")
-                            error()
-                        }
-                    )
-                },
-                                                       
-                error: {
-                    print("Failed to save photo and thumbnail!")
-                    error()
-                })
-            
-        } else if mealData.replacePhoto {
+        }
+        else if mealData.replacePhoto {
             
 			//
 			// Update the Meal AND replace the existing photo and
@@ -358,9 +286,9 @@ class BackendlessManager {
                             meal.rating = mealData.rating
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
-                            meal.restaurantName = mealToSave.restaurantName
+                            meal.restaurantName = mealData.restaurantName
                             meal.starRatings = mealData.prevRating //this should do it!
-                            meal.ownerId = mealToSave.ownerId
+                            meal.ownerId = mealData.ownerId
                             
                             // Save the updated Meal.
                             self.backendless.data.save( meal,
@@ -369,7 +297,13 @@ class BackendlessManager {
                                     
                                     let meal = entity as! Meal
                                     
-                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
+                                    print("Meal: \(meal.objectId!)")
+                                    print("name: \(meal.name)")
+                                    print("photoUrl: \"\(meal.photoUrl!)\"")
+                                    print("rating: \"\(meal.rating)\"")
+                                    print("restaurant:\(meal.restaurantName!)")
+                                    print("note: \"\(meal.note)\"")
+                                    print("ownerId: \(meal.ownerId)")
                                     
                                     // Update the mealData used by the UI with the new URLS!
                                     mealData.photoUrl = meal.photoUrl

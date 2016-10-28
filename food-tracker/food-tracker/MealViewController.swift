@@ -21,7 +21,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	@IBOutlet weak var notesView: UITextView!
 	@IBOutlet weak var scrollView: UIScrollView!
     
-    var addingNewItem: Bool? = false
+    var addingNewItem: Bool?
     
     var isUserLoggedIn = false
     
