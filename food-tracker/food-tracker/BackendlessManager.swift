@@ -262,6 +262,8 @@ class BackendlessManager {
 			//
 			
             let mealToSave = Meal()
+//Added to keep track of owner
+            mealToSave.ownerId = mealData.ownerId
             
             savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
                                                        
@@ -287,8 +289,8 @@ class BackendlessManager {
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
                             meal.restaurantName = mealData.restaurantName
-                            meal.starRatings = mealData.prevRating //this should do it!
-                            meal.ownerId = mealData.ownerId
+                        //    meal.starRatings = mealData.prevRating //this should do it!
+                            meal.ownerId = mealToSave.ownerId
                             
                             // Save the updated Meal.
                             self.backendless.data.save( meal,
