@@ -391,6 +391,9 @@ class MealTableViewController: UITableViewController {
 	@IBAction func unwindToMealList(_ sender: UIStoryboardSegue) {
 		
 		if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+            
+// Added to refresh TVC upon update
+            refresh(sender: sender)
 			
 			if let selectedIndexPath = tableView.indexPathForSelectedRow {
 				

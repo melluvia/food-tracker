@@ -41,10 +41,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             
             userId = "Non-logged in user"
         }
-
         
-        
-        
+// This should allow users to edit their own meals
         if addingNewItem == false && userId! as String != meal?.ownerId {
             
             restaurantNameTextField.isEnabled = false
@@ -171,6 +169,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	@IBAction func save(_ sender: UIBarButtonItem) {
 		
 		saveButton.isEnabled = false
+        
+        addingNewItem = false 
 		
 		let name = nameTextField.text ?? ""
 		let rating = ratingControl.rating
