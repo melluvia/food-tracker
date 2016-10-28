@@ -172,11 +172,12 @@ class RegisterViewController: UIViewController {
             backendless.userService.logout( { (user: Any!) -> Void in
                 print("User logged out!")
                 completion()
+                
                 },
                                             
-                                            error: { (fault: Fault?) -> Void in
-                                                print("User failed to log out: \(fault)")
-                                                error((fault?.message)!)
+                error: { (fault: Fault?) -> Void in
+                    print("User failed to log out: \(fault)")
+                    error((fault?.message)!)
             })
             
         } else {

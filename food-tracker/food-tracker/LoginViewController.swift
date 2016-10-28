@@ -30,15 +30,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 Utility.showAlert(viewController: self, title: "Backendless Error", message: "To use this sample you must register with Backendless, create an app, and replace the APP_ID and SECRET_KEY in this sample's BackendlessManager class with the values from your app's settings.")
             }
         }
-        
-        // Add the created padding to the textFields
-    //    emailTextField.leftView = paddingView
-    //    emailTextField.leftViewMode = UITextFieldViewMode.always
-    //    emailTextField.placeholder = "Email"
-        
-     //   passwordTextField.leftView = paddingView
-     //   passwordTextField.leftViewMode = UITextFieldViewMode.always
-    //    passwordTextField.placeholder = "Password"
     }
 	
 	func isAppIdSetInPlist() -> Bool {
@@ -189,8 +180,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             passwordTextField.placeholder = "Password"
         }
     }
-
-    
-    
-    
 }

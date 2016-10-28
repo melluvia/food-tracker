@@ -11,13 +11,8 @@ import Foundation
 
 class AvgRating {
     
-//    var allRatingsArray: [Double] = [] //maybe declare in function so no need to append?
     var currentRating: Double = 0
     var avgRating: Double = 0
-    
-    
-    
-    
     
     //function that calculates average rating (using star system..round up or down to the nearest half-star)
     func calcAvgRating(_ mealRating: Double, pastRating: String?) -> Double {
@@ -30,7 +25,6 @@ class AvgRating {
             
             //splitting up ratings into seperate numbers(but in quotes)
             let prevRatArray = pastRating!.components(separatedBy: ",")
-            //prevRatArray.removeLast() //to remove "" in array
             print("prevRatArray is \(prevRatArray)") //delete after debugging
             
             var tempArray: [Double] = []

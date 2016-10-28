@@ -26,6 +26,8 @@ class MealTableViewController: UITableViewController {
 	// Create cache that uses NSString keys to point to UIImages.
 	var imageCache = NSCache<NSString, UIImage>()
 	
+    var isUserLoggedIn = false
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -39,48 +41,58 @@ class MealTableViewController: UITableViewController {
 		
 		// sets edit button to white
 		self.navigationController?.navigationBar.tintColor = UIColor.white
-        
-//        // set image on bar button item
-//		let img = UIImage(named: "edit-symbol")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-//        let img2 = UIImage(named: "exit")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-
 		
 		leftBarButtonItem = UIBarButtonItem(image: img,
-		                                        style: UIBarButtonItemStyle.plain,
-		                                        target: self,
-		                                        action: #selector(onEditBtn(sender:)))
-			
-			
+                                            style: UIBarButtonItemStyle.plain,
+                                            target: self,
+                                            action: #selector(onEditBtn(sender:)))
+
 		self.navigationItem.leftBarButtonItem = leftBarButtonItem
         
-		
-        if !BackendlessManager.sharedInstance.isUserLoggedIn() {
+        isUserLoggedIn = BackendlessManager.sharedInstance.isUserLoggedIn()
+        
+        if !isUserLoggedIn {
             
             // Load any saved meals, otherwise load sample data.
             // if user is not logged in, we use the archiver
             if let savedMeals = loadMealsFromArchiver() {
+                
                 meals += savedMeals
+                
             } else {
                 
                 loadSampleMeals()
             }
+            
         } else {
     
         refresh(sender: self)
+        }
     }
+    
+    func loadSampleMeals() {
 
-		///				//sort the meals from highest to lowest rating
-////TODO: WHO IS SORTING MEALS???????????????????????????????????
-//				self.meals.sort {
-//					
-//                       $0.rating > $1.rating
-
+        let photo1 = UIImage(named: "meal1")!
+        let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4, note: "A great Salad!", restaurantName: "My Kitchen!!", prevRating: "4")!
         
+        let photo2 = UIImage(named: "meal2")!
+        let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5, note: "Gotta Love Chicken!", restaurantName: "My mom's house", prevRating: "5")!
+        
+        let photo3 = UIImage(named: "meal3")!
+        let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3, note: "Just average.", restaurantName: "Denny's", prevRating: "3")!
+        
+        meals += [meal1, meal2, meal3]
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+         isUserLoggedIn = BackendlessManager.sharedInstance.isUserLoggedIn()
     }
     
     func refresh(sender: AnyObject) {
         
-        if BackendlessManager.sharedInstance.isUserLoggedIn() {
+        if isUserLoggedIn {
             
             // Updated loadMeals in BEManager to throw error if fails
             BackendlessManager.sharedInstance.loadMeals(
@@ -98,9 +110,9 @@ class MealTableViewController: UITableViewController {
                     self.refreshControl?.endRefreshing()
             })
         } else {
+            
             refreshControl!.endRefreshing()
         }
-
     }
     
     func onEditBtn(sender: UIBarButtonItem) {
@@ -118,18 +130,18 @@ class MealTableViewController: UITableViewController {
             isDeleting = true
         }
         
-        print("\(isDeleting)")
+        if isUserLoggedIn == true {
         
-        filterMealsByOwner()
+            filterMealsByOwner()
+        }
         
         self.tableView.isEditing = !self.tableView.isEditing
         
         refresh(sender: self)
-        
     }
     
     func filterMealsByOwner() {
-        
+            
         filteredMeals = []
         
         let userId = BackendlessManager.sharedInstance.backendless.userService.currentUser.objectId!
@@ -141,21 +153,8 @@ class MealTableViewController: UITableViewController {
                 filteredMeals.append(meal)
             }
         }
+        
         tableView.reloadData()
-    }
-    
-    func loadSampleMeals() {
-        
-        let photo1 = UIImage(named: "meal1")!
-        let meal1 = MealData(name: "Caprese Salad", photo: photo1, rating: 4, note: "A great Salad!", restaurantName: "My Kitchen!!", prevRating: "4")!
-        
-        let photo2 = UIImage(named: "meal2")!
-        let meal2 = MealData(name: "Chicken and Potatoes", photo: photo2, rating: 5, note: "Gotta Love Chicken!", restaurantName: "My mom's house", prevRating: "5")!
-        
-        let photo3 = UIImage(named: "meal3")!
-        let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3, note: "Just average.", restaurantName: "Denny's", prevRating: "3")!
-        
-        meals += [meal1, meal2, meal3]
     }
 	
 	override func didReceiveMemoryWarning() {
@@ -170,12 +169,11 @@ class MealTableViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isDeleting == true {
+        if isUserLoggedIn == true && isDeleting == true {
             return filteredMeals.count
         }
         
         return meals.count
-
     }
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -185,80 +183,65 @@ class MealTableViewController: UITableViewController {
         
         let meal: MealData
         
-        if isDeleting == true {
+        if isDeleting && isUserLoggedIn == true {
             meal = filteredMeals[indexPath.row]
         } else {
             meal = meals[indexPath.row]
         }
         
-                cell.nameLabel.text = meal.name
-                cell.ratingControl.rating = meal.rating
+        cell.nameLabel.text = meal.name
+        cell.ratingControl.rating = meal.rating
         
-            // Move to a background thread to do some long running work
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
+        if isUserLoggedIn == true {
+            cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: meal.prevRating))
+        } else {
+            cell.avgRatingLabel.isHidden = true
+            cell.avgStarHeader.isHidden = true
             
-            // Bounce back to the main thread to update the UI
-            DispatchQueue.main.async {
-                
-                print("meal.rating: \(meal.rating), pastRating: \(meal.prevRating)")
-                
-                cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: meal.prevRating))
-                
-                
-                print("the avg rating label is at \(cell.avgRatingLabel.text)")
-            }
+            print("Meal created at :\(indexPath.row)")
         }
-
         
         // For NSCache, if we have the cache key we put it on the cell when it gets created
-        if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {
+        if meal.thumbnailUrl != nil && isUserLoggedIn {
             
             if imageCache.object(forKey: meal.thumbnailUrl! as NSString) != nil {
-                    
-                    // Bounce back to the main thread to update the UI
-                    DispatchQueue.main.async {
-                        
-                        // If the URL for the thumbnail is in the cache already - get the UIImage that belongs to it.
-                        cell.photoImageView.image = self.imageCache.object(forKey: meal.thumbnailUrl! as NSString)
-                    }
-        
+                
+                // If the URL for the thumbnail is in the cache already - get the UIImage that belongs to it.
+                cell.photoImageView.image = self.imageCache.object(forKey: meal.thumbnailUrl! as NSString)
+
             } else {
                 
                 cell.spinner.startAnimating()
                 
                 loadImageFromUrl(thumbnailUrl: meal.thumbnailUrl!,
                                  
-                                 completion: { data in
-                                    // retrieved data- using it to create a UIImage for our cell's ui imageview.
-                                    if let image = UIImage(data: data) {
+                    completion: { data in
+                        
+                        // retrieved data- using it to create a UIImage for our cell's ui imageview.
+                        if let image = UIImage(data: data) {
                                             
-                                            // Bounce back to the main thread to update the UI
-                                            DispatchQueue.main.async {
+                            // Bounce back to the main thread to update the UI
+                            DispatchQueue.main.async {
                                                 
-                                                cell.photoImageView.image = image
-                                        }
-                                        
-                                        // Bounce back to the main thread to update the UI
-                                         DispatchQueue.main.async {
-                                            
-                                            // cache the pulled down UIImage using the URL as the key.
-                                            self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
-                                            
-                                        }
-                                        
-                                    }
+                                cell.photoImageView.image = image
+    
+                                // cache the pulled down UIImage using the URL as the key.
+                                self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
+                            }
+                        }
                                     
-                                    cell.spinner.stopAnimating()
+                        cell.spinner.stopAnimating()
                     },
                                  
-                                 loadError: {
-                                    cell.spinner.stopAnimating()
+                    loadError: {
+                        cell.spinner.stopAnimating()
                 })
             }
             
         } else {
             cell.photoImageView.image = meal.photo
         }
+        
         return cell
     }
 	
@@ -310,7 +293,9 @@ class MealTableViewController: UITableViewController {
     
     // Disables the swipe to delete
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        
         if tableView.isEditing {
+        
             return .delete
         }
         
@@ -322,7 +307,7 @@ class MealTableViewController: UITableViewController {
 		
 		if editingStyle == .delete {
 			
-			if BackendlessManager.sharedInstance.isUserLoggedIn() {
+			if isUserLoggedIn {
 				
 				// Find the MealData in the data source that we wish to delete.
 				let mealToRemove = filteredMeals[indexPath.row]
@@ -350,14 +335,16 @@ class MealTableViewController: UITableViewController {
                     })
 
 			} else {
-				
+                
 				// Delete the row from the data source
 				meals.remove(at: (indexPath as NSIndexPath).row)
-				
-				// Save the meals.
-				saveMealsToArchiver()
-				
+                
+                print("Meal deleted at :\(indexPath.row)")
+                
 				tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                // Save the meals.
+                saveMealsToArchiver()
 			}
 			
 		} else if editingStyle == .insert {
@@ -367,7 +354,6 @@ class MealTableViewController: UITableViewController {
 	
 	// MARK: - Navigation
 	
-
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		
 		if segue.identifier == "ShowDetail" {
@@ -401,7 +387,6 @@ class MealTableViewController: UITableViewController {
             let nextVC = navVC.topViewController as! MealViewController
             
             nextVC.addingNewItem = true 
-            
 		}
 	}
 	
@@ -414,24 +399,23 @@ class MealTableViewController: UITableViewController {
 				// Update an existing meal.
 				meals[(selectedIndexPath as NSIndexPath).row] = meal
 				tableView.reloadRows(at: [selectedIndexPath], with: .none)
-//!!!!!!!!!!!!!!!!!!!!!!!
-                
 				
 			} else {
 				
 				// Add a new meal.
 				let newIndexPath = IndexPath(row: meals.count, section: 0)
 				meals.append(meal)
+                
+                print("indexPath row: \(newIndexPath)")
+                
 				tableView.insertRows(at: [newIndexPath], with: .bottom)
 			}
 			
-			if !BackendlessManager.sharedInstance.isUserLoggedIn() {
+			if !isUserLoggedIn {
 				// We're not logged in - save the meals using NSKeyedUnarchiver.
 				saveMealsToArchiver()
 			}
 		}
-        
-        //refresh(sender: sender)
 	}
 	
 	// MARK: NSCoding
@@ -452,17 +436,6 @@ class MealTableViewController: UITableViewController {
 	
 	// MARK: Logout Button
 	
-//	var refreshAlert = UIAlertController(title: "Refresh", message: "All data will be lost.", preferredStyle: UIAlertControllerStyle.Alert)
-//	
-//	refreshAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
-//	print("Handle Ok logic here")
-//	}))
-//	
-//	refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
-//	print("Handle Cancel Logic here")
-//	}))
-//	
-//	presentViewController(refreshAlert, animated: true, completion: nil)
 	@IBAction func logoutBtn(_ sender: UIBarButtonItem) {
 		
 		let alert = UIAlertController(title: "Logout", message: "logout now?", preferredStyle: UIAlertControllerStyle.alert)
@@ -482,24 +455,10 @@ class MealTableViewController: UITableViewController {
 		alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
 			print("Handle Ok logic here")
 		}))
-		
-//		BackendlessManager.sharedInstance.logoutUser(
-//			
-//			completion: {
-//				self.performSegue(withIdentifier: "gotoLoginFromMenu", sender: sender)
-//			},
-//			
-//			error: { message in
-//				print("User failed to log out: \(message)")
-//		})
 
 		self.present(alert, animated: true, completion: nil)
 		
 		print( "logoutBtn called!" )
-		
-
-	}
-    
-    
+	}    
 
 }

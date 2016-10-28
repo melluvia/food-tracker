@@ -23,19 +23,29 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     var addingNewItem: Bool? = false
     
+    var isUserLoggedIn = false
     
-	/*
-	This value is either passed by `MealTableViewController` in `prepareForSegue(_:sender:)`
-	or constructed as part of adding a new meal.
-	*/
 	var meal: MealData?
+    
+    var userId: String?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
         
-        let userId = BackendlessManager.sharedInstance.backendless.userService.currentUser.objectId!
+        isUserLoggedIn = BackendlessManager.sharedInstance.isUserLoggedIn()
         
-        if addingNewItem == false && userId as String != meal?.ownerId {
+        if isUserLoggedIn == true {
+            
+            userId = BackendlessManager.sharedInstance.backendless.userService.currentUser.objectId! as String
+        } else {
+            
+            userId = "Non-logged in user"
+        }
+
+        
+        
+        
+        if addingNewItem == false && userId! as String != meal?.ownerId {
             
             restaurantNameTextField.isEnabled = false
             nameTextField.isEnabled = false
@@ -100,18 +110,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         saveButton.isEnabled = false
-        
-//        // Create padding for textFields
-//        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
-//        
-//        textField.leftView = paddingView
-//        textField.leftViewMode = UITextFieldViewMode.always
-//        
-//        if textField == restaurantNameTextField {
-//            restaurantNameTextField.placeholder = "Restaurant Name"
-//        } else {
-//            nameTextField.placeholder = "Dish Title"
-//        }
     }
 	
 	func checkValidMealName() {
@@ -136,32 +134,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             notesView.textColor = UIColor.white
         }
     }
-    
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        if notesView.textColor == UIColor.lightGray {
-//            notesView.text = nil
-//            notesView.textColor = UIColor.black
-//        }
-//    }
-    
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        if notesView.text.isEmpty {
-//            notesView.text = "Placeholder"
-//            notesView.textColor = UIColor.lightGray
-//        }
-//    }
-    
-    
-//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        
-//        // Resign keyboard upon return
-//        if(text == "\n") {
-//            view.endEditing(true)
-//            return false
-//        } else {
-//            return true
-//        }
-//    }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
@@ -202,12 +174,10 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		
 		let name = nameTextField.text ?? ""
 		let rating = ratingControl.rating
-       // Meal.init().starRatings?.append(String(rating) + ".")
 		let photo = photoImageView.image
 		let note = notesView.text ?? ""
         let restaurantName = restaurantNameTextField.text ?? ""
         
-//TODO: Save prev rating to BE
         let prevRating = String(ratingControl.rating)
 		
 		saveSpinner.isHidden = false
@@ -401,13 +371,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Reset the scroll view back to where it was!
 		self.scrollView.contentInset = UIEdgeInsets.zero
 	}
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if segue.identifier == "unwindToMealList" {
-//            
-//        }
-//    }
 
 }
 

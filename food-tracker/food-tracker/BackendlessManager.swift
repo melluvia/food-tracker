@@ -8,12 +8,6 @@
 
 import Foundation
 
-// The BackendlessManager class below is using the Singleton pattern.
-// A singleton class is a class which can be instantiated only once.
-// In other words, only one instance of this class can ever exist.
-// The benefit of a Singleton is that its state and functionality are
-// easily accessible to any other object in the project.
-
 class BackendlessManager {
 	
 	// This gives access to the one and only instance.
@@ -22,17 +16,12 @@ class BackendlessManager {
 	// This prevents others from using the default '()' initializer for this class.
 	private init() {}
 	
-	
 	let backendless = Backendless.sharedInstance()!
 	
 	
 	let VERSION_NUM = "v1"
 	let APP_ID = "2ECFFE12-41E3-DA72-FF9C-68AA8967D700"
 	let SECRET_KEY = "AFE77CAD-2858-C0DA-FF8D-455A60FA4D00"
-	
-// will type in manually
-//	let EMAIL = "test@gmail.com" // Doubles as User Name
-//	let PASSWORD = "password"
 	
 	func initApp() {
 		
@@ -147,7 +136,6 @@ class BackendlessManager {
         if isUserLoggedIn() {
             
             // If they are currently logged in - go ahead and log them out!
-            
             backendless.userService.logout( { (user: Any!) -> Void in
                     print("User logged out!")
                     completion()
@@ -165,53 +153,6 @@ class BackendlessManager {
         }
     }
 	
-//	func saveTestData() {
-//		
-//		let newMeal = Meal()
-//		newMeal.name = "Test Meal #1"
-//		newMeal.photoUrl = "https://guildsa.org/wp-content/uploads/2016/09/meal1.png"
-//		newMeal.rating = 5
-//		newMeal.note = "Test Note"
-//		
-//		backendless.data.save( newMeal,
-//		                       
-//		   response: { (entity: Any?) -> Void in
-//			
-//				let meal = entity as! Meal
-//			
-//				print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
-//			},
-//				   
-//			error: { (fault: Fault?) -> Void in
-//				print("Meal failed to save: \(fault)")
-//			}
-//		)
-//	}
-	
-//	func loadTestData() {
-//		
-//		let dataStore = backendless.persistenceService.of(Meal.ofClass())
-//		
-//		dataStore?.find(
-//			
-//			{ (meals: BackendlessCollection?) -> Void in
-//				
-//				print("Find attempt on all Meals has completed without error!")
-//				print("Number of Meals found = \((meals?.data.count)!)")
-//				
-//				for meal in (meals?.data)! {
-//					
-//					let meal = meal as! Meal
-//					
-//					print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", note: \"\(meal.note)\"")
-//				}
-//			},
-//			
-//			error: { (fault: Fault?) -> Void in
-//				print("Meals were not fetched: \(fault)")
-//			}
-//		)
-//	}
 	
 	func savePhotoAndThumbnail(mealToSave: Meal, photo: UIImage, completion: @escaping () -> (), error: @escaping () -> ()) {
 		
@@ -512,11 +453,6 @@ class BackendlessManager {
         
         let dataStore = backendless.persistenceService.of(Meal.ofClass())
         
-        // Lets find ALL meals not just those that belong to the currentuser
-//        let dataQuery = BackendlessDataQuery()
-//        // Only get the Meals that belong to our logged in user!
-//        dataQuery.whereClause = "ownerId = '\(backendless.userService.currentUser.objectId!)'"
-        
         dataStore?.find(
             
             { (meals: BackendlessCollection?) -> Void in
@@ -579,50 +515,7 @@ class BackendlessManager {
             }
         )
     }
-    
-//    // Load meals from that owner
-//    func loadUserOnlyMeals(user: BackendlessUser, completion: @escaping ([MealData]) -> (), error: @escaping () -> ()) {
-//        
-//        let userId = backendless.userService.currentUser.objectId
-//        
-//        let dataStore = self.backendless.data.of(Meal.ofClass())
-//        
-//        let dataQuery = BackendlessDataQuery()
-//        dataQuery.whereClause = "ownerId = \(userId!)"
-//        
-//        dataStore?.find(dataQuery,
-//        
-//            response: { (meals: BackendlessCollection?) -> Void in
-//                
-//                print("Find attempt on Meals with a certain ownerId has completed without error!")
-//                print("Number of Meals found = \((meals?.data.count)!)")
-//                
-//                let mealData = [MealData]()
-//                
-//                if (meals?.data.count)! > 0 {
-//                    
-//                    for meal in (meals?.data)! {
-//                        
-//                        let meal = meal as! Meal
-//                        
-//                        print("Id: \(meal.objectId!), name: \(meal.name!)")
-//                    }
-//                    
-//                    completion(mealData)
-//                    
-//                } else {
-//                    print("No Meals were fetched using the whereClause '\(dataQuery.whereClause)'")
-//                }
-//            },
-//                        
-//            error: { ( fault: Fault?) -> Void in
-//                print("Meals were not fetched: \(fault)")
-//            })
-//        
-//        
-//    
-//    }
-    
+        
     func removePhotoAndThumbnail(photoUrl: String, thumbnailUrl: String, completion: @escaping () -> (), error: @escaping () -> ()) {
         
         // Get just the file name which is everything after "/files/".

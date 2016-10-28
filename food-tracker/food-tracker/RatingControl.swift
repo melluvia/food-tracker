@@ -31,7 +31,7 @@ class RatingControl: UIView {
 		
 		let filledStarImage = UIImage(named: "filledStar")
 		let emptyStarImage = UIImage(named: "emptyStar")
-		let halfStarImage = UIImage(named: "halfStars")
+//		let halfStarImage = UIImage(named: "halfStars")
         
 		for _ in 0..<starCount {
 			
@@ -76,14 +76,9 @@ class RatingControl: UIView {
 	// MARK: Button Action
 	
 	func ratingButtonTapped(_ button: UIButton) {
-
-        //**why is this here twice????
-	//	rating = Double(ratingButtons.index(of: button)! + 1)
-
 		
 		rating = Double(ratingButtons.index(of: button)! + 1)
 
-		
 		updateButtonSelectionStates()
 	}
 	
