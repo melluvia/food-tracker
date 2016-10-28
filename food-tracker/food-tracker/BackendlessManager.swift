@@ -430,7 +430,7 @@ class BackendlessManager {
                             
                             let meal = entity as! Meal
                             
-                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
+                            print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName), note: \"\(meal.note)\",")
                             
                             completion()
                         },

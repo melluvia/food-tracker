@@ -197,8 +197,6 @@ class MealTableViewController: UITableViewController {
         } else {
             cell.avgRatingLabel.isHidden = true
             cell.avgStarHeader.isHidden = true
-            
-            print("Meal created at :\(indexPath.row)")
         }
         
         // For NSCache, if we have the cache key we put it on the cell when it gets created
