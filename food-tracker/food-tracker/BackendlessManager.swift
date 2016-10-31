@@ -20,7 +20,7 @@ class BackendlessManager {
 	
 	
 	let VERSION_NUM = "v1"
-	let APP_ID = "2ECFFE12-41E3-DA72-FF9C-68AA8967D700"
+	let APP_ID =  "2ECFFE12-41E3-DA72-FF9C-68AA8967D700"
 	let SECRET_KEY = "AFE77CAD-2858-C0DA-FF8D-455A60FA4D00"
 	
 	func initApp() {
@@ -222,7 +222,9 @@ class BackendlessManager {
             mealToSave.note = mealData.note
             mealToSave.restaurantName = mealData.restaurantName
             mealToSave.ownerId = mealData.ownerId
-			
+            mealToSave.starRatings = mealData.prevRating
+            print("mealToSave.starRatings is \(mealToSave.starRatings)")
+            
             savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
                                                        
                completion: {
@@ -235,7 +237,7 @@ class BackendlessManager {
                             let meal = entity as! Meal
 
                             print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
-
+                            print("This is \(meal.starRatings)")
                             mealData.objectId = meal.objectId
                             mealData.photoUrl = meal.photoUrl
                             mealData.thumbnailUrl = meal.thumbnailUrl
@@ -255,6 +257,82 @@ class BackendlessManager {
                 })
         }
         else if mealData.replacePhoto {
+
+        } else if mealData.replacePhoto {
+            
+            //
+            // Update the Meal AND replace the existing photo and 
+            // thumbnail image with a new one.
+            //
+            
+            let mealToSave = Meal()
+            
+            savePhotoAndThumbnail(mealToSave: mealToSave, photo: mealData.photo!,
+                                                       
+               completion: {
+
+                    let dataStore = self.backendless.persistenceService.of(Meal.ofClass())
+
+                    dataStore?.findID(mealData.objectId,
+                                      
+                        response: { (meal: Any?) -> Void in
+                            
+                            // We found the Meal to update.
+                            let meal = meal as! Meal
+                            
+                            // Cache old URLs for removal!
+                            let oldPhotoUrl = meal.photoUrl!
+                            let oldthumbnailUrl = meal.thumbnailUrl!
+                            
+                            // Update the Meal with the new data.
+                            meal.name = mealData.name
+							meal.note = mealData.note
+                            meal.rating = mealData.rating
+                            meal.photoUrl = mealToSave.photoUrl
+                            meal.thumbnailUrl = mealToSave.thumbnailUrl
+                            meal.restaurantName = mealToSave.restaurantName
+                           // meal.starRatings? = mealData.prevRating!
+                            meal.ownerId = mealToSave.ownerId
+                            
+                            // Save the updated Meal.
+                            self.backendless.data.save( meal,
+                                                   
+                                response: { (entity: Any?) -> Void in
+                                    
+                                    let meal = entity as! Meal
+                                    
+                                    print("Meal: \(meal.objectId!), name: \(meal.name), photoUrl: \"\(meal.photoUrl!)\", rating: \"\(meal.rating)\", restaurant:\(meal.restaurantName!), note: \"\(meal.note)\", ownerId: \(meal.ownerId!)")
+                                    
+                                    // Update the mealData used by the UI with the new URLS!
+                                    mealData.photoUrl = meal.photoUrl
+                                    mealData.thumbnailUrl = meal.thumbnailUrl
+                                    
+                                    completion()
+                                    
+                                    // Attempt to remove the old photo and thumbnail images.
+                                    self.removePhotoAndThumbnail(photoUrl: oldPhotoUrl, thumbnailUrl: oldthumbnailUrl, completion: {}, error: {})
+                                },
+                                                   
+                               error: { (fault: Fault?) -> Void in
+                                    print("Failed to save Meal: \(fault)")
+                                    error()
+                            })
+                        },
+                         
+                        error: { (fault: Fault?) -> Void in
+                            print("Failed to find Meal: \(fault)")
+                            error()
+                        }
+                    )
+                },
+                                                       
+                error: {
+                    print("Failed to save photo and thumbnail!")
+                    error()
+                })
+            
+        } else if mealData.replacePhoto {
+
             
 			//
 			// Update the Meal AND replace the existing photo and
@@ -288,8 +366,14 @@ class BackendlessManager {
                             meal.rating = mealData.rating
                             meal.photoUrl = mealToSave.photoUrl
                             meal.thumbnailUrl = mealToSave.thumbnailUrl
+
                             meal.restaurantName = mealData.restaurantName
                         //    meal.starRatings = mealData.prevRating //this should do it!
+
+                            meal.restaurantName = mealToSave.restaurantName
+                            //let temp prating =
+                          //  meal.starRatings? = mealData.prevRating! //this should do it!
+
                             meal.ownerId = mealToSave.ownerId
                             
                             // Save the updated Meal.
@@ -357,7 +441,7 @@ class BackendlessManager {
 					meal.note = mealData.note
                     meal.restaurantName = mealData.restaurantName
                     meal.ownerId = mealData.ownerId
-                    meal.prevRating = mealData.prevRating
+                    meal.starRatings? = mealData.prevRating!
                     
                     // Save the updated Meal.
                     self.backendless.data.save( meal,
@@ -406,7 +490,9 @@ class BackendlessManager {
                     
                    // print("OwnerId: \(meal.ownerId!)")
                     
-                    let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "), prevRating: meal.starRatings ?? ("5"))
+                    
+                    //this is wherer the mysterious 5 came from..should be nil not "0" //tricky problems
+                    let newMealData = MealData(name: meal.name!, photo: nil, rating: meal.rating, note: meal.note ?? (" "), restaurantName: meal.restaurantName ?? (" "), prevRating: (meal.starRatings ?? (" ")))
 					
                     if let newMealData = newMealData {
                         
@@ -416,6 +502,7 @@ class BackendlessManager {
 						newMealData.note = meal.note
                         newMealData.restaurantName = meal.restaurantName
                         newMealData.ownerId = meal.ownerId
+                        newMealData.prevRating = meal.starRatings  //change back to starRatings //all ratings here
                         
                         mealData.append(newMealData)
                     }

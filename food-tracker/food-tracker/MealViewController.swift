@@ -28,10 +28,21 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 	var meal: MealData?
     
     var userId: String?
+    
+    var preRating: String? = ""
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        print("Viewdidload was called for Mealviewcontroller!!")
+        //this is in 1 spot too many ...which spot is right though ********
+        if meal?.prevRating != nil && meal?.prevRating != "" {
+            
+            preRating = meal?.prevRating
+        }
         
+        //  preRating = String(ratingControl.rating)
+          print("The viewDidLoad just loaded and the preRating is equal to : \(preRating)")
+       
         isUserLoggedIn = BackendlessManager.sharedInstance.isUserLoggedIn()
         
         if isUserLoggedIn == true {
@@ -85,6 +96,11 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Dispose of any resources that can be recreated.
 	}
     
+    override func viewDidAppear(_ animated: Bool) {
+      //  if (ratingControl != nil) && (ratingControl.rating != 0.0) {
+       //     preRating = String(ratingControl.rating) }
+        print("The viewDidAppear just loaded and the preRating is equal to : \(preRating)")
+    }
     
     
 	
@@ -178,8 +194,14 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		let note = notesView.text ?? ""
         let restaurantName = restaurantNameTextField.text ?? ""
         
-        let prevRating = String(ratingControl.rating)
-		
+        //prob here
+        let prevRating = preRating
+        //or problem is here
+        if preRating != "" && preRating != nil {
+            //meal?.prevRating = "\(meal?.prevRating!),\(String(describing: meal?.rating))"
+          //  preRating = meal?.prevRating!  NOT NEEDED!
+        }
+        
 		saveSpinner.isHidden = false
 		saveSpinner.startAnimating()
 		
@@ -194,6 +216,17 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 			meal?.rating = rating
 			meal?.note = note
             meal?.restaurantName = restaurantName
+            
+// MARK: Problem here
+            // problem is RIGHT here ******
+            if  preRating! != String(describing: meal?.rating) {
+                print("preRating\(preRating!) and meal?.rating\(meal?.rating) should not be equal ")
+                if meal?.prevRating != nil && meal?.prevRating != preRating {
+                    meal?.prevRating?.append("," + preRating!)
+                } else {
+                    meal?.prevRating = preRating
+                }
+            print("meal?.prevRating? after being appended is \(meal?.prevRating)")}
 		}
 		
 		if BackendlessManager.sharedInstance.isUserLoggedIn() {

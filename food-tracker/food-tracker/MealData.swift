@@ -52,7 +52,7 @@ class MealData: NSObject, NSCoding {
 	
 //	 MARK: Initialization
  
-    init?(name: String, photo: UIImage?, rating: Double, note: String, restaurantName: String , prevRating: String) {
+    init?(name: String, photo: UIImage?, rating: Double, note: String, restaurantName: String , prevRating: String?) {
 		
 		// Initialize stored properties.
 		self.name = name

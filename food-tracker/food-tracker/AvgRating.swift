@@ -19,19 +19,23 @@ class AvgRating {
         
         currentRating = mealRating
         var pastR: [Double] = [6.0]
+        var count = 0
+        var tempAvg: Double = 0.00
+        var sum: Double = 0.0
+        var tempArray: [Double] = []
         
         //set pastR to prevRating if its != nil
-        if pastRating != nil {
+        if pastRating != nil && pastRating != "0.0"{
             
             //splitting up ratings into seperate numbers(but in quotes)
             let prevRatArray = pastRating!.components(separatedBy: ",")
-            print("prevRatArray is \(prevRatArray)") //delete after debugging
+            print("prevRatArray is \(prevRatArray)..but we pulled it from PastRating which is \(pastRating)") //delete after debugging
             
-            var tempArray: [Double] = []
+            
             //this loop will change strings into Doubles
             //!!!***WE must clean up duplicates here!!!!!
             for i in prevRatArray{
-                if i != "" {
+                if (i != "") && (i != " ") {
                     tempArray.append(Double(i)!)
                 }
          
@@ -41,15 +45,14 @@ class AvgRating {
             pastR = [6.0]
         }
 
-            var tempAvg: Double = 0.00
-            var sum: Double = 0.0
+        
         
             if (pastR == [6.0]) {
                 sum = currentRating
                 tempAvg = sum
             } else {
                 // sum = currentRating + pastR s'
-                var count = 0
+                
                 for i in pastR {
                     sum = sum + i
                     count = count + 1
@@ -93,13 +96,42 @@ class AvgRating {
         default:
             avgRating = 0
         }
-        print("the final avg for \(mealRating) is \(avgRating)")
+        print("the final avg for \(mealRating) is \(avgRating)..the tempAvg is \(tempAvg)")
         return avgRating
     }
     
 
-    
-    
+    func testCalcAvg(testRating: Double, testPrevRating: String) -> Double {
+        
+        var average: Double = 0.0   //this will be the final average
+        let rating = testRating     //this is the current rating
+        var pastRatings: [Double] = []  // this will be all the past ratings as numbers in an array
+        
+        let tempArray = testPrevRating.components(separatedBy: ",") // will put all numbers as strings in an array
+        
+        //now put/convert all "string" numbers into doubles in proper array
+        for i in tempArray{
+            //this doesnt check for nil or ""
+            pastRatings.append(Double(i)!)
+        }
+        
+        var sum = 0.0
+        var count = 0
+        //calculate average
+        for i in pastRatings{
+            
+            sum = sum + i
+            
+            count = count + 1
+        }
+        sum = sum + rating
+        //add to count for current rating
+        count = count + 1
+        
+        average = sum / Double(count)
+        
+        return average
+    }
     
     
     

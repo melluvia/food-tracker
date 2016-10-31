@@ -193,6 +193,8 @@ class MealTableViewController: UITableViewController {
         cell.ratingControl.rating = meal.rating
         
         if isUserLoggedIn == true {
+            //meal.prevRating is wrong here ...prevrating is nil here
+            print("It went to hell before here prevrating is: \(meal.prevRating)")
             cell.avgRatingLabel.text = String(AvgRating.init().calcAvgRating(meal.rating, pastRating: meal.prevRating))
         } else {
             cell.avgRatingLabel.isHidden = true
@@ -365,17 +367,20 @@ class MealTableViewController: UITableViewController {
 				let selectedMeal = meals[(indexPath as NSIndexPath).row]
 				mealDetailViewController.meal = selectedMeal
                 
-                //dont forget to save the current rating as previous rating 
-                if selectedMeal.prevRating != nil{
-                    selectedMeal.prevRating!.append(String(selectedMeal.rating) + ",")
-                    //save it to backendless
-                    //Backendless.sharedInstance().data.
+                //this should be neccessary
+//          *****//dont forget to save the current rating as previous rating(this stomps on all Ratings!!)
+                if selectedMeal.prevRating! == nil { //there is no prevrating Array
+                   selectedMeal.prevRating! = String(selectedMeal.rating)
                 } else {
-                    selectedMeal.prevRating = String(selectedMeal.rating) + ","
-                    //save it to backendless
-                    
-                    print("the culprit is \(selectedMeal.prevRating)")
+                    selectedMeal.prevRating!.append("," + String(selectedMeal.rating))
                 }
+                print("we are sending this to mealview Controller..preRating is \(selectedMeal.prevRating!)")
+//                    selectedMeal.prevRating = String(selectedMeal.rating) + ","
+
+//                    //save it to backendless
+//                    
+                    print("the culprit is \(selectedMeal.prevRating)")
+               
 			}
 			
 		} else if segue.identifier == "AddItem" {
