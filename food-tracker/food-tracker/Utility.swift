@@ -14,8 +14,52 @@ class Utility {
 	static let sharedInstance = Utility()
 	
 	// This prevents others from using the default '()' initializer for this class.
-	private init() {}
-	
+	private init() {
+    
+        imageCache.countLimit = 50 // sets cache limit to 50 images.
+    }
+    
+    // Create cache that uses NSString keys to point to UIImages.
+    var imageCache = NSCache<NSString, UIImage>()
+    
+    func loadImageFromUrl(imageUrl: String, completion: @escaping (Data) -> (), loadError: @escaping () -> ()) {
+        
+        let url = URL(string: imageUrl)!
+        
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
+            
+            if error == nil {
+                
+                do {
+                    
+                    let data = try Data(contentsOf: url, options: [])
+                    
+                    DispatchQueue.main.async {
+                        
+                        completion(data)
+                    }
+                    
+                } catch {
+                    print("NSData Error: \(error)")
+                    DispatchQueue.main.async {
+                        loadError()
+                    }
+                }
+            } else {
+                print("NSData Error: \(error)")
+                DispatchQueue.main.async {
+                    loadError()
+                }
+            }
+        })
+        
+        task.resume()
+    }
+
+    
+    
 	static func isValidEmail(emailAddress: String) -> Bool {
 		
 		let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"

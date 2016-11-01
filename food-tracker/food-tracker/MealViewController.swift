@@ -30,6 +30,18 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     var userId: String?
     
     var preRating: String? = ""
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hide toolbar
+        self.navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Show toolbar when leave MVC
+        self.navigationController?.setToolbarHidden(false, animated: true)
+    }
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -42,7 +54,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         //  preRating = String(ratingControl.rating)
           print("The viewDidLoad just loaded and the preRating is equal to : \(preRating)")
-       
+        
+        // Check if user is logged in
         isUserLoggedIn = BackendlessManager.sharedInstance.isUserLoggedIn()
         
         if isUserLoggedIn == true {
@@ -53,7 +66,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             userId = "Non-logged in user"
         }
         
-// This should allow users to edit their own meals
+        print("addingNewItem = \(addingNewItem), userId = \(userId! as String), meal?.ownerId = \(meal?.ownerId) ")
+        
         if addingNewItem == false && userId! as String != meal?.ownerId {
             
             restaurantNameTextField.isEnabled = false
@@ -61,7 +75,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             photoImageView.isUserInteractionEnabled = false
             notesView.isEditable = false
         }
-
 	
 		// Handle the text field’s user input through delegate callbacks.
 		nameTextField.delegate = self
@@ -74,10 +87,40 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             navigationItem.title = meal.name
             nameTextField.text   = meal.name
             
-            if BackendlessManager.sharedInstance.isUserLoggedIn() && meal.photoUrl != nil {
-                loadImageFromUrl(imageView: photoImageView, photoUrl: meal.photoUrl!)
+            if isUserLoggedIn == true && meal.photoUrl != nil {
+                
+                if Utility.sharedInstance.imageCache.object(forKey: meal.photoUrl! as NSString) != nil {
+                    
+                    photoImageView.image = Utility.sharedInstance.imageCache.object(forKey: meal.photoUrl! as NSString)
+                
+                } else {
+                    
+                    saveSpinner.startAnimating()
+                
+                    Utility.sharedInstance.loadImageFromUrl(imageUrl: meal.photoUrl!,
+                            
+                        completion: { data in
+                        
+                            // retrieved data- using it to create a UIImage for our cell's ui imageview.
+                            if let image = UIImage(data: data) {
+                                            
+                                // Bounce back to the main thread to update the UI
+                                DispatchQueue.main.async {
+                                                
+                                    self.photoImageView.image = image
+    
+                                    // cache the pulled down UIImage using the URL as the key.
+                                    Utility.sharedInstance.imageCache.setObject(image, forKey: meal.photoUrl! as NSString)
+                                }
+                            }
+                            self.saveSpinner.stopAnimating()
+                        },
+                        loadError: {
+                            self.saveSpinner.stopAnimating()
+                    })
+                }
             } else {
-                photoImageView.image = meal.photo
+               photoImageView.image = meal.photo
             }
             
             ratingControl.rating = meal.rating
@@ -110,14 +153,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 		// Hide the keyboard.
 		//textField.resignFirstResponder()
 		
-		if textField == restaurantNameTextField {
-			nameTextField.becomeFirstResponder()
+		if textField == nameTextField {
+			restaurantNameTextField.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
         }
-        
         return true
-
 	}
     
     // UITextFieldDelegate, called when editing session begins, or when keyboard displayed
@@ -217,7 +258,6 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 			meal?.note = note
             meal?.restaurantName = restaurantName
             
-// MARK: Problem here
             // problem is RIGHT here ******
             if  preRating! != String(describing: meal?.rating) {
                 print("preRating\(preRating!) and meal?.rating\(meal?.rating) should not be equal ")
@@ -229,7 +269,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             print("meal?.prevRating? after being appended is \(meal?.prevRating)")}
 		}
 		
-		if BackendlessManager.sharedInstance.isUserLoggedIn() {
+		if isUserLoggedIn {
 			
 			// We're logged in - attempt to save to Backendless!
 			self.saveSpinner.startAnimating()
@@ -246,7 +286,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                     self.performSegue(withIdentifier: "unwindToMealList", sender: self)
                 },
                                                        
-               error: {
+                error: {
                 
                     // It was NOT saved to the database! - tell the user and DON'T call performSegue.
                     self.saveSpinner.stopAnimating()
@@ -335,41 +375,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         }
     }
     
-    func loadImageFromUrl(imageView: UIImageView, photoUrl: String) {
-        
-        saveSpinner.startAnimating()
-        
-        let url = URL(string: photoUrl)!
-        
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
-            
-            if error == nil {
-                
-                do {
-                    
-                    let data = try Data(contentsOf: url, options: [])
-                    
-                    DispatchQueue.main.async {
-                        
-                        // We got the image data! Use it to create a UIImage for our cell's
-                        // UIImageView.
-                        imageView.image = UIImage(data: data)
-                        self.saveSpinner.stopAnimating()
-                    }
-                    
-                } catch {
-                    print("NSData Error: \(error)")
-                }
-                
-            } else {
-                print("NSURLSession Error: \(error)")
-            }
-        })
-        
-        task.resume()
-    }
+    // MARK: Scroll Keyboard to TextField
 	
 	func registerForKeyboardNotifications() {
 		

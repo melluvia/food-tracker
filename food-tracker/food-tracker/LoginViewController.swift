@@ -78,6 +78,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             Utility.showAlert(viewController: self, title: "Login Error", message: "Please enter a valid email address.")
             return
         }
+        
+        loginBtn.isEnabled = false
 
         spinner.startAnimating()
 

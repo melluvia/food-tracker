@@ -22,16 +22,18 @@ class MealTableViewController: UITableViewController {
     let img2 = UIImage(named: "exit")!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
     
     var leftBarButtonItem = UIBarButtonItem()
-    
-	// Create cache that uses NSString keys to point to UIImages.
-	var imageCache = NSCache<NSString, UIImage>()
-	
+
     var isUserLoggedIn = false
     
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		imageCache.countLimit = 50 // sets cache limit to 50 images.
+        
+        if isUserLoggedIn == false {
+            
+            
+            // This isn't working but no big deal
+            navigationController?.navigationItem.title = "Your Dishes"
+        }
 
         // Add support for pull-to-refresh on the table view.
         self.refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: UIControlEvents.valueChanged)
@@ -82,7 +84,6 @@ class MealTableViewController: UITableViewController {
         let meal3 = MealData(name: "Pasta with Meatballs", photo: photo3, rating: 3, note: "Just average.", restaurantName: "Denny's", prevRating: "3")!
         
         meals += [meal1, meal2, meal3]
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -204,16 +205,16 @@ class MealTableViewController: UITableViewController {
         // For NSCache, if we have the cache key we put it on the cell when it gets created
         if meal.thumbnailUrl != nil && isUserLoggedIn {
             
-            if imageCache.object(forKey: meal.thumbnailUrl! as NSString) != nil {
+            if Utility.sharedInstance.imageCache.object(forKey: meal.thumbnailUrl! as NSString) != nil {
                 
                 // If the URL for the thumbnail is in the cache already - get the UIImage that belongs to it.
-                cell.photoImageView.image = self.imageCache.object(forKey: meal.thumbnailUrl! as NSString)
+                cell.photoImageView.image = Utility.sharedInstance.imageCache.object(forKey: meal.thumbnailUrl! as NSString)
 
             } else {
                 
                 cell.spinner.startAnimating()
                 
-                loadImageFromUrl(thumbnailUrl: meal.thumbnailUrl!,
+                Utility.sharedInstance.loadImageFromUrl(imageUrl: meal.thumbnailUrl!,
                                  
                     completion: { data in
                         
@@ -226,7 +227,7 @@ class MealTableViewController: UITableViewController {
                                 cell.photoImageView.image = image
     
                                 // cache the pulled down UIImage using the URL as the key.
-                                self.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
+                                Utility.sharedInstance.imageCache.setObject(image, forKey: meal.thumbnailUrl! as NSString)
                             }
                         }
                                     
@@ -244,45 +245,6 @@ class MealTableViewController: UITableViewController {
         
         return cell
     }
-	
-	func loadImageFromUrl(thumbnailUrl: String, completion: @escaping (Data) -> (), loadError: @escaping () -> ()) {
-		
-		let url = URL(string: thumbnailUrl)!
-		
-		let session = URLSession.shared
-		
-		let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
-			
-			if error == nil {
-				
-				do {
-					
-					let data = try Data(contentsOf: url, options: [])
-					
-					DispatchQueue.main.async {
-						
-						// We got the image data! Use it to create a UIImage for our cell's
-						// UIImageView. Then, stop the activity spinner.
-						completion(data)
-						//cell.activityIndicator.stopAnimating()
-					}
-					
-				} catch {
-					print("NSData Error: \(error)")
-					DispatchQueue.main.async {
-						loadError()
-					}
-				}
-			} else {
-				print("NSData Error: \(error)")
-				DispatchQueue.main.async {
-					loadError()
-				}
-			}
-		})
-		
-		task.resume()
-	}
 	
 	// Override to support conditional editing of the table view.
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -367,9 +329,11 @@ class MealTableViewController: UITableViewController {
 				let selectedMeal = meals[(indexPath as NSIndexPath).row]
 				mealDetailViewController.meal = selectedMeal
                 
+                mealDetailViewController.addingNewItem = false 
+                
                 //this should be neccessary
 //          *****//dont forget to save the current rating as previous rating(this stomps on all Ratings!!)
-                if selectedMeal.prevRating! == nil { //there is no prevrating Array
+                if selectedMeal.prevRating == nil { //there is no prevrating Array
                    selectedMeal.prevRating! = String(selectedMeal.rating)
                 } else {
                     selectedMeal.prevRating!.append("," + String(selectedMeal.rating))
@@ -397,7 +361,6 @@ class MealTableViewController: UITableViewController {
 		
 		if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
             
-// Added to refresh TVC upon update
             refresh(sender: sender)
 			
 			if let selectedIndexPath = tableView.indexPathForSelectedRow {

@@ -15,6 +15,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordConfirmTextField: UITextField!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var registerBtn: UIButton!
+    @IBOutlet weak var warningLabel: UILabel!
     
     let backendless = Backendless.sharedInstance()!
     
@@ -136,7 +137,8 @@ class RegisterViewController: UIViewController {
             
             if passwordTextField.text != passwordConfirmTextField.text {
                 
-                registerBtn.isEnabled = false                
+                registerBtn.isEnabled = false
+                warningLabel.isHidden = false
             }
         }
         
@@ -145,6 +147,8 @@ class RegisterViewController: UIViewController {
     
     // UITextFieldDelegate, called when editing session begins, or when keyboard displayed
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        warningLabel.isHidden = true 
         
         // Create padding for textFields
         let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 20, height: 20))
