@@ -61,19 +61,23 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         if isUserLoggedIn == true {
             
             userId = BackendlessManager.sharedInstance.backendless.userService.currentUser.objectId! as String
-        } else {
+        }
+        else {
             
-            userId = "Non-logged in user"
+            userId = ""
         }
         
-        print("addingNewItem = \(addingNewItem), userId = \(userId! as String), meal?.ownerId = \(meal?.ownerId) ")
+        print("addingNewItem = \(addingNewItem), userId = \(userId! as String?), meal?.ownerId = \(meal?.ownerId) ")
         
         if addingNewItem == false && userId! as String != meal?.ownerId {
             
-            restaurantNameTextField.isEnabled = false
-            nameTextField.isEnabled = false
-            photoImageView.isUserInteractionEnabled = false
-            notesView.isEditable = false
+            if userId! != "" {
+            
+                restaurantNameTextField.isEnabled = false
+                nameTextField.isEnabled = false
+                photoImageView.isUserInteractionEnabled = false
+                notesView.isEditable = false
+            }
         }
 	
 		// Handle the text field’s user input through delegate callbacks.
