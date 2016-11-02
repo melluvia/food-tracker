@@ -20,8 +20,8 @@ class BackendlessManager {
 	
 	
 	let VERSION_NUM = "v1"
-	let APP_ID =  "2ECFFE12-41E3-DA72-FF9C-68AA8967D700"
-	let SECRET_KEY = "AFE77CAD-2858-C0DA-FF8D-455A60FA4D00"
+	let APP_ID =   "2ECFFE12-41E3-DA72-FF9C-68AA8967D700" // old Backendless Account
+	let SECRET_KEY = "AFE77CAD-2858-C0DA-FF8D-455A60FA4D00" // old Backendless Account
 	
 	func initApp() {
 		

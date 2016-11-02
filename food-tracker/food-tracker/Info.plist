@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Dish Rate</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,7 +25,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>backendless2ECFFE12-41E3-DA72-FF9C-68AA8967D700</string>
+				<string>backendlessA3210F50-AEC3-9533-FF5A-CCD45F3E3C00</string>
 			</array>
 		</dict>
 	</array>
