@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wLa-aO-8YV">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="92" width="414" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kjQ-c0-U9U" id="esn-pb-Ci0">
-                                    <frame key="frameInset" width="414" height="89.666666666666671"/>
+                                    <frame key="frameInset" width="414" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="V5P-nb-unr" userLabel="Photo Image View">
@@ -146,6 +146,7 @@
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Dish Title" textAlignment="center" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="JVV-pV-lvV">
                                                 <constraints>
+                                                    <constraint firstAttribute="width" constant="250" id="bhR-zc-Ffv"/>
                                                     <constraint firstAttribute="height" constant="40" id="rLd-NJ-rIE"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -153,6 +154,7 @@
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="129" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant Name" textAlignment="center" minimumFontSize="17" background="login-entry" translatesAutoresizingMaskIntoConstraints="NO" id="Q8f-xr-nDZ">
                                                 <constraints>
+                                                    <constraint firstAttribute="width" constant="250" id="5Wd-m2-I0L"/>
                                                     <constraint firstAttribute="height" constant="40" id="EZ2-UO-WhJ"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -164,6 +166,7 @@
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="VXP-mk-If4" userLabel="Photo Image View">
                                                 <gestureRecognizers/>
                                                 <constraints>
+                                                    <constraint firstAttribute="width" constant="250" id="1GS-1b-TEX"/>
                                                     <constraint firstAttribute="height" constant="250" id="iAv-X3-Qi9"/>
                                                 </constraints>
                                                 <connections>
@@ -193,21 +196,18 @@
                                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zpA-5m-LrH"/>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Q8f-xr-nDZ" secondAttribute="trailing" constant="55" id="A47-5c-3Q4"/>
+                                            <constraint firstItem="Q8f-xr-nDZ" firstAttribute="centerX" secondItem="t2G-2v-YF2" secondAttribute="centerX" id="BMj-gd-PkN"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" id="CFb-VE-7H5"/>
                                             <constraint firstAttribute="trailing" secondItem="3S3-1c-5TM" secondAttribute="trailing" id="FDX-rG-PCB"/>
+                                            <constraint firstItem="VXP-mk-If4" firstAttribute="centerX" secondItem="t2G-2v-YF2" secondAttribute="centerX" id="FGw-n9-RLb"/>
                                             <constraint firstItem="zpA-5m-LrH" firstAttribute="centerY" secondItem="t2G-2v-YF2" secondAttribute="centerY" id="Ofb-jZ-gZT"/>
                                             <constraint firstItem="Q8f-xr-nDZ" firstAttribute="top" secondItem="JVV-pV-lvV" secondAttribute="bottom" constant="8" id="Pip-NB-HbB"/>
                                             <constraint firstAttribute="bottom" secondItem="3S3-1c-5TM" secondAttribute="bottom" id="PpM-Gt-2Ur"/>
-                                            <constraint firstItem="VXP-mk-If4" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" constant="55" id="YVJ-qA-mOP"/>
                                             <constraint firstItem="ICG-oO-6LN" firstAttribute="centerX" secondItem="t2G-2v-YF2" secondAttribute="centerX" id="bVm-8H-WJ1"/>
                                             <constraint firstItem="3S3-1c-5TM" firstAttribute="top" secondItem="ICG-oO-6LN" secondAttribute="bottom" constant="20" id="eIo-87-kJa"/>
                                             <constraint firstItem="zpA-5m-LrH" firstAttribute="centerX" secondItem="t2G-2v-YF2" secondAttribute="centerX" id="haj-F7-u86"/>
-                                            <constraint firstAttribute="trailing" secondItem="JVV-pV-lvV" secondAttribute="trailing" constant="55" id="lHA-z5-SiT"/>
                                             <constraint firstItem="VXP-mk-If4" firstAttribute="top" secondItem="Q8f-xr-nDZ" secondAttribute="bottom" constant="10" id="mID-qx-Dct"/>
-                                            <constraint firstItem="Q8f-xr-nDZ" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" constant="55" id="mkb-Vo-JYU"/>
-                                            <constraint firstItem="JVV-pV-lvV" firstAttribute="leading" secondItem="t2G-2v-YF2" secondAttribute="leading" constant="55" id="u9q-lz-o7H"/>
-                                            <constraint firstAttribute="trailing" secondItem="VXP-mk-If4" secondAttribute="trailing" constant="55" id="uVz-Uq-RN7"/>
+                                            <constraint firstItem="JVV-pV-lvV" firstAttribute="centerX" secondItem="t2G-2v-YF2" secondAttribute="centerX" id="ulL-vJ-LvE"/>
                                             <constraint firstItem="ICG-oO-6LN" firstAttribute="top" secondItem="VXP-mk-If4" secondAttribute="bottom" constant="15" id="vRO-yF-AJO"/>
                                             <constraint firstItem="JVV-pV-lvV" firstAttribute="top" secondItem="t2G-2v-YF2" secondAttribute="top" constant="86" id="va7-Bx-s9C"/>
                                         </constraints>
