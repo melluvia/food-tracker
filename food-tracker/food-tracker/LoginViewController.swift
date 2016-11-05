@@ -18,6 +18,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+	    
+	//code for UITextFieldDelegate hide keyboard fix.
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
+
 
         emailTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
         passwordTextField.addTarget(self, action: #selector(LoginViewController.textFieldChanged(textField:)), for: UIControlEvents.editingChanged)
@@ -152,20 +157,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: UITextFieldDelegate
     
     // UITextFieldDelegate, called when Return tapped on keyboard
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Hide the keyboard.
+//     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//         // Hide the keyboard.
         
-        if textField == emailTextField {
+//         if textField == emailTextField {
             
-            passwordTextField.becomeFirstResponder()
+//             passwordTextField.becomeFirstResponder()
             
-        } else {
-            textField.resignFirstResponder()
+//         } else {
+//             textField.resignFirstResponder()
             
-        }
+//         }
         
-        return true
-    }
+//         return true
+//     }
     
     // UITextFieldDelegate, called when editing session begins, or when keyboard displayed
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -181,5 +186,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         } else {
             passwordTextField.placeholder = "Password"
         }
+    }
+    //Hide Keyboard when user touches outside keyboard
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    //Presses return key to exit keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return (true)
     }
 }
